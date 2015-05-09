@@ -26,7 +26,8 @@ html {
 }
 
 body {
-  margin: 0 0 -40px 0;
+  /*margin: 0 0 -40px 0;*/
+  margin: 0;
   font-family: 'Playfair Display', Georgia, serif;
 }
 
@@ -73,10 +74,11 @@ footer {
   font-size: 12px;
   color: grey;
   text-align: center;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 40px;
+  /*position: absolute;*/
+  /*left: 0;*/
+  /*bottom: 0;*/
+  /*height: 40px;*/
+  margin-top: 80px;
   width: 100%;
 }
 
@@ -235,71 +237,6 @@ div {
  * Form
  */
 
-.form {
-  margin-top: 18px;
-}
-.box {
-  font: 16px/30px 'Fauna One', Georgia, serif;
-  /*margin-top: 30px;*/
-  border: 1px solid #D3D3D3;
-  padding: 20px;
-  text-align: left;
-  overflow: auto;
-}
-
-.box.compact {
-  margin-top: 4px;
-  padding: 10px 20px;
-}
-
-.box.disabled {
-  background: #F6F6F6;
-  color: #656565;
-}
-
-.box.disabled a {
-  color: #656565;
-}
-
-.box-stack {
-  position: relative;
-}
-
-.box-stack .box-link {
-  font: 16px/30px 'Inconsolata', monospace;
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding-left: 50px;
-  background: linear-gradient(to left, #F6F6F6 0%, #F6F6F6 80%, rgba(246,246,246,0) 100%);
-}
-
-.copy {
-  outline: none;
-}
-
-
-
-#introduction_recipient_given_name {
-  padding-left: 4px;
-  width: 70px;  /* TODO */
-}
-
-#introduction_content {
-  display: none;
-  width: 85%;
-}
-
-#form-name, #form-contact {
-  text-align: left;
-}
-
-#form-name input, #form-contact input {
-  border: 1px solid #D3D3D3;
-  padding: 10px 20px;
-  width: 100%;
-}
-
 button, input[type="submit"], .button {
   font: 14px/24px 'Playfair Display', Georgia, serif;
   letter-spacing: 0.1em;
@@ -326,46 +263,9 @@ button:hover, input[type="submit"]:hover, .button:hover {
   color: black;
 }
 
-.arrowseperator {
-  width: 0;
-  height: 0;
-  margin: 60px auto;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid #eeeeee;
-}
-
-.glyphseperator {
-  /* TODO: load font! */
-  font: 16px 'Minion Pro';
-  margin-bottom: 4px;
-  display: none;
-  text-align: center;
-}
-
-footer span {
-  /*border-top: 1px solid #D3D3D3;*/
-  /*padding: 14px 40px;*/
-  margin-top: 20px;
-  /*font-style: italic;*/
-}
-
-#examples {
-  /*display: none;*/
-  /*text-align: right;*/
-  text-align: left;
-  line-height: 24px;
-  margin-left: 250px;
-  margin-right: 10px;
-  padding: 4px 10px 10px 10px;
-  border-left: 1px solid #D3D3D3;
-  border-right: 1px solid #D3D3D3;
-  border-bottom: 1px solid #D3D3D3;
-  font-size: 14px;
-  background: white;
-  position: relative;
-  top: -15px;
-}
+/*
+ * Autocomplete
+ */
 
 .autocomplete-suggestions {
   background: #FFF;
@@ -384,198 +284,15 @@ footer span {
 .autocomplete-group { padding: 2px 5px; }
 .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
 
-.blurry-text {
-   color: transparent;
-   text-shadow: 0 0 15px rgba(0,0,0,0.5);
-}
-
-#share {
-  margin-top: 20px;
-  text-align: center;
-}
-
-#share a {
-  font: 18px 'Inconsolata', monospace;
-  margin: 0 auto;
-  padding: 10px 16px;
-  /*background: #F6F6F6;*/
-  /*border-radius: 4px;*/
-  /*border: 2px solid black;*/
-  color: #222222;
-}
-
-#callout {
-  font-size: 16px;
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-
 /*
- * Messages
+ * Cards
  */
-
-#messages {
-  max-width: 400px;
-  height: 350px;
-  margin: 80px auto 0;
-  font-family: "Helvetica Neue";
-  font-size: 16px;
-  text-align: left;
-  font-weight: 300;
-  overflow: auto;
-}
-
-#messages div {
-  max-width: 255px;
-  word-wrap: break-word;
-  margin-bottom: 10px;
-  line-height: 24px;
-  display: none;
-}
-
-#messages p {
-  margin: 0;
-}
-
-.from-me {
-  position:relative;
-  padding:12px 20px;
-  color:white;
-  background:#0B93F6;
-  border-radius:25px;
-  float: right;
-}
-.from-me a {
-  color: white;
-}
-.from-me:before {
-  content:"";
-  position:absolute;
-  z-index:-1;
-  bottom:-2px;
-  right:-7px;
-  height:20px;
-  border-right:20px solid #0b93f6;
-  border-bottom-left-radius: 16px 14px;
-  -webkit-transform:translate(0, -2px);
-}
-
-.from-me:after {
-  content:"";
-  position:absolute;
-  z-index:1;
-  bottom:-2px;
-  right:-56px;
-  width:26px;
-  height:20px;
-  background:white;
-  border-bottom-left-radius: 10px;
-  -webkit-transform:translate(-30px, -2px);
-}
-.from-them {
-  position:relative;
-  padding:12px 20px;
-  background:#e5e5ea;
-  border-radius:25px;
-  color: black;
-  float: left;
-}
-.from-them:before {
-  content:"";
-  position:absolute;
-  z-index:2;
-  bottom:-2px;
-  left:-7px;
-  height:20px;
-  border-left:20px solid #e5e5ea;
-  border-bottom-right-radius: 16px 14px;
-  -webkit-transform:translate(0, -2px);
-}
-
-.from-them:after {
-  content:"";
-  position:absolute;
-  z-index:3;
-  bottom:-2px;
-  left:4px;
-  width:26px;
-  height:20px;
-  background:white;
-  border-bottom-right-radius: 10px;
-  -webkit-transform:translate(-30px, -2px);
-}
-
-.from-me {
-  position:relative;
-  padding: 8px 18px;;
-  color:white;
-  background:#0B93F6;
-  border-radius:25px;
-  float: right;
-}
-.from-me:before {
-  content:"";
-  position:absolute;
-  z-index:-1;
-  bottom:-2px;
-  right:-7px;
-  height:20px;
-  border-right:20px solid #0b93f6;
-  border-bottom-left-radius: 16px 14px;
-  -webkit-transform:translate(0, -2px);
-}
-
-.from-me:after {
-  content:"";
-  position:absolute;
-  z-index:1;
-  bottom:-2px;
-  right:-56px;
-  width:26px;
-  height:20px;
-  background:white;
-  border-bottom-left-radius: 10px;
-  -webkit-transform:translate(-30px, -2px);
-}
-.from-them {
-  position:relative;
-  padding: 8px 18px;;
-  background:#e5e5ea;
-  border-radius:25px;
-  color: black;
-  float: left;
-}
-.from-them:before {
-  content:"";
-  position:absolute;
-  z-index:2;
-  bottom:-2px;
-  left:-7px;
-  height:20px;
-  border-left:20px solid #e5e5ea;
-  border-bottom-right-radius: 16px 14px;
-  -webkit-transform:translate(0, -2px);
-}
-
-.from-them:after {
-  content:"";
-  position:absolute;
-  z-index:3;
-  bottom:-2px;
-  left:4px;
-  width:26px;
-  height:20px;
-  background:white;
-  border-bottom-right-radius: 10px;
-  -webkit-transform:translate(-30px, -2px);
-}
 
 .card {
   overflow: auto;
 }
 
-.card > img, .card-filler {
+.card > img {
   float: left;
   width: 100px;
   /*height: 100px;*/
@@ -642,7 +359,7 @@ footer span {
 
 
 .arrows {
-  margin: 4px 0 2px;
+  margin: 4px 0 0;
   width: 100%;
   height: 30px;
 }

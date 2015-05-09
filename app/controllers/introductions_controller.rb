@@ -11,7 +11,6 @@ class IntroductionsController < ApplicationController
         @parent = @parent_introduction.from_node
 
         if (not session.include? :user_id) or (session.include? :user_id and @sender[:uuid] != session[:user_id])
-          # TODO: don't update cookie if child
           session[:introduction] = params[:key]
           session[:user_id] = @sender[:uuid]
         end
@@ -32,7 +31,7 @@ class IntroductionsController < ApplicationController
     #TODO: check empty
 
     #@parent = @sender.introduced_by.to_a[0]
-    @grandparent = @parent.introduced_by.to_a[0]
+    #@grandparent = @parent.introduced_by.to_a[0]
 
     @recipient = Person.new
     @introduction = Introduction.new
