@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Compliment Gossip</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div id="container">
+
+<%= yield %>
+
+<footer>
+<em>The Chain Letter of Interesting People</em>, a project by David Chouinard
+</footer>
+
+</div>
+
+</body>
+</html>

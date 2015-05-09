@@ -1,0 +1,1 @@
+KEY_LENGHT = 6
