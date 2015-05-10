@@ -228,6 +228,7 @@ button, input[type="submit"], .button {
 button:hover, input[type="submit"]:hover, .button:hover {
   /*background-color: #D3D3D3;*/
   /*color: black;*/
+  padding: 5px 11px 6px; /* one pixel less to compensate */
   border: 2px solid #D3D3D3;
 }
 
@@ -358,6 +359,11 @@ button:hover, input[type="submit"]:hover, .button:hover {
   margin-top: -2px;
   margin-bottom: 10px;
   padding-right: 2px;
+}
+
+.card-preview {
+  margin: 50px auto 30px;
+  text-align: center;
 }
 
 
@@ -531,7 +537,7 @@ label.tip {
 }
 
 .form-inset {
-  width: 600px;
+  width: 750px;
   margin: 80px auto 30px;
   overflow: auto;
 }
@@ -543,13 +549,41 @@ label.tip {
 .form-inset-block {
   float: left;
   width: 50%;
-  padding: 10px 20px 10px;
+  padding: 10px 20px 15px;
 }
 
 .form-inset-block h3 {
   margin: 4px 0 14px;
 }
 
+
+.template-picker {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 10px;
+  user-select: none;
+}
+.template-picker > div {
+  padding: 6px 8px;
+  border: 1px solid #D3D3D3;
+  color: #4f4f4f;
+  display: inline-block;
+  cursor: pointer;
+}
+.template-picker > div.disabled {
+  color: #D3D3D3;
+  cursor: no-drop;
+}
+.template-picker > div:not(.disabled):hover {
+  padding: 5px 7px;
+  border: 2px solid #D3D3D3;
+}
+.template-picker > div:first-child {
+  border-radius: 6px 0 0 6px;
+}
+.template-picker > div:last-child {
+  border-radius: 0 6px 6px 0;
+}
 
 
 

@@ -6,6 +6,8 @@ class Person
 
   property :email, type: String
 
+  property :in_progress, type: String
+
   property :street_line1, type: String
   property :street_line2, type: String
   property :city, type: String

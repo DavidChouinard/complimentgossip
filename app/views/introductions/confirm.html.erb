@@ -1,57 +1,89 @@
-<form>
+<p id="notice"><%= notice %></p>
 
-  <div class="form-container" style="margin-top: 120px;">
-    <label>Your email</label>
-    <input type="text" placeholder="david@example.com" />
+<div class="card-preview">
+  <img src="<%= image_url('card.png') %>" class="card" />
+</div>
+
+<%= form_for @introduction do |f| %>
+
+  <div class="form-container">
+    <%= f.fields_for :sender, @sender do |c| %>
+      <%= c.hidden_field :uuid %>
+
+      <%= c.label :email, "Your email"%>
+      <%= c.text_field :email, :autofocus => true, :placeholder => "#{@sender.name.downcase.delete(' ')}@example.com" %>
+    <% end %>
   </div>
 
   <div class="form-inset">
     <div class="form-inset-block">
       <h3>Find address by name</h3>
 
-      <label>Name</label>
-      <input type="text" />
+      <div class="form-group">
+        <div style="width:65%;">
+          <label>Name</label>
+          <input type="text" />
+        </div>
 
-      <label>Location</label>
-      <input type="text" id="address-state" placeholder="city, state, etc. (optional)" />
+        <div style="width:35%;">
+          <label>Location</label>
+          <input type="text" id="address-state" placeholder="city, state, …" />
+        </div>
+      </div>
     </div>
 
     <div class="form-inset-block">
       <h3>Find workplace address</h3>
 
-      <label style="margin-top: 46px;">Business name</label>
+      <label>Business name</label>
       <input type="text" placeholder="" id="google-autocomplete" autocomplete="off"/>
     </div>
   </div>
 
-  <div class="form-container">
-    <label>Recipient full name</label>
-    <input type="text" id="address-name" value="David …"/>
-
-    <label>Address</label>
-    <input type="text" id="address-line1"/>
-    <input type="text" id="address-line2"/>
-
-    <div class="form-group">
-      <div style="width:55%;">
-        <label>City</label>
-        <input type="text" id="address-city"/>
-      </div>
-
-      <div style="width:20%;">
-        <label>State</label>
-        <input type="text" id="address-state"/>
-      </div>
-
-      <div style="width:25%;">
-        <label>Zip code</label>
-        <input type="text" id="address-postalcode"/>
-      </div>
+  <% if @introduction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@introduction.errors.count, "error") %> prohibited this  from being saved:</h2>
+      <ul>
+      <% @introduction.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
     </div>
+  <% end %>
 
-    <label>Country</label>
-    <input type="text" id="address-country"/>
+  <div class="form-container">
+    <%= f.fields_for :recipient, @recipient do |c| %>
+      <%= c.hidden_field :uuid %>
+
+      <%= c.label :name, "Recipient name" %>
+      <%= c.text_field :name %>
+
+      <%= c.label :street_line1, "Address" %>
+      <%= c.text_field :street_line1 %>
+      <%= c.text_field :street_line2 %>
+
+      <div class="form-group">
+        <div style="width:55%;">
+          <%= c.label :city, "City" %>
+          <%= c.text_field :city, :placeholder => "Beverly Hills" %>
+        </div>
+
+        <div style="width:20%;">
+          <%= c.label :state, "State" %>
+          <%= c.text_field :state, :placeholder => "CA" %>
+        </div>
+
+        <div style="width:25%;">
+          <%= c.label :postal_code, "Zip code" %>
+          <%= c.text_field :postal_code, :placeholder => "90210" %>
+        </div>
+      </div>
+
+      <%= c.label :country, "Country" %>
+      <%= c.text_field :country, :placeholder => "United States" %>
+
+    <% end %>
   </div>
 
-
-</form>
+  <%= f.submit "Share the gossip" %>
+<% end %>

@@ -1,11 +1,13 @@
+var TEMPLATE_COUNT = 8;
+
 $(document).ready(function() {
-  //$("#introduction_content").typed({
-    //strings: ["David is…", "Heidi is…", "Alyssa is…", "Pierre is…", "Alex is…"],
-    ////attr: "placeholder",
-    //cursorChar: "",
-    //backDelay: 2000,
-    //loop: true
-  //});
+  $("#introduction_content").typed({
+    strings: ["David is…", "Heidi is…", "Alyssa is…", "Pierre is…", "Alex is…"],
+    //attr: "placeholder",
+    cursorChar: "",
+    backDelay: 2000,
+    loop: true
+  });
 
   $("#form-introname").keypress(function (e) {
     if (e.which == 13) {  //enter key
@@ -51,33 +53,55 @@ $(document).ready(function() {
   });
 
 
-  var intros = ["one of the most genuine and thoughtful people I know.",
-    //"I'm inspired by David's deep ability to rally others around his vision.",
-    "passionate and fearless: he inspires me to be ambitious.",
-    "one of the most brilliant and creative people I've met."]
-    //"David exudes a sense of urgency that inspires me to push harder."];
+  if ($("#introduction_content").length) {
+    var intros = ["one of the most genuine and thoughtful people I know.",
+      //"I'm inspired by David's deep ability to rally others around his vision.",
+      "passionate and fearless: he inspires me to be ambitious.",
+      "one of the most brilliant and creative people I've met."]
+      //"David exudes a sense of urgency that inspires me to push harder."];
 
-  //$('#form-intro').autocomplete({
-      //lookup: intros,
-      //minChars: 0,
-  //});
+    //$('#form-intro').autocomplete({
+        //lookup: intros,
+        //minChars: 0,
+    //});
 
-  var input = document.getElementById("introduction_content");
-  new Awesomplete(input, {
-    list: intros,
-    filter: function (text, input) {
-      return true;
-    },
-    item: function(text, input){
-      var newText = input + " is " + text;
+    var input = document.getElementById("introduction_content");
+    new Awesomplete(input, {
+      list: intros,
+      filter: function (text, input) {
+        return true;
+      },
+      item: function(text, input){
+        var newText = input + " is " + text;
 
-      return Awesomplete.$.create("li", {
-          innerHTML: newText.replace(RegExp(input.trim(), "gi"), "<mark>$&</mark>"),
-          "aria-selected": "false"
-      });
-    },
-  });
+        return Awesomplete.$.create("li", {
+            innerHTML: newText.replace(RegExp(input.trim(), "gi"), "<mark>$&</mark>"),
+            "aria-selected": "false"
+        });
+      },
+    });
+  }
 
+  if ($(".template-picker").length) {
+    var current_template = 0;  // 0 = no template
+    update_template_state(current_template);
+
+    // TODO: prefetch images
+
+    $(".template-picker > div:first-child").on("click", function() {
+      if (current_template > 0) {
+        current_template--;
+        update_template_state(current_template);
+      }
+    });
+
+    $(".template-picker > div:last-child").on("click", function() {
+      if (current_template < TEMPLATE_COUNT) {
+        current_template++
+        update_template_state(current_template);
+      }
+    });
+  }
 
   if ($("#google-autocomplete").length) {
     var autocomplete = new google.maps.places.Autocomplete(document.getElementById('google-autocomplete'),
@@ -90,7 +114,7 @@ $(document).ready(function() {
       var subpremise = find_component(place, "subpremise", "long_name");
 
       if (subpremise !== "") {
-        address += "# " + subpremise;
+        address += " # " + subpremise;
       }
 
       if ("name" in place) {
@@ -133,4 +157,20 @@ function find_component(place, component, property) {
   var value = place.address_components.filter(function(d) { return d["types"][0] === component; });
 
   return (value.length == 0) ? "" : value[0][property];
+};
+
+function update_template_state(template) {
+  if (template == 0) {
+    $(".template-picker > div:first-child").attr("class", "disabled");
+  } else if (template == TEMPLATE_COUNT) {
+    $(".template-picker > div:last-child").attr("class", "disabled");
+  } else {
+    $(".template-picker > div").attr("class", null);
+  }
+
+  if (template == 0) {
+    $(".prompt").attr("id", null);
+  } else {
+    $(".prompt").attr("id", "template-" + template);
+  }
 };

@@ -76,8 +76,8 @@
   </div>
 
   <div class="template-picker">
-    <div class="disabled">◀</div>
-    <div>▶</div>
+    <div>◄</div>
+    <div>►</div>
   </div>
 
   <%= f.submit "Submit" %>

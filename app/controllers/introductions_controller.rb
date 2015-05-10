@@ -1,19 +1,18 @@
 class IntroductionsController < ApplicationController
   def start
-    if params.include? :key
-      query = Person.all.introduced(:person, :intro).where('intro.key = {key}').params(key: params[:key])
+    if params.include? :key or session.include? :key
+      key = params[:key] || session[:key]
+      query = Person.all.introduced(:person, :intro).where('intro.key = {key}').params(key: key)
 
       introduction = query.pluck(:intro).to_a
 
+      # TODO: handle else
       if not introduction.empty?
         @sender = query.pluck(:person).to_a[0]
-        @parent_introduction = introduction[0]
-        @parent = @parent_introduction.from_node
+        @parent = introduction[0]
 
-        if (not session.include? :user_id) or (session.include? :user_id and @sender[:uuid] != session[:user_id])
-          session[:introduction] = params[:key]
-          session[:user_id] = @sender[:uuid]
-        end
+        session[:key] = params[:key]
+        session[:user_id] = @sender[:uuid]
       end
     elsif session.include? :user_id
       @sender = Person.find(session[:user_id])
@@ -27,7 +26,6 @@ class IntroductionsController < ApplicationController
       @sender = Person.new
     end
 
-
     #TODO: check empty
 
     #@parent = @sender.introduced_by.to_a[0]
@@ -36,12 +34,14 @@ class IntroductionsController < ApplicationController
     @recipient = Person.new
     @introduction = Introduction.new
 
+    @sender.in_progress = nil
+
     respond_to do |format|
-      #if @sender.introduced.to_a.count >= 1
-        #format.html { render :more }
-      #else
+      if @sender.in_progress
+        format.html { render :confirm }
+      else
         format.html { render :new }
-      #end
+      end
     end
   end
 
@@ -72,19 +72,21 @@ class IntroductionsController < ApplicationController
     # ensure login user only
     @sender = Person.find(filtered_params[:sender][:uuid])
     @sender.update(filtered_params[:sender])
-    @recipient = Person.create(filtered_params[:recipient])
+    @recipient = Person.create()
 
     @introduction = Introduction.new(from_node: @sender, to_node: @recipient, content: filtered_params[:content])
 
     respond_to do |format|
       if @introduction.save
-        #format.html { redirect_to "/#{@introduction.key}" }
-        @url = "#{request.base_url}/#{@introduction.key}"
-        format.html { render :prompt }
+        @sender.update(:in_progress => @introduction.id)
+        format.html { redirect_to "/#{session.fetch("key", "")}" }
       else
         format.html { render :new }
       end
     end
+  end
+
+  def confirm
   end
 
   private
