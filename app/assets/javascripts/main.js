@@ -1,11 +1,11 @@
 $(document).ready(function() {
-  $("#form-name").typed({
-    strings: ["David", "Heidi", "Alyssa", "Pierre", "Alex"],
-    attr: "placeholder",
-    //startDelay: 5000, // TODO
-    backDelay: 2000,
-    loop: true
-  });
+  //$("#introduction_content").typed({
+    //strings: ["David is…", "Heidi is…", "Alyssa is…", "Pierre is…", "Alex is…"],
+    ////attr: "placeholder",
+    //cursorChar: "",
+    //backDelay: 2000,
+    //loop: true
+  //});
 
   $("#form-introname").keypress(function (e) {
     if (e.which == 13) {  //enter key
@@ -35,54 +35,77 @@ $(document).ready(function() {
     }
   })
 
-  var intros = ["David is one of the most genuine and thoughtful people I know.",
-    "I'm inspired by David's deep ability to rally others around his vision.",
-    "David is passionate and fearless: he inspires me to be ambitious.",
-    "David is one of the most brilliant and creative people I've met.",
-    "David exudes a sense of urgency that inspires me to push harder."];
-
-  $('#form-intro').autocomplete({
-      lookup: intros,
-      minChars: 0,
-  });
-
   $(".tip")
     .css({opacity: 0});
 
-  $(".prompt").hover(function() {
-    //$(".tip").transition({opacity: 1});
+  $(".prompt").hoverIntent(function() {
+    $(".tip").transition({opacity: 1});
   }, function() {
     $(".tip").transition({opacity: 0});
   }).click(function() {
-    $("input", this).focus();
+    $("#introduction_content", this).select();
+  });
+
+  $("#introduction_sender_name").on("click", function(e) {
+    e.stopPropagation();
   });
 
 
-  var autocomplete = new google.maps.places.Autocomplete(document.getElementById('google-autocomplete'),
-      { types: ['establishment'] });
+  var intros = ["one of the most genuine and thoughtful people I know.",
+    //"I'm inspired by David's deep ability to rally others around his vision.",
+    "passionate and fearless: he inspires me to be ambitious.",
+    "one of the most brilliant and creative people I've met."]
+    //"David exudes a sense of urgency that inspires me to push harder."];
 
-  google.maps.event.addListener(autocomplete, 'place_changed', function() {
-    var place = autocomplete.getPlace();
+  //$('#form-intro').autocomplete({
+      //lookup: intros,
+      //minChars: 0,
+  //});
 
-    var address = find_component(place, "street_number", "long_name") + " " + find_component(place, "route", "short_name");
-    var subpremise = find_component(place, "subpremise", "long_name");
+  var input = document.getElementById("introduction_content");
+  new Awesomplete(input, {
+    list: intros,
+    filter: function (text, input) {
+      return true;
+    },
+    item: function(text, input){
+      var newText = input + " is " + text;
 
-    if (subpremise !== "") {
-      address += "# " + subpremise;
-    }
-
-    if ("name" in place) {
-      $("#address-line1").val(place["name"]);
-      $("#address-line2").val(address);
-    } else {
-      $("#address-line1").val(address);
-    }
-
-    $("#address-city").val(find_component(place, "locality", "long_name"));
-    $("#address-state").val(find_component(place, "administrative_area_level_1", "short_name"));
-    $("#address-postalcode").val(find_component(place, "postal_code", "long_name"));
-    $("#address-country").val(find_component(place, "country", "long_name"));
+      return Awesomplete.$.create("li", {
+          innerHTML: newText.replace(RegExp(input.trim(), "gi"), "<mark>$&</mark>"),
+          "aria-selected": "false"
+      });
+    },
   });
+
+
+  if ($("#google-autocomplete").length) {
+    var autocomplete = new google.maps.places.Autocomplete(document.getElementById('google-autocomplete'),
+        { types: ['establishment'] });
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      var place = autocomplete.getPlace();
+
+      var address = find_component(place, "street_number", "long_name") + " " + find_component(place, "route", "short_name");
+      var subpremise = find_component(place, "subpremise", "long_name");
+
+      if (subpremise !== "") {
+        address += "# " + subpremise;
+      }
+
+      if ("name" in place) {
+        $("#address-line1").val(place["name"]);
+        $("#address-line2").val(address);
+      } else {
+        $("#address-line1").val(address);
+      }
+
+      $("#address-city").val(find_component(place, "locality", "long_name"));
+      $("#address-state").val(find_component(place, "administrative_area_level_1", "short_name"));
+      $("#address-postalcode").val(find_component(place, "postal_code", "long_name"));
+      $("#address-country").val(find_component(place, "country", "long_name"));
+    });
+  }
 
   //function showIntroduction(e) {
     //var next = getNext(e);

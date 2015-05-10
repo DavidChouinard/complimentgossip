@@ -15,4 +15,6 @@
 //= require turbolinks
 //= require jquery.transit
 //= require typed
+//= require awesomplete
+//= require jquery.hoverIntent
 //= require_tree .

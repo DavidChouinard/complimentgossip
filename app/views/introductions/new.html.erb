@@ -1,12 +1,12 @@
-<div class="card">
-  <div class="card-ellipsis card-ellipsis-top card-alone">…</div>
-</div>
+<p id="notice"><%= notice %></p>
 
-<div class="card">
+<div class="card-ellipsis card-ellipsis-top card-alone">…</div>
+
+<div class="cards">
   <img src="<%= image_url('card.png') %>" class="card card-alone" />
   <div class="card-text">
     <div class="card-head">Matt is one of the most thoughtful and genuine people I know.</div>
-    <div class="card-subhead">#153 • <span>matt@mattfoo.com</span></div>
+    <div class="card-subhead">#153 • <a href="mailto:<%=u '"Matt Foo"<matt@mattfoo.com>' %>">matt@mattfoo.com</a></div>
   </div>
 </div>
 
@@ -14,22 +14,20 @@
   <path d="M200,0 L200,30" class="line"/>
 </svg>
 
-<div class="card">
+<div class="cards">
   <img src="<%= image_url('card.png') %>" class="card card-alone" />
   <div class="card-text">
     <div class="card-head">Alex is passionate and fearless: he inspires me to be ambitious.</div>
-    <div class="card-subhead">#159 • <span>alexlynn@gmail.com</span></div>
+    <div class="card-subhead"> #159 • <a href="mailto:<%=u '"Alex Lynn"<alexlynn@gmail.com>' %>">alexlynn@gmail.com</a></div>
   </div>
 </div>
 
 <svg class="arrows">
-  <!--<path d="M200,8 L50,40" class="line"/>-->
-
   <path d="M200,0 C200,20 90,10 90,30" class="line line-dashed" />
   <path d="M200,0 L200,30" class="line"/>
 </svg>
 
-<div class="card">
+<div class="cards">
   <div class="card-ellipsis card-ellipsis-side">…</div>
   <img src="<%= image_url('card.png') %>" class="card card-fadded" />
   <img src="<%= image_url('card.png') %>" class="card" />
@@ -43,20 +41,42 @@
   <path d="M200,0 L200,30" class="line"/>
 </svg>
 
-<div class="prompt">
-
-  <div class="prompt-inner">
-    <form>
-      <label class="tip bare">Which friend inspire you? Whom do you want to be more like?</label>
-      <!--<div class="seperator"></div>-->
-      <input type="text" id="form-name" autofocus />
-      <!--<textarea id="form-name" autofocus></textarea>-->
-    </form>
-  </div>
-
+<div class="prompt-sidebar">
+  <!--<img src="<%= image_url('card.png') %>" class="card" />
+  <div class="card-label">sent</div>
+  <img src="<%= image_url('card.png') %>" class="card" />
+  <div class="card-label">draft</div>-->
 </div>
 
-<!--<button>Submit</button>-->
+<%= form_for(@introduction) do |f| %>
+  <% if @introduction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@introduction.errors.count, "error") %> prohibited this  from being saved:</h2>
+      <ul>
+      <% @introduction.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="prompt">
+
+    <div class="prompt-inner">
+      <%= f.label :content, 'Which friend inspires you? Whom do you want to be more like?', :class => "tip bare" %>
+      <%= f.text_area :content, :rows => 2, :autocomplete => false %>
+
+      <%= f.fields_for :sender, @sender do |c| %>
+        <%= c.hidden_field :uuid %>
+        <%= c.text_field :name, :value => "Alex Lynn", :autocomplete => false %>
+      <% end %>
+
+    </div>
+
+  </div>
+
+  <%= f.submit "Submit" %>
+<% end %>
 
 <!--<div class="progress">-->
   <!--Ⅰ/Ⅲ-->
@@ -68,8 +88,7 @@
   <!--<span class="progress-glyph">a</span>-->
 <!--</div>-->
 
-<!--<div class="progress">-->
-  <!--<span class="progress-chicklet active"></span>-->
-  <!--<span class="progress-chicklet"></span>-->
-  <!--<span class="progress-chicklet"></span>-->
-<!--</div>-->
+<!--<div class="progress">
+  <span class="progress-chicklet active"></span><span class="progress-chicklet"></span><span class="progress-chicklet"></span>
+</div>
+<div class="progess-label">Ⅰ / Ⅲ</div>-->

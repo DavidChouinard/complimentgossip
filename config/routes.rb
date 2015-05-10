@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'introductions#start'
 
   post '/' => 'introductions#create'
-  #get '/:key' => 'introductions#start', :constraint => { :key => /.{1,6}/ }
+  get '/:key' => 'introductions#start', :constraint => { :key => /.{1,6}/ }
 
   resources :introductions, :only => [:create]
 

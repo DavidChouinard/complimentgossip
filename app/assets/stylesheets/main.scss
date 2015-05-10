@@ -33,7 +33,7 @@ body {
 
 #container {
   width: 980px;
-  margin: 10px auto 80px;
+  margin: 15px auto 20px;
 }
 
 h1 {
@@ -82,8 +82,7 @@ footer {
   width: 100%;
 }
 
-input, select {
-  /*font: 16px/30px 'Fauna One', Georgia, serif;*/
+input, select, textarea {
   font: 16px/30px 'Playfair Display', Georgia, serif;
   background: transparent;
   box-shadow: none;
@@ -114,37 +113,6 @@ label {
   /*border: 1px solid #d3d3d3;*/
   /*color: #999999;*/
 }
-
-label.bare {
-  font-size: 14px;
-  font-style: italic;
-  /*font-variant: small-caps;*/
-  /*text-transform: uppercase;*/
-  /*font-weight: bold;*/
-  /*letter-spacing: 0.1em;*/
-  text-align: left;
-  display: block;
-  margin-bottom: 18px;
-  padding: 2px 0;
-  position: relative;
-  /*color: white;*/
-  /*background: black;*/
-  /*border: 1px solid #d3d3d3;*/
-  /*color: #999999;*/
-}
-
-/*label:after {*/
-  /*position: absolute;*/
-  /*top: 100%;*/
-  /*left: 36px;*/
-  /*content: "";*/
-  /*width: 8px;*/
-  /*height: 8px;*/
-  /*border-right: 1px solid black;*/
-  /*border-top: 1px solid black;*/
-  /*transform: rotate(135deg);*/
-  /*pointer-events: none;*/
-/*}*/
 
 /*
  * Rails
@@ -239,16 +207,15 @@ div {
 
 button, input[type="submit"], .button {
   font: 14px/24px 'Playfair Display', Georgia, serif;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   text-align: center;
 
-  border: 2px solid #D3D3D3;
+  border: 1px solid #D3D3D3;
+  border-radius: 5px;
   background: none;
 
-  margin: 30px auto;
+  margin: 40px auto;
   padding: 6px 12px 7px;
-  width: 200px;
+  width: 180px;
 
   appearance: none;
   -webkit-appearance: none;
@@ -259,8 +226,9 @@ button, input[type="submit"], .button {
   display: block;
 }
 button:hover, input[type="submit"]:hover, .button:hover {
-  background-color: #D3D3D3;
-  color: black;
+  /*background-color: #D3D3D3;*/
+  /*color: black;*/
+  border: 2px solid #D3D3D3;
 }
 
 /*
@@ -288,12 +256,11 @@ button:hover, input[type="submit"]:hover, .button:hover {
  * Cards
  */
 
-.card {
+.cards {
   overflow: auto;
 }
 
-.card > img {
-  float: left;
+.card {
   width: 100px;
   /*height: 100px;*/
   border: 1px solid #D3D3D3;
@@ -301,8 +268,16 @@ button:hover, input[type="submit"]:hover, .button:hover {
   margin-right: 10px;
 }
 
+.cards > .card {
+  float: left;
+}
+
 .card-alone {
   margin-left: 150px;
+}
+
+.card-left, .prompt-sidebar {
+  margin-left: 40px;
 }
 
 .card-fadded {
@@ -352,9 +327,37 @@ button:hover, input[type="submit"]:hover, .button:hover {
   color: rgb(79, 79, 79);
 }
 
-.card-subhead > span {
+.new {
+  color: #0E7AFE;
+  font-weight: bold;
+  vertical-align: 10%;
+  margin-left: -10px;
+  padding-right: 2px;
+  /*letter-spacing: 0em;*/
+  /*font-size: 10px;*/
+}
+
+.card-subhead > a {
   font-size: 11px;
   letter-spacing: 0.08em;
+  color: rgb(79, 79, 79);
+  text-decoration: none;
+}
+
+.card-subhead > a:hover {
+  text-decoration: underline;
+}
+
+.card-label {
+  font-size: 8px;
+  text-transform: uppercase;
+  /*font-weight: bold;*/
+  letter-spacing: 0.1em;
+  color: rgb(79, 79, 79);
+  text-align: right;
+  margin-top: -2px;
+  margin-bottom: 10px;
+  padding-right: 2px;
 }
 
 
@@ -384,24 +387,82 @@ svg .line {
 .prompt {
   border: 1px solid #D3D3D3;
   margin: 0 150px 10px;
-  /*height: 480px;*/
+}
+
+.prompt-sidebar {
+  width: 100px;
+  float: left;
 }
 
 .prompt-inner {
   font-size: 18px;
-  margin: 70px 100px 300px;
+  margin: 40px 60px 0;
+  height: 440px;
 }
 
-#form-name {
-  width: 80px;
-  border: none;
-  width: 100%;
+label.tip {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: normal;
+  text-transform: none;
   text-align: center;
-  font-size: 40px;
+  letter-spacing: 0;
+  display: block;
+  padding: 2px 0;
+  position: relative;
+  color: #4f4f4f;
 }
 
-.tip {
-  opacity: 0
+.tip:before {
+  content : "";
+  position: absolute;
+  top: 100%;
+  left: calc(50% - 50px);
+  margin-top: 5px;
+  height: 1px;
+  width: 100px;
+  border-bottom: 1px solid #D3D3D3;
+}
+
+.tip:after {
+  position: absolute;
+  top: 100%;
+  left: calc(50% - 4px);
+  content: "";
+  margin-top: 2px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-right: 1px solid #D3D3D3;
+  border-top: 1px solid #D3D3D3;
+  transform: rotate(135deg);
+  pointer-events: none;
+}
+
+#introduction_content {
+  font-size: 34px;
+  line-height: 42px;
+  text-align: center;
+
+  margin-top: 30px;
+  width: 100%;
+  height: auto;
+
+  overflow: hidden;
+  outline: none;
+  border: none;
+  resize: none;
+}
+
+#introduction_sender_name {
+  display: block;
+  width: 100%;
+  margin-top: 150px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 16px;
+  border: none;
 }
 
 /*.progress {*/
@@ -424,13 +485,25 @@ svg .line {
 .progress-chicklet {
   display: inline-block;
   width: 60px;
-  height: 4px;
-  background: #F6F6F6;
+  height: 6px;
+  background: #D3D3D3;
+  margin-right: 1px;
+}
+.progress-chicklet:first-child {
+  border-radius: 3px 0 0 3px;
+}
+.progress-chicklet:last-child {
+  border-radius: 0 3px 3px 0;
 }
 .progress-chicklet.active {
-  background: #0B93F6;
+  background: #2c89c7;
 }
 .progress-chicklet.active {
+}
+.progess-label {
+  text-align: center;
+  font-size: 10px;
+  color: #4f4f4f;
 }
 
 .progress-glyph {

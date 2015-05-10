@@ -2,8 +2,11 @@ class Introduction
   include Neo4j::ActiveRel
   before_save :generate_key
 
-  property :content, type: String, presence: true
   property :key, type: String
+  property :content, type: String, presence: true
+  property :template_id, type: Integer
+
+  property :thumbnail, type: String
 
   property :created_at
   property :updated_at
