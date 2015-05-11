@@ -1,4 +1,4 @@
-var TEMPLATE_COUNT = 8;
+var TEMPLATE_COUNT = 13;
 
 $(document).ready(function() {
   $("#introduction_content").typed({
@@ -52,6 +52,14 @@ $(document).ready(function() {
     e.stopPropagation();
   });
 
+  if ($(".cards").length) {
+    $(".cards > .card:not(.card-fadded)").hover(function() {
+      $(".card-preview > img").attr("src", $(this).attr("src"));
+      $(".card-preview").show()
+    }, function() {
+      $(".card-preview").hide()
+    });
+  }
 
   if ($("#introduction_content").length) {
     var intros = ["one of the most genuine and thoughtful people I know.",
@@ -101,6 +109,21 @@ $(document).ready(function() {
         update_template_state(current_template);
       }
     });
+  }
+
+  if ($(".card-overlay").length) {
+    setTimeout(function() {
+      $(".card-overlay > div")
+        .css({opacity: 0, scale: 3, "padding-top": 2})
+        .text("Sent!")
+        .transition({opacity: 1, scale: 1, easing: "snap"});
+    }, 4000);
+
+    setTimeout(function() {
+      $(".card-overlay")
+        .transition({opacity: 0}, function () { $(this).remove(); })
+        //.hide();
+    }, 6000);
   }
 
   if ($("#google-autocomplete").length) {
@@ -170,7 +193,9 @@ function update_template_state(template) {
 
   if (template == 0) {
     $(".prompt").attr("id", null);
+    $("#introduction_template").val(null);
   } else {
     $(".prompt").attr("id", "template-" + template);
+    $("#introduction_template_id").val(template);
   }
 };

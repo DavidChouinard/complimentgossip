@@ -1,99 +1,124 @@
-<p id="notice"><%= notice %></p>
+class IntroductionsController < ApplicationController
+  def start
+    if params.include? :key or session.include? :key
+      key = params[:key] || session[:key]
+      query = Person.all.introduced(:person, :intro).where('intro.key = {key}').params(key: key)
 
-<div class="card-ellipsis card-ellipsis-top card-alone">…</div>
+      introduction = query.pluck(:intro).to_a
 
-<div class="cards">
-  <img src="<%= image_url('card.png') %>" class="card card-alone" />
-  <div class="card-text">
-    <div class="card-head">Matt is one of the most thoughtful and genuine people I know.</div>
-    <div class="card-subhead">#153 • <a href="mailto:<%=u '"Matt Foo"<matt@mattfoo.com>' %>">matt@mattfoo.com</a></div>
-  </div>
-</div>
+      # TODO: handle else
+      if not introduction.empty?
+        @sender = query.pluck(:person).to_a[0]
+        @parent = introduction[0]
 
-<svg class="arrows">
-  <path d="M200,0 L200,30" class="line"/>
-</svg>
+        session[:key] = params[:key]
+        session[:user_id] = @sender[:uuid]
+      else
+        render :file => "#{Rails.root}/public/404.html", :status => :not_found, :layout => false and return
+      end
+    else
+      # TODO: not open for business
+      render :file => "#{Rails.root}/public/notyet.html", :layout => false and return
+    end
 
-<div class="cards">
-  <img src="<%= image_url('card.png') %>" class="card card-alone" />
-  <div class="card-text">
-    <div class="card-head">Alex is passionate and fearless: he inspires me to be ambitious.</div>
-    <div class="card-subhead"> #159 • <a href="mailto:<%=u '"Alex Lynn"<alexlynn@gmail.com>' %>">alexlynn@gmail.com</a></div>
-  </div>
-</div>
+    if not defined? @sender
+      @sender = Person.new
+    end
 
-<svg class="arrows">
-  <path d="M200,0 C200,20 90,10 90,30" class="line line-dashed" />
-  <path d="M200,0 L200,30" class="line"/>
-</svg>
+    #TODO: check empty
 
-<div class="cards">
-  <div class="card-ellipsis card-ellipsis-side">…</div>
-  <img src="<%= image_url('card.png') %>" class="card card-fadded" />
-  <img src="<%= image_url('card.png') %>" class="card" />
-  <div class="card-text">
-    <div class="card-head">David is one of the most brilliant and creative people I've met.</div>
-    <div class="card-subhead">#171</div>
-  </div>
-</div>
+    #@parent = @sender.introduced_by.to_a[0]
+    #@grandparent = @parent.introduced_by.to_a[0]
 
-<svg class="arrows">
-  <path d="M200,0 L200,30" class="line"/>
-</svg>
+    @recipient = Person.new
+    @introduction = Introduction.new
 
-<div class="prompt-sidebar">
-  <!--<img src="<%= image_url('card.png') %>" class="card" />
-  <div class="card-label">sent</div>
-  <img src="<%= image_url('card.png') %>" class="card" />
-  <div class="card-label">draft</div>-->
-</div>
+    #@sender.in_progress = nil
+    #@sender.save()
 
-<%= form_for @introduction do |f| %>
-  <% if @introduction.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@introduction.errors.count, "error") %> prohibited this  from being saved:</h2>
-      <ul>
-      <% @introduction.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+    respond_to do |format|
+      if @sender.in_progress
+        format.html { render :confirm }
+      else
+        format.html { render :new }
+      end
+    end
+  end
 
-  <div class="prompt">
+  def create
+    filtered_params = introduction_params
 
-    <div class="prompt-inner">
-      <%= f.label :content, 'Which friend inspires you? Whom do you want to be more like?', :class => "tip" %>
-      <%= f.text_area :content, :rows => 2, :autocomplete => false %>
+    # TODO: handle UUID no recognized
+    # ensure login user only
 
-      <%= f.fields_for :sender, @sender do |c| %>
-        <%= c.hidden_field :uuid %>
-        <%= c.text_field :name, :autocomplete => false %>
-      <% end %>
+    # TODO: should be a transaction
 
-    </div>
+    @sender = Person.find(filtered_params[:sender][:uuid])
+    @sender.update(filtered_params[:sender])
+    @recipient = Person.create()
 
-  </div>
+    @introduction = Introduction.new(from_node: @sender, to_node: @recipient, content: filtered_params[:content])
 
-  <div class="template-picker">
-    <div>◄</div>
-    <div>►</div>
-  </div>
+    respond_to do |format|
+      if @introduction.save
+        @sender.update(:in_progress => @introduction.key)
+        format.html { redirect_to "/#{session.fetch("key", "")}" }
+      else
+        format.html { render :new }
+      end
+    end
+  end
 
-  <%= f.submit "Submit" %>
-<% end %>
+  def update
+    filtered_params = introduction_params
 
-<!--<div class="progress">-->
-  <!--Ⅰ/Ⅲ-->
-<!--</div>-->
+    # TODO: check not exists
+    @sender = Person.find(filtered_params[:sender][:uuid])
+    @recipient = Person.find(filtered_params[:recipient][:uuid])
 
-<!--<div class="progress">-->
-  <!--<span class="progress-glyph" style="color: black;">a</span>-->
-  <!--<span class="progress-glyph">a</span>-->
-  <!--<span class="progress-glyph">a</span>-->
-<!--</div>-->
+    # TODO: validate exists
 
-<!--<div class="progress">
-  <span class="progress-chicklet active"></span><span class="progress-chicklet"></span><span class="progress-chicklet"></span>
-</div>
-<div class="progess-label">Ⅰ / Ⅲ</div>-->
+    @sender.in_progress = nil
+
+    respond_to do |format|
+      if @sender.update(filtered_params[:sender]) and @recipient.update(filtered_params[:recipient])
+        format.html { redirect_to "/#{session.fetch("key", "")}", :flash => { :updated_key => @introduction.key } }
+      else
+        format.html { render :confirm }
+      end
+    end
+  end
+
+  def format_serial(serial = 0)
+    if serial == 0
+      serial = Person.all.introduced.count + 1
+    end
+
+    return "# #{serial.to_s.rjust(3, '0')}"
+  end
+  helper_method :format_serial
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    #before_action :set_person, only: [:show, :edit, :update, :destroy]
+    #def set_person
+      #@person = Person.find(params[:id])
+    #end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def introduction_params
+      #TODO: required uuid
+      params.require(:introduction).permit(:content, :template,
+          :sender => [:uuid, :name, :email],
+          :recipient => [:uuid, :street_line1, :street_line2, :city, :state, :postal_code, :country])
+    end
+
+    #def sender_params
+      #puts params
+      #params.require(:sender).permit(:uuid, :full_name, :contact)
+    #end
+
+    #def recipient_params
+      #params.require(:recipient).permit(:given_name)
+    #end
+end

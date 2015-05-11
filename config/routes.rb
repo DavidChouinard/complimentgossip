@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   get '/:key' => 'introductions#start', :constraint => { :key => /.{1,#{KEY_LENGHT}}/ }
 
   post "/introductions" => 'introductions#create'
-  put "/confirm/:id" => 'introductions#confirm'
+  put "/confirm/:key" => 'introductions#update', :constraint => { :key => /.{1,#{KEY_LENGHT}}/ }
+
+  #resources :introductions, only: [:create, :update]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

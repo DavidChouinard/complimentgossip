@@ -1,81 +1,108 @@
 
 #template-1 {
-  background-image: image-url('templates/cactus1_digitalsugar_cactus2.png');
-  background-repeat: no-repeat;
-  background-position: 50% 90%;
-  background-size: 50px auto;
+  /*background-image: image-url('templates/flower.png');*/
+  /*background-repeat: no-repeat;*/
+  /*background-position: 50% 310px;*/
+  /*background-size: auto 30px;*/
 }
 #template-1 #introduction_sender_name {
-  margin-top: 140px;
+  /*margin-top: 160px;*/
+}
+
+#template-1 {
+  background-image: image-url('templates/swirl.png');
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: 50% 320px;
+  background-size: 50px auto;
 }
 
 #template-2 {
-  background-image: image-url('templates/ELEMENT5.png');
+  background-image: image-url('templates/dotted.png');
   background-size: 50%;
   background-repeat: no-repeat;
-  background-position: 50% 70%;
-  background-size: 50px auto;
-}
-#template-2 #introduction_sender_name {
-  margin-top: 160px;
-}
-
-#template-3 {
-  background-image: image-url('templates/BORDER1.png');
-  background-size: 50%;
-  background-repeat: no-repeat;
-  background-position: 50% 80%;
+  background-position: 50% 372px;
   background-size: 170px auto;
 }
 
-#template-4 {
+#template-3 {
   background-image: image-url('templates/ELEMENT6.png');
   background-size: 50%;
   background-repeat: no-repeat;
-  background-position: 50% 88%;
+  background-position: 50% 390px;
   background-size: auto 30px;
 }
-#template-4 #introduction_sender_name {
-  margin-top: 140px;
+
+#template-4 {
+  background-image: image-url('templates/cross.png');
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: 50% 390px;
+  background-size: auto 40px;
 }
 
 #template-5 {
-  background-image: image-url('templates/ELEMENT8.png');
+  background-image: image-url('templates/arrow2.png');
   background-size: 50%;
   background-repeat: no-repeat;
-  background-position: 50% 91%;
-  background-size: auto 40px;
-}
-#template-4 #introduction_sender_name {
-  margin-top: 130px;
+  background-position: 50% 320px;
+  background-size: 50px auto;
 }
 
 #template-6 {
-  background-image: image-url('templates/ELEMENT12.png');
+  background-image: image-url('templates/horse.png');
   background-size: 50%;
   background-repeat: no-repeat;
-  background-position: 50% 88%;
-  background-size: auto 30px;
-}
-#template-6 #introduction_sender_name {
-  margin-top: 140px;
+  background-position: 50% 310px;
+  background-size: 50px auto;
 }
 
+
 #template-7 {
-  background-image: image-url('templates/ELEMENT11.png');
-  background-size: 50%;
+  background-image: image-url('templates/bear.png');
   background-repeat: no-repeat;
-  background-position: 50% 85%;
-  background-size: 60px auto;
+  background-position: 50% 315px;
+  background-size: 35px auto;
 }
 
 #template-8 {
-  background-image: image-url('templates/ELEMENT9.png');
-  background-size: 50%;
+  background-image: image-url('templates/roman.png');
   background-repeat: no-repeat;
-  background-position: 50% 88%;
-  background-size: 60px auto;
+  background-position: 50% 310px;
+  background-size: 25px auto;
 }
-#template-8 #introduction_sender_name {
-  margin-top: 140px;
+
+#template-9 {
+  background-image: image-url('templates/wings.png');
+  background-repeat: no-repeat;
+  background-position: 50% 385px;
+  background-size: 110px auto;
+}
+
+#template-10 {
+  background-image: image-url('templates/bolt.png');
+  background-repeat: no-repeat;
+  background-position: 50% 380px;
+  background-size: auto 20px;
+}
+
+#template-11 {
+  background-image: image-url('templates/diamond.png');
+  background-repeat: no-repeat;
+  background-position: 50% 312px;
+  background-size: auto 25px;
+}
+
+#template-12 {
+  background-image: image-url('templates/bird.png');
+  background-repeat: no-repeat;
+  background-position: 50% 310px;
+  background-size: auto 25px;
+}
+
+#template-13 {
+  background-image: image-url('templates/star.png');
+  background-repeat: no-repeat;
+  background-position: 50% 352px;
+  background-size: auto 14px;
 }
