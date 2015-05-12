@@ -1,11 +1,11 @@
 class IntroductionsController < ApplicationController
   def start
-    # TODO: this really needs to be seperated in two
+    # TODO: this really should be seperated in two
 
     if params.include? :key or session.include? :key
 
       key = params[:key] || session[:key]
-      query = Person.all.introduced(:person, :intro).where('intro.key = {key}').params(key: key)
+      query = Person.all.introduced(:person, :intro).where('intro.key = {key}').params(key: key.downcase)
 
       introduction = query.pluck(:intro).to_a
 

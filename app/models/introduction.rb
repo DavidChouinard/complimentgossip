@@ -1,6 +1,6 @@
 class Introduction
   include Neo4j::ActiveRel
-  before_save :generate_key_and_serial
+  before_create :generate_key_and_serial
 
   property :key, type: String
   property :serial, type: Integer
