@@ -1,7 +1,7 @@
 var TEMPLATE_COUNT = 13;
 
 $(document).ready(function() {
-  $("#introduction_content").typed({
+  var typed = $("#introduction_content").typed({
     strings: ["David is…", "Heidi is…", "Alyssa is…", "Pierre is…", "Alex is…"],
     //attr: "placeholder",
     cursorChar: "",
@@ -44,8 +44,13 @@ $(document).ready(function() {
     $(".tip").transition({opacity: 1});
   }, function() {
     $(".tip").transition({opacity: 0});
-  }).click(function() {
+  }).one("click", function() {
     $("#introduction_content", this).select();
+    $("#introduction_content").data('typed').destroy();
+
+    $(this).click(function() {
+      $("#introduction_content", this).focus();
+    });
   });
 
   $("#introduction_sender_name").on("click", function(e) {
@@ -63,27 +68,21 @@ $(document).ready(function() {
 
   if ($("#introduction_content").length) {
     var intros = ["one of the most genuine and thoughtful people I know.",
-      //"I'm inspired by David's deep ability to rally others around his vision.",
+      "alive and : he inspires me to be ambitious.",
       "passionate and fearless: he inspires me to be ambitious.",
       "one of the most brilliant and creative people I've met."]
-      //"David exudes a sense of urgency that inspires me to push harder."];
-
-    //$('#form-intro').autocomplete({
-        //lookup: intros,
-        //minChars: 0,
-    //});
 
     var input = document.getElementById("introduction_content");
     new Awesomplete(input, {
       list: intros,
       filter: function (text, input) {
-        return true;
+        return (input.trim().split(" ").length - 1) <= 1
       },
       item: function(text, input){
         var newText = input + " is " + text;
 
         return Awesomplete.$.create("li", {
-            innerHTML: newText.replace(RegExp(input.trim(), "gi"), "<mark>$&</mark>"),
+            innerHTML: newText.replace(RegExp(input, "gi"), "<mark>$&</mark>"),
             "aria-selected": "false"
         });
       },
@@ -122,11 +121,11 @@ $(document).ready(function() {
     setTimeout(function() {
       $(".card-overlay")
         .transition({opacity: 0}, function () { $(this).remove(); })
-        //.hide();
     }, 6000);
   }
 
   if ($("#google-autocomplete").length) {
+
     var autocomplete = new google.maps.places.Autocomplete(document.getElementById('google-autocomplete'),
         { types: ['establishment'] });
 
@@ -141,16 +140,23 @@ $(document).ready(function() {
       }
 
       if ("name" in place) {
-        $("#address-line1").val(place["name"]);
-        $("#address-line2").val(address);
+        $("#introduction_recipient_street_line1").val(place["name"]);
+        $("#introduction_recipient_street_line2").val(address);
       } else {
-        $("#address-line1").val(address);
+        $("#introduction_recipient_street_line1").val(address);
       }
 
-      $("#address-city").val(find_component(place, "locality", "long_name"));
-      $("#address-state").val(find_component(place, "administrative_area_level_1", "short_name"));
-      $("#address-postalcode").val(find_component(place, "postal_code", "long_name"));
-      $("#address-country").val(find_component(place, "country", "long_name"));
+      $("#introduction_recipient_city").val(find_component(place, "locality", "long_name"));
+      $("#introduction_recipient_state").val(find_component(place, "administrative_area_level_1", "short_name"));
+      $("#introduction_recipient_postal_code").val(find_component(place, "postal_code", "long_name"));
+      $("#introduction_recipient_country").val(find_component(place, "country", "long_name"));
+    });
+
+    // prevent form submission
+    $("#google-autocomplete").keypress(function (e) {
+      if (e.which == 13) {  //enter key
+        e.preventDefault();
+      }
     });
   }
 
