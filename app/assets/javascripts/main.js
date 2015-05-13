@@ -67,25 +67,48 @@ $(document).ready(function() {
   }
 
   if ($("#introduction_content").length) {
-    var intros = ["one of the most genuine and thoughtful people I know.",
-      "alive and : he inspires me to be ambitious.",
-      "passionate and fearless: he inspires me to be ambitious.",
-      "one of the most brilliant and creative people I've met."]
+    var intros = [
+      "is <mark>bold</mark>, <mark>wondrous</mark> and an incredible friend.",
+      "one of the most <mark>genuine</mark> and <mark>thoughtful</mark> people I know.",
+      "always takes common courtesy to uncommon levels.",
+      "is <mark>passionate</mark> and <mark>fearless</mark>: he inspires me to be ambitious.",
+      "is the most <mark>brilliantly creative</mark> person I've met."]
 
     var input = document.getElementById("introduction_content");
     new Awesomplete(input, {
+      minChars: 0,
       list: intros,
+      sort: function() {
+        return 0;  // keep original sort
+      },
       filter: function (text, input) {
-        return (input.trim().split(" ").length - 1) <= 1
+        return (input.trim().split(" ").length - 1) <= 3
       },
       item: function(text, input){
-        var newText = input + " is " + text;
+        var html = input.trim().split(" ")[0].capitalizeFirstCharacter() + " " + text
+          .replace(RegExp(input, "gi"), "$&")
+          .replace(/\{/, "");
 
         return Awesomplete.$.create("li", {
-            innerHTML: newText.replace(RegExp(input, "gi"), "<mark>$&</mark>"),
-            "aria-selected": "false"
+            innerHTML: html, "aria-selected": "false"
         });
-      },
+      }
+    });
+
+    var LINE_HEIGHT = 42;
+    var PADDING = 4;
+
+    $('#introduction_content').on('input propertychange', function(e) {
+      if (($(this)[0].scrollHeight + 2 * PADDING) / LINE_HEIGHT >= 3) {
+
+        // delete last entered char
+        $(input).val(function(index,value) {
+          return value.substr(0,value.length-1);
+        })
+
+        // Handle copy paste case recursively
+        $(this).trigger("input");
+      }
     });
   }
 
@@ -202,6 +225,10 @@ function update_template_state(template) {
     $("#introduction_template").val(null);
   } else {
     $(".prompt").attr("id", "template-" + template);
-    $("#introduction_template_id").val(template);
+    $("#introduction_template").val(template);
   }
 };
+
+String.prototype.capitalizeFirstCharacter = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+}

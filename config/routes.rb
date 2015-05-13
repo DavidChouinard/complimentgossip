@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get '/:key' => 'introductions#start', :constraint => { :key => /.{1,#{KEY_LENGHT}}/ }
   put '/:key' => 'introductions#start', :constraint => { :key => /.{1,#{KEY_LENGHT}}/ }
 
+  get '/card/:key' => 'introductions#show', :constraint => { :key => /.{1,#{KEY_LENGHT}}/ }
+
   post "/introductions" => 'introductions#create'
   put "/confirm/:key" => 'introductions#update', :constraint => { :key => /.{1,#{KEY_LENGHT}}/ }
 

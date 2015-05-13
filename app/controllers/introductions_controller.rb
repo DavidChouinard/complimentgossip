@@ -53,6 +53,17 @@ class IntroductionsController < ApplicationController
     #end
   end
 
+  def show
+    if params.include? :key
+      query = Person.all.introduced(:person, :intro).where('intro.key = {key}').params(key: params[:key])
+
+      @sender = query.pluck(:person).to_a[0]
+      @introduction = query.pluck(:intro).to_a[0]
+
+      render :card, :layout => false and return
+    end
+  end
+
   def create
     filtered_params = introduction_params
 
