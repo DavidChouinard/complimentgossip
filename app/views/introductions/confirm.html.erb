@@ -5,7 +5,7 @@
   <div class="card-label card-label-left"><%= format_serial %></div>
 </div>
 
-<%= form_for @introduction, :url => url_for(:controller => 'introductions', :action => 'update'), method: :put do |f| %>
+<%= form_for @introduction, :url => url_for(:controller => 'introductions', :action => 'update', :key => @introduction.key), method: :put do |f| %>
 
   <div class="form-container">
     <%= f.fields_for :sender, @sender do |c| %>
@@ -35,7 +35,7 @@
       </div>-->
 
       <!--<div class="form-inset-block">-->
-      <h3>Find workplace address</h3>
+      <h3>Find a workplace address</h3>
 
       <label>Business name</label>
       <input type="text" placeholder="" id="google-autocomplete" autocomplete="off"/>

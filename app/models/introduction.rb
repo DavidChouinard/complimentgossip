@@ -8,7 +8,10 @@ class Introduction
 
   property :content, type: String, presence: true
 
+  property :obj_id, type: String
   property :thumbnail, type: String
+  property :job_id, type: String
+  property :expected_delivery, type: Date
 
   property :created_at
   property :updated_at

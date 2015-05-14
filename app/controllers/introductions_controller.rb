@@ -23,7 +23,6 @@ class IntroductionsController < ApplicationController
 
           render :confirm and return
         else
-          @sender = query.pluck(:person).to_a[0]
           @parent = introduction[0]
           @recipient = Person.new
           @introduction = Introduction.new
@@ -55,12 +54,7 @@ class IntroductionsController < ApplicationController
 
   def show
     if params.include? :key
-      query = Person.all.introduced(:person, :intro).where('intro.key = {key}').params(key: params[:key])
-
-      @sender = query.pluck(:person).to_a[0]
-      @introduction = query.pluck(:intro).to_a[0]
-
-      render :card, :layout => false and return
+      render :card, :layout => false
     end
   end
 
@@ -92,14 +86,47 @@ class IntroductionsController < ApplicationController
     filtered_params = introduction_params
 
     # TODO: check not exists  and in_progress exists
-    @sender = Person.find(filtered_params[:sender][:uuid])
     @recipient = Person.find(filtered_params[:recipient][:uuid])
 
+    # TODO: move this
     in_progress = @sender.in_progress
     @sender.in_progress = nil
 
+    # TODO: validation error
+    @sender.update(filtered_params[:sender])
+    @recipient.update(filtered_params[:recipient])
+
+    html = render_to_string :card, :layout => false
+
+    object =  LOB.objects.create(
+      description: "Card #{@introduction.key}",
+      file: html.to_str,    # to_s is broken
+      setting: "201"
+    )
+
+    @introduction.obj_id = object["id"]
+    @introduction.thumbnail = object["thumbnails"][0]["large"]
+
+    job = LOB.jobs.create(
+      description: "Card #{@introduction.key}",
+      from: "adr_6de93363a1bc1f9a",  # TODO
+      to: {
+        :name => @recipient.name,
+        :address_line1 => @recipient.street_line1,
+        :address_line2 => @recipient.street_line2,
+        :city => @recipient.city,
+        :state => @recipient.state,
+        :country => @recipient.country,
+        :zip => @recipient.postal_code
+      },
+      objects: [object["id"]]
+    )
+
+    @introduction.job_id = job["id"]
+    @introduction.expected_delivery = Date.parse(job["expected_delivery_date"])
+
     respond_to do |format|
-      if @sender.update(filtered_params[:sender]) and @recipient.update(filtered_params[:recipient])
+      if @introduction.save
         format.html { redirect_to "/#{session.fetch("key", "")}", :flash => { :updated_key => in_progress } }
       else
         format.html { render :confirm }
@@ -117,11 +144,13 @@ class IntroductionsController < ApplicationController
   helper_method :format_serial
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    #before_action :set_person, only: [:show, :edit, :update, :destroy]
-    #def set_person
-      #@person = Person.find(params[:id])
-    #end
+    before_action :set_introduction, only: [:show, :update]
+    def set_introduction
+      # TODO: validation
+      query = Person.all.introduced_by(:person, :intro).where('intro.key = {key}').params(key: params[:key])
+      @sender = query.pluck(:person).to_a[0]
+      @introduction = query.pluck(:intro).to_a[0]
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def introduction_params
