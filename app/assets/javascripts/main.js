@@ -169,10 +169,20 @@ $(document).ready(function() {
         $("#introduction_recipient_street_line1").val(address);
       }
 
-      $("#introduction_recipient_city").val(find_component(place, "locality", "long_name"));
-      $("#introduction_recipient_state").val(find_component(place, "administrative_area_level_1", "short_name"));
+      var city = find_component(place, "locality", "long_name")
+      if (city == "") {
+        city = find_component(place, "postal_town", "long_name")
+      }
+
+      var state = find_component(place, "administrative_area_level_1", "short_name")
+      if (state == "") {
+        state = find_component(place, "administrative_area_level_2", "short_name")
+      }
+
+      $("#introduction_recipient_city").val(city);
+      $("#introduction_recipient_state").val(state);
       $("#introduction_recipient_postal_code").val(find_component(place, "postal_code", "long_name"));
-      $("#introduction_recipient_country").val(find_component(place, "country", "long_name"));
+      $("#introduction_recipient_country").val(find_component(place, "country", "short_name"));
     });
 
     // prevent form submission
@@ -206,7 +216,7 @@ $(document).ready(function() {
 
 
 function find_component(place, component, property) {
-  var value = place.address_components.filter(function(d) { return d["types"][0] === component; });
+  var value = place.address_components.filter(function(d) { return d["types"].indexOf(component) != -1; });
 
   return (value.length == 0) ? "" : value[0][property];
 };

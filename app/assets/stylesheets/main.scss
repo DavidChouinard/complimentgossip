@@ -90,9 +90,17 @@ input, select, textarea {
   border-radius: 0px;
 }
 
-input:focus{
+select {
+  background-image: image-url('arrow.png');
+  background-size: auto 18px;
+  background-repeat: no-repeat;
+  background-position: 95% 50%;
+}
+
+input:focus, select:focus, textarea:focus {
   outline: 0;
 }
+
 
 label {
   font-size: 12px;
