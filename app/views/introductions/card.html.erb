@@ -6,15 +6,15 @@
   <style>
 @font-face {
   font-family: 'Playfair Display';
-  font-style: normal;
-  font-weight: 400;
   src: url('http://static.davidchouinard.com/fonts/PlayfairDisplay-Regular.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Playfair Display';
-  font-style: italic;
-  font-weight: 400;
+  /* This is extremely hacky (to deal with a bug in Lob's renderer).
+    Orginal TTF font name is change to Playfair Display Italic and used a seperate font here */
+  font-family: 'Playfair Display Italic';
   src: url('http://static.davidchouinard.com/fonts/PlayfairDisplay-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
 }
 
 html {
@@ -67,6 +67,7 @@ body {
   font-size: 12px;
   margin: 0.25in 1in;
   font-style: italic;
+  font-family: 'Playfair Display Italic', Georgia, serif;
 }
 
 .page-back-link {
