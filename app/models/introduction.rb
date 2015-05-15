@@ -10,6 +10,7 @@ class Introduction
 
   property :obj_id, type: String
   property :thumbnail, type: String
+  property :image, type: String
   property :job_id, type: String
   property :expected_delivery, type: Date
 

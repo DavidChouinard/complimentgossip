@@ -52,7 +52,7 @@
   <% @sender.introduced.each_with_rel do |_, card| %>
 
     <div class="card card-overlaid">
-      <img src="<%= image_url('card.png') %>" />
+      <img src="<%= card.thumbnail %>" />
 
       <% if flash[:updated_key] and flash[:updated_key] == card.key %>
         <div class="card-overlay">

@@ -281,6 +281,7 @@ button:hover, input[type="submit"]:hover, .button:hover {
 .card-ellipsis-top {
   width: 100px;
   text-align: center;
+  -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
   position: relative;
   left: 8px;
@@ -328,7 +329,6 @@ button:hover, input[type="submit"]:hover, .button:hover {
   color: #4f4f4f;
 
   margin-bottom: 10px;
-  padding-right: 2px;
 }
 
 .card-label-left {
@@ -490,12 +490,13 @@ svg .line {
 }
 
 label.tip {
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 14px;
   font-style: italic;
-  font-weight: normal;
   text-transform: none;
   text-align: center;
   letter-spacing: 0;
+
   display: block;
   padding: 2px 0;
   position: relative;
@@ -524,6 +525,7 @@ label.tip {
   background: white;
   border-right: 1px solid #D3D3D3;
   border-top: 1px solid #D3D3D3;
+  -webkit-transform: rotate(135deg);
   transform: rotate(135deg);
   pointer-events: none;
 }
@@ -751,6 +753,10 @@ label.tip {
   cursor: pointer;
   display: block;
 }
+.me .button:hover {
+  color: white;
+  background: black;
+}
 
 .button-companion {
   float: left;
@@ -767,23 +773,22 @@ label.tip {
   float: right;
 }
 
-.me-cards-main {
-  width: 100%;
-  height: auto;
-}
-
-.me-cards-bottom {
-  /*text-align: center;*/
-}
-.me-cards-bottom > img {
+.me-cards > div {
   margin-right: 6px;
-  margin-top: 6px;
+  /*margin-top: 6px;*/
   width: 180px;
   height: auto;
   float: left;
 }
-.me-cards-bottom > img:last-child {
-  margin-right: 0;
+
+.me-cards .card {
+  width: 100%;
+  height: auto;
+}
+
+.me-cards .card-label {
+  margin-top: -4px;
+  margin-bottom: 6px;
 }
 
 .me-project {

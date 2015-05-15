@@ -106,7 +106,8 @@ class IntroductionsController < ApplicationController
     )
 
     @introduction.obj_id = object["id"]
-    @introduction.thumbnail = object["thumbnails"][0]["large"]
+    @introduction.thumbnail = object["thumbnails"][0]["small"]
+    @introduction.image = object["thumbnails"][0]["large"]
 
     job = LOB.jobs.create(
       description: "Card #{@introduction.key}",
