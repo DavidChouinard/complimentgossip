@@ -1,16 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic&subset=latin,latin-ext);
 
-/*@font-face {*/
-    /*font-family: 'Printers Ornaments One';*/
-    /*src: url('fonts/PrintersOrnamentsOne-webfont.eot');*/
-    /*src: url('fonts/PrintersOrnamentsOne-webfont.eot?#iefix') format('embedded-opentype'),*/
-         /*url('fonts/PrintersOrnamentsOne-webfont.woff') format('woff'),*/
-         /*url('fonts/PrintersOrnamentsOne-webfont.ttf') format('truetype'),*/
-         /*url('fonts/PrintersOrnamentsOne-webfont.svg#printers_ornaments_oneregular') format('svg');*/
-    /*font-weight: normal;*/
-    /*font-style: normal;*/
-/*}*/
-
 html {
   box-sizing: border-box;
 }
@@ -38,27 +27,9 @@ h1 {
   font-weight: normal;
 }
 
-h1::after {
-  content: "U";
-  /* TODO load font! */
-  font: 18px "Printers Ornaments One";
-  text-align: center;
-  display: block;
-  margin-top: 22px;
-}
-
 h3 {
   font-size: 16px;
   font-weight: normal;
-}
-
-blockquote {
-  font: 16px/30px 'Fauna One', Georgia, serif;
-  text-align: left;
-  background: #F6F6F6;
-  border-bottom: 2px solid #d3d3d3;
-  padding: 20px;
-  margin: 20px 0 20px;
 }
 
 blockquote .blockquote-attribution {
@@ -137,19 +108,15 @@ div {
   color: green;
 }
 
-.field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table;
+.field_with_errors input, .field_with_errors textarea, .field_with_errors select {
+  border: 2px solid #e74c3c !important;
 }
 
-#error_explanation {
-  width: 450px;
-  border: 2px solid red;
+.error-explanation {
+  border: 1px solid #e74c3c;
   padding: 7px;
   padding-bottom: 0;
   margin-bottom: 20px;
-  background-color: #f0f0f0;
   h2 {
     text-align: left;
     font-weight: bold;
@@ -157,7 +124,7 @@ div {
     font-size: 12px;
     margin: -7px;
     margin-bottom: 0px;
-    background-color: #c00;
+    background-color: #c0392b;
     color: #fff;
   }
   ul li {
@@ -166,17 +133,14 @@ div {
   }
 }
 
+.error-explanation-new {
+  margin: 0 150px 10px;
+}
+
 
 /*
  *
  */
-
-.grandparent {
-  font: 14px 'Fauna One', Georgia, serif;
-  text-align: center;
-  /*padding: 20px;*/
-  margin: 70px 0 0;
-}
 
 .arrow {
   width: 0;

@@ -1,6 +1,5 @@
 class Person
   include Neo4j::ActiveNode
-  #before_create :guess_gender
 
   property :name, type: String
 
@@ -21,18 +20,25 @@ class Person
   has_many :out, :introduced, model_class: Person, rel_class: Introduction
   has_many :in, :introduced_by, model_class: Person, rel_class: Introduction
 
-  #GENDER_GUESS_PROBABILITY_THRESHOLD = 0.9
+  validates :email, email: true, :allow_blank => true
 
-  #def guess_gender
-    #response = Net::HTTP.get_response(URI.parse("https://api.genderize.io?name=#{self.given_name.downcase}"))
+  validates :name, presence: true, :on => :update
+  validates :street_line1, presence: true, :on => :update
+  validates :city, presence: true, :on => :update
+  validates :postal_code, presence: true, :on => :update
 
-    #if response.kind_of? Net::HTTPSuccess
-      #data = JSON.parse(response.body)
+  validates :state, inclusion: {in: STATES.map { |state| state["short_name"] }, message: "%{value} is not valid" },
+    :if => lambda { self.country == "US" }, :on => :update
 
-      #if data.has_key?("gender") and not data["gender"].nil? and data.has_key?("probability") and data["probability"].to_f > GENDER_GUESS_PROBABILITY_THRESHOLD
-        #self.is_male = (data["gender"] == "male")
-      #end
-    #end
+  validates :country, inclusion: {in: COUNTRIES.map { |country| country["short_name"] }, message: "%{value} is not valid" }, :on => :update
 
-  #end
+  before_validation do
+    # if the user enters a full state name, convert it to the abreviation automatically
+    STATES.each { |state|
+      if not self.state.blank? and self.state.downcase == state["name"].downcase
+        self.state = state["short_name"]
+        break
+      end
+    }
+  end
 end

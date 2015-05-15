@@ -76,10 +76,21 @@
 
 <%= form_for @introduction do |f| %>
   <% if @introduction.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@introduction.errors.count, "error") %> prohibited this  from being saved:</h2>
+    <div class="error-explanation error-explanation-new">
+      <h2><%= pluralize(@introduction.errors.count, "error") %> prohibited this from being saved:</h2>
       <ul>
       <% @introduction.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @sender.errors.any? %>
+    <div class="error-explanation error-explanation-new">
+      <h2><%= pluralize(@sender.errors.count, "error") %> prohibited this from being saved:</h2>
+      <ul>
+      <% @sender.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>

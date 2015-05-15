@@ -93,8 +93,9 @@ class IntroductionsController < ApplicationController
     @sender.in_progress = nil
 
     # TODO: validation error
-    @sender.update(filtered_params[:sender])
-    @recipient.update(filtered_params[:recipient])
+    if not (@sender.update(filtered_params[:sender]) and @recipient.update(filtered_params[:recipient]))
+      render :confirm and return
+    end
 
     html = render_to_string :card, :layout => false
 

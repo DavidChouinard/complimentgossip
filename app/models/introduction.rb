@@ -20,6 +20,9 @@ class Introduction
   from_class Person
   to_class Person
 
+  validates :content, length: {minimum: 10, maximum: 100},
+    format: { without: /…\z/, message: "is empty; enter an introduction" }
+
   def generate_key_and_serial
     # TODO: should regenerate if not unique
     self.key = rand(36**KEY_LENGHT).to_s(36)

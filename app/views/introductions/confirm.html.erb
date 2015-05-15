@@ -8,6 +8,17 @@
 <%= form_for @introduction, :url => url_for(:controller => 'introductions', :action => 'update', :key => @introduction.key), method: :put do |f| %>
 
   <div class="form-container">
+    <% if @sender.errors.any? %>
+      <div class="error-explanation error-explanation-confirm">
+        <h2><%= pluralize(@sender.errors.count, "error") %> prohibited this  from being saved:</h2>
+        <ul>
+        <% @sender.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <%= f.fields_for :sender, @sender do |c| %>
       <%= c.hidden_field :uuid %>
 
@@ -52,18 +63,18 @@
     </div>
   </div>
 
-  <% if @introduction.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@introduction.errors.count, "error") %> prohibited this  from being saved:</h2>
-      <ul>
-      <% @introduction.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="form-container">
+    <% if @recipient.errors.any? %>
+      <div class="error-explanation error-explanation-confirm">
+        <h2><%= pluralize(@recipient.errors.count, "error") %> prohibited this  from being saved:</h2>
+        <ul>
+        <% @recipient.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <%= f.fields_for :recipient, @recipient do |c| %>
       <%= c.hidden_field :uuid %>
 
@@ -71,13 +82,13 @@
       <%= c.text_field :name %>
 
       <%= c.label :street_line1, "Address" %>
-      <%= c.text_field :street_line1 %>
+      <%= c.text_field :street_line1, :placeholder => "1 Infinite Loop" %>
       <%= c.text_field :street_line2 %>
 
       <div class="form-group">
         <div style="width:55%;">
           <%= c.label :city, "City" %>
-          <%= c.text_field :city, :placeholder => "Beverly Hills" %>
+          <%= c.text_field :city, :placeholder => "Cupertino" %>
         </div>
 
         <div style="width:20%;">
@@ -87,7 +98,7 @@
 
         <div style="width:25%;">
           <%= c.label :postal_code, "Zip code" %>
-          <%= c.text_field :postal_code, :placeholder => "90210" %>
+          <%= c.text_field :postal_code, :placeholder => "95014" %>
         </div>
       </div>
 

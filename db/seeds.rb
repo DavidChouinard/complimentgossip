@@ -4,7 +4,7 @@
 alyssa = Person.create(name: 'Allysa Roberts', email: "alyssa@me.com")
 matt = Person.create(name: 'Matt Johnson', email: "matt@mattjohnson.com")
 alex = Person.create(name: 'Alex Todd', email: "alextodd@gmail.com")
-david = Person.create(name: 'David Chouinard')
+david = Person.create(name: 'David Chouinard', :street_line1 => "1 fake boob St.", :city => "Beverly Hills", :state => "CA", :postal_code => "90210", :country => "US")
 darrell = Person.create(name: 'Darrell Lewis')
 
 
@@ -16,4 +16,3 @@ intro = Introduction.create(from_node: alex, to_node: david, content: "David is 
 # for demo
 intro.key = "dv5lhx"
 intro.save()
-
