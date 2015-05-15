@@ -140,7 +140,7 @@ class IntroductionsController < ApplicationController
       serial = Person.all.introduced.count + 1
     end
 
-    return "# #{serial.to_s.rjust(3, '0')}"
+    return "##{serial.to_s.rjust(3, '0')}"
   end
   helper_method :format_serial
 

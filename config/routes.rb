@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
   root 'introductions#start'
 
-  get '/:key' => 'introductions#start', :constraint => { :key => /.{1,#{KEY_LENGHT}}/ }
-  put '/:key' => 'introductions#start', :constraint => { :key => /.{1,#{KEY_LENGHT}}/ }
+  get '/:key' => 'introductions#start', :key => /.{1,#{KEY_LENGHT}}/
+  put '/:key' => 'introductions#start', :key => /.{1,#{KEY_LENGHT}}/
 
-  get '/card/:key' => 'introductions#show', :constraint => { :key => /.{1,#{KEY_LENGHT}}/ }
+  get '/card/:key' => 'introductions#show', :key => /.{1,#{KEY_LENGHT}}/
 
   post "/introductions" => 'introductions#create'
-  put "/confirm/:key" => 'introductions#update', :constraint => { :key => /.{1,#{KEY_LENGHT}}/ }
+  put "/confirm/:key" => 'introductions#update', :key => /.{1,#{KEY_LENGHT}}/
+
+  get ':action' => 'static#:action'
+
 
   #resources :introductions, only: [:create, :update]
 
