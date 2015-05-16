@@ -27,29 +27,19 @@ class IntroductionsController < ApplicationController
           @recipient = Person.new
           @introduction = Introduction.new
 
+          @children = @sender.rels(dir: :outgoing)
+
           render :new and return
         end
       else
         render :file => "#{Rails.root}/public/404.html", :status => :not_found, :layout => false and return
       end
     else
-      # TODO: not open for business
       render :file => "#{Rails.root}/public/notyet.html", :layout => false and return
     end
 
     #@parent = @sender.introduced_by.to_a[0]
     #@grandparent = @parent.introduced_by.to_a[0]
-
-    #@sender.in_progress = nil
-    #@sender.save()
-
-    #respond_to do |format|
-      #if @sender.in_progress
-        #format.html { render :confirm }
-      #else
-        #format.html { render :new }
-      #end
-    #end
   end
 
   def show
@@ -72,6 +62,20 @@ class IntroductionsController < ApplicationController
 
     @introduction = Introduction.new(from_node: @sender, to_node: @recipient, content: filtered_params[:content])
 
+    if @introduction.valid?
+      html = render_to_string :card, :layout => false
+
+      object =  LOB.objects.create(
+        description: "Card #{@introduction.key}",
+        file: html.to_str,    # to_s is broken
+        setting: "201"
+      )
+
+      @introduction.obj_id = object["id"]
+      @introduction.thumbnail = object["thumbnails"][0]["small"]
+      @introduction.image = object["thumbnails"][0]["large"]
+    end
+
     respond_to do |format|
       if @introduction.save
         @sender.update(:in_progress => @introduction.key)
@@ -85,29 +89,18 @@ class IntroductionsController < ApplicationController
   def update
     filtered_params = introduction_params
 
+    puts @sender
+    puts @sender.name
+
     # TODO: check not exists  and in_progress exists
     @recipient = Person.find(filtered_params[:recipient][:uuid])
 
-    # TODO: move this
     in_progress = @sender.in_progress
     @sender.in_progress = nil
 
-    # TODO: validation error
     if not (@sender.update(filtered_params[:sender]) and @recipient.update(filtered_params[:recipient]))
       render :confirm and return
     end
-
-    html = render_to_string :card, :layout => false
-
-    object =  LOB.objects.create(
-      description: "Card #{@introduction.key}",
-      file: html.to_str,    # to_s is broken
-      setting: "201"
-    )
-
-    @introduction.obj_id = object["id"]
-    @introduction.thumbnail = object["thumbnails"][0]["small"]
-    @introduction.image = object["thumbnails"][0]["large"]
 
     job = LOB.jobs.create(
       description: "Card #{@introduction.key}",
@@ -121,7 +114,7 @@ class IntroductionsController < ApplicationController
         :country => @recipient.country,
         :zip => @recipient.postal_code
       },
-      objects: [object["id"]]
+      objects: [@introduction.obj_id]
     )
 
     @introduction.job_id = job["id"]
@@ -133,6 +126,23 @@ class IntroductionsController < ApplicationController
       else
         format.html { render :confirm }
       end
+    end
+  end
+
+  def destroy
+    query = Person.all.introduced(:person, :intro).rel_where(key: params[:key])
+    @sender = query.pluck(:person).to_a[0]
+    @introduction = query.pluck(:intro).to_a[0]
+
+    if @sender.in_progress
+      @sender.introduced(:person, :intro).rel_where(key: @sender.in_progress).delete_all(:intro)
+
+      @sender.in_progress = nil
+      @sender.save
+
+      redirect_to "/#{session.fetch("key", "")}"
+    else
+      render :file => "public/422.html", :layout => false, :status => :unauthorized
     end
   end
 
@@ -149,12 +159,12 @@ class IntroductionsController < ApplicationController
     before_action :set_introduction, only: [:show, :update]
     def set_introduction
       # TODO: validation
-      query = Person.all.introduced_by(:person, :intro).where('intro.key = {key}').params(key: params[:key])
+
+      query = Person.all.introduced_by(:person, :intro).rel_where(key: params[:key])
       @sender = query.pluck(:person).to_a[0]
       @introduction = query.pluck(:intro).to_a[0]
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def introduction_params
       #TODO: require uuid
       params.require(:introduction).permit(:content, :template,

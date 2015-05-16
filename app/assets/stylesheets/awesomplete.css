@@ -14,10 +14,13 @@ div.awesomplete > input {
 }
 
 div.awesomplete > ul:before {
-  content: "Suggestions";
+  content: "suggestions";
+
+  font-family: 'Playfair Display SC', Georgia, serif;
   font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  letter-spacing: 0.05em;
+
   color: #4f4f4f;
   padding-left: 4px;
   margin-bottom: 2px;
@@ -31,7 +34,7 @@ div.awesomplete > ul {
   list-style: none;
 
   font-size: 14px;
-  padding: 2px 4px 4px;
+  padding: 0 4px 4px;
   /*border-radius: .3em;*/
   margin: -30px 0 0;
 

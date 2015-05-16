@@ -46,10 +46,6 @@ footer {
   font-style: italic;
   color: grey;
   text-align: center;
-  /*position: absolute;*/
-  /*left: 0;*/
-  /*bottom: 0;*/
-  /*height: 40px;*/
   margin-top: 80px;
   width: 100%;
 }
@@ -139,10 +135,6 @@ div {
   }
 }
 
-.error-explanation-new {
-  margin: 0 150px 10px;
-}
-
 
 /*
  *
@@ -186,7 +178,8 @@ button, input[type="submit"] {
   border-radius: 5px;
   background: none;
 
-  margin: 40px auto;
+  margin-left: auto;
+  margin-right: auto;
   padding: 6px 12px 7px;
   width: 180px;
 
@@ -198,11 +191,17 @@ button, input[type="submit"] {
   cursor: pointer;
   display: block;
 }
-button:hover, input[type="submit"]:hover, .button:hover {
+button:hover, input[type="submit"]:hover {
   /*background-color: #D3D3D3;*/
   /*color: black;*/
   padding: 5px 11px 6px; /* one pixel less to compensate */
   border: 2px solid #D3D3D3;
+}
+button.loading, input[type="submit"].loading {
+  background-image: image-url('loading2.gif');
+  background-size: auto 12px;
+  background-position: 50% 12px;
+  background-repeat: no-repeat;
 }
 
 /*
@@ -237,9 +236,11 @@ button:hover, input[type="submit"]:hover, .button:hover {
 .card {
   width: 100px;
   height: auto;
-  border: 1px solid #D3D3D3;
   padding: 6px;
   margin-right: 10px;
+
+  border: 1px solid #D3D3D3;
+  background: white;
 }
 .card > img {
   width: 100%;
@@ -343,12 +344,13 @@ button:hover, input[type="submit"]:hover, .button:hover {
 
 .card-self {
   width: 100px;
-  margin: 50px auto 30px;
+  margin: -20px auto 30px;
   text-align: center;
 }
 
 .card-overlaid {
   position: relative;
+  /*border: 1px solid #27ae60;*/
 }
 .card-overlay {
   position: absolute;
@@ -357,98 +359,88 @@ button:hover, input[type="submit"]:hover, .button:hover {
   width: 100%;
   height: 100%;
 
-  background: rgba(160, 160, 160, 0.85);
-  color: white;
+  background: rgba(255, 255, 255, 0.8);
+  color: #2ecc71;
 
-  padding-top: 24px;
+  padding-top: 22px;
 
-  font-size: 12px;
+  font-size: 18px;
   text-align: center;
 }
 
-.card-overlay > div{
-  -webkit-animation: overlayKeyFrames .4s ease!important;
-  animation: overlayKeyFrames .4s ease!important;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
+.card-overlay > div {
+  opacity: 0;
 }
 
-.card-overlay-hide > div {
-  -webkit-animation: overlayKeyFramesOut .4s ease!important;
-  animation: overlayKeyFramesOut .4s ease!important;
-  -webkit-animation-fill-mode: forwards!important;
-  animation-fill-mode: forwards;
+.card-overlay > div > svg {
+  /*display: block;*/
+  /*margin: 4px auto 0;*/
+  width: 22px;
+  height: 22px;
+  padding-right: 4px;
+  vertical-align: middle;
 }
 
-@-webkit-keyframes overlayKeyFramesOut {
-  0% {
-    -webkit-transform: scale(1);
-    opacity: 1;
-  }
-
-  100% {
-    -webkit-transform: scale(.5);
-    opacity: 0;
-  }
+.card-overlay > div > svg > path {
+  fill: #2ecc71;
 }
 
-@keyframes overlayKeyFramesOut {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(.5);
-    opacity: 0;
-  }
+.cards-children > div:first-child {
+  float: left;
 }
 
-@-webkit-keyframes overlayKeyFrames {
-  0% {
-    -webkit-transform: scale(2);
-    opacity: 0;
-  }
-
-  100% {
-    -webkit-transform: scale(1);
-    opacity: 1;
-  }
+.card-stack {
+  position: relative;
+  cursor: pointer;
 }
 
-@keyframes overlayKeyFrames {
-  0% {
-    transform: scale(2);
-    opacity: 0;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+.card-stack > *:first-child {
+  position: relative;  // necessary for z-index to work
+  z-index: 100;
+}
+.card-stack > *:not(:first-child) {
+  position: absolute;
+  top: 0;
 }
 
+.exit {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: right;
+  color: #D3D3D3;
 
-.arrows {
+  display: block;
+  margin-top: 30px;
+}
+.exit:hover {
+  text-decoration: none;
+  color: #B5B5B5;
+  cursor: pointer;
+  user-select: none;
+}
+
+.card-line {
   margin: 4px 0 0;
   width: 100%;
   height: 30px;
+}
+
+.card-longline {
+  margin: 4px 0;
+  width: 300px;
+  height: 180px;
+  float: left;
 }
 
 svg .line {
   stroke: #D3D3D3;
   stroke-width: 2;
   fill: none;
-  /*marker-end: url(#arrowhead);*/
 }
 
 .line-dashed {
   stroke-dasharray: 3,4;
   stroke-linecap: round;
-}
-
-#arrowhead > path {
-  fill: #D3D3D3;
 }
 
 .top {
@@ -473,7 +465,15 @@ svg .line {
 
 .prompt {
   border: 1px solid #D3D3D3;
-  margin: 0 150px 10px;
+}
+
+.prompt, .prompt-buttons, .error-explanation-new {
+  margin-left: 150px;
+  margin-right: 150px;
+}
+
+.prompt-buttons {
+  margin-top: 10px;
 }
 
 .prompt-sidebar {
@@ -558,6 +558,14 @@ label.tip {
   border: none;
 }
 
+.prompt-submit {
+  width: 180px;
+  margin: 25px auto;
+}
+.prompt-submit > a {
+  width: 100%;
+}
+
 /*.progress {*/
   /*text-align: center;*/
 /*}*/
@@ -571,9 +579,43 @@ label.tip {
 
 
 .progress {
-  text-align: center;
-  margin-top: 30px;
+  /*text-align: center;*/
+  /*margin-top: 30px;*/
+  float: right;
+  font-size: 11px;
+  line-height: 20px;
 }
+
+.progress-message {
+  text-align: right;
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 2px;
+  padding-right: 4px;
+}
+
+.progress-cards {
+  display: inline-block;
+}
+
+.progress-cards > div {
+  margin-left: 1px;
+  border: 1px solid #D3D3D3;
+  width: 36px;
+  height: 24px;
+  display: inline-block;
+}
+
+.progress-cards > div.progress-active {
+  background: repeating-linear-gradient(
+    45deg,
+    white,
+    white 4px,
+    #E7EAFF 4px,
+    #E7EAFF 8px
+  );
+}
+
 
 .progress-chicklet {
   display: inline-block;
@@ -597,12 +639,6 @@ label.tip {
   text-align: center;
   font-size: 10px;
   color: #4f4f4f;
-}
-
-.progress-glyph {
-  font: 20px "Printers Ornaments One";
-  color: #D3D3D3;
-  padding: 0 6px;
 }
 
 
@@ -689,11 +725,16 @@ label.tip {
   padding: 0 4px;
 }
 
+.form-submit {
+  margin-top: 40px;
+}
+
 
 .template-picker {
+  width: 100px;
   margin: 0 auto;
   text-align: center;
-  font-size: 10px;
+  font-size: 9px;
   user-select: none;
 }
 .template-picker > div {

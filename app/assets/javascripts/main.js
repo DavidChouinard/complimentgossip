@@ -1,5 +1,7 @@
 var TEMPLATE_COUNT = 13;
 
+$.fx.speeds._default = 200;
+
 $(document).ready(function() {
   var typed = $("#introduction_content").typed({
     strings: ["David is…", "Heidi is…", "Alyssa is…", "Pierre is…", "Alex is…"],
@@ -9,33 +11,10 @@ $(document).ready(function() {
     loop: true
   });
 
-  $("#form-introname").keypress(function (e) {
-    if (e.which == 13) {  //enter key
-      e.stopPropagation();
-      e.preventDefault();
+  $('button, input[type="submit"]').on("click", function(e) {
+    $(this).addClass("loading").val("");
+  });
 
-      if ($(this).val() != "") {
-        var name = $(this).val();
-
-        //$(this).attr("disabled", true);
-        $(this).hide();
-        $("#box-text").text($("#box-text").text() + " " + name + ".");
-
-        //$("#introductions")
-          //.transition({display: "block", height: "auto", easing: "snap"});
-
-        $("#form-intro")
-          .css("display", "inline")
-          .focus();
-          //.focus(function () { $(this).select(); } )
-          //.mouseup(function (e) {e.preventDefault(); });
-
-        $("#examples")
-          .show();
-          //.transition({display: "block", easing: "snap"});
-      }
-    }
-  })
 
   $(".tip")
     .css({opacity: 0});
@@ -135,17 +114,40 @@ $(document).ready(function() {
 
   if ($(".card-overlay").length) {
     setTimeout(function() {
+      $(".card-overlaid").css({"border-color": "#2ecc71"});
+
       $(".card-overlay > div")
         .css({opacity: 0, scale: 3, "padding-top": 2})
-        .text("Sent!")
         .transition({opacity: 1, scale: 1, easing: "snap"});
-    }, 4000);
+    }, 700);
 
     setTimeout(function() {
       $(".card-overlay")
-        .transition({opacity: 0}, function () { $(this).remove(); })
-    }, 6000);
+        .transition({opacity: 0}, function () {
+          $(this).remove();
+        })
+
+      $(".card-overlaid").transition({"border-color": "#D3D3D3"});
+    }, 4000);
   }
+
+  $(".cards .card-stack *:not(:first-child)").each(function(i) {
+    $(this).css({"left": 4 * (i + 1), "z-index": 99 - i })
+  });
+
+  $(".cards:has(.card-stack)").hover(function() {
+    var width = $(this).find(".card").width() + 20;
+
+    $(this).children(".card-text").transition({"opacity": 0 })
+    $(this).find(".card-stack *:not(:first-child)").each(function(i) {
+      $(this).transition({"left": width * (i + 1) })
+    });
+  }, function() {
+    $(this).children(".card-text").transition({"opacity": 1 })
+    $(this).find(".card-stack *:not(:first-child)").each(function(i) {
+      $(this).transition({"left": 4 * (i + 1) })
+    });
+  });
 
   if ($("#google-autocomplete").length) {
 

@@ -11,7 +11,7 @@
     </div>
   </div>
 
-  <svg class="arrows">
+  <svg class="card-line">
     <path d="M200,0 L200,30" class="line"/>
   </svg>
 
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <svg class="arrows">
+  <svg class="card-line">
     <path d="M200,0 C200,20 90,10 90,30" class="line line-dashed" />
     <path d="M200,0 L200,30" class="line"/>
   </svg>
@@ -43,35 +43,11 @@
   </div>
 </div>
 
-<svg class="arrows">
+<svg class="card-line">
   <path d="M200,0 L200,30" class="line"/>
 </svg>
 
 <div class="prompt-sidebar">
-
-  <% @sender.introduced.each_with_rel do |_, card| %>
-
-    <div class="card card-overlaid">
-      <img src="<%= card.thumbnail %>" />
-
-      <% if flash[:updated_key] and flash[:updated_key] == card.key %>
-        <div class="card-overlay">
-          <div>
-            Sending
-            <div class="spinner">
-              <div class="bounce1"></div>
-              <div class="bounce2"></div>
-              <div class="bounce3"></div>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="card-label card-label-left"><%= format_serial(card.serial) %></div>
-    <div class="card-label card-label-right">may 25</div>
-    <div class="clear"></div>
-  <% end %>
 </div>
 
 <%= form_for @introduction do |f| %>
@@ -113,12 +89,62 @@
 
   </div>
 
-  <div class="template-picker">
-    <div class="disabled">◀</div>
-    <div>▶</div>
+  <% if @children.count > 0 %>
+    <svg class="card-longline">
+      <path d="M200,0 L200,180" class="line"/>
+    </svg>
+  <% end %>
+
+  <div class="prompt-buttons">
+    <div class="progress">
+      <div class="progress-message">Ⅰ <em>of</em> Ⅲ</div>
+      <div class="progress-cards">
+        <div class="progress-active"></div>
+        <div class="<%= "progress-active" if @children.count > 1 %>"></div>
+        <div class="<%= "progress-active" if @children.count > 2 %>"></div>
+      </div>
+    </div>
+
+    <div class="template-picker">
+      <div class="disabled">◀</div>
+      <div>▶</div>
+    </div>
+
+    <div class="prompt-submit">
+    <%= f.submit "Submit" %>
+    </div>
   </div>
 
-  <%= f.submit "Submit" %>
+  <div class="clear"></div>
+<% end %>
+
+<% if @children.count > 0 %>
+<div class="cards cards-children">
+
+  <div class="card-alone <%= "card-stack" if @children.count > 1 %>">
+    <% @sender.introduced.each_with_rel do |_, card| %>
+      <div class="card card-overlaid">
+        <img src="<%= card.thumbnail %>"/>
+
+        <% if flash[:updated_key] and flash[:updated_key] == card.key %>
+          <div class="card-overlay">
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0.8 -1.6 16.0 21.6">
+                <path d="M8 0c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm3 4.594l1.406 1.406-5.406 5.406-3.406-3.406 1.406-1.406 2 2 4-4z"/>
+              </svg>Sent
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+    <% end %>
+  </div>
+
+  <div class="card-text">
+    <div class="card-head"><%= @sender.rels(dir: :outgoing).first.content %></div>
+    <div class="card-subhead"> <%= format_serial(@sender.rels(dir: :outgoing).first.serial) %> • est. may 1 • <a href="mailto:<%=u '"Alex Lynn"<alexlynn@gmail.com>' %>">alexlynn@gmail.com</a></div>
+  </div>
+</div>
 <% end %>
 
 <!--<div class="progress">-->

@@ -1,7 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+<div class="form-container">
+  <%= link_to "×", "/#{params[:key]}", :method => :delete, :class => "exit", :data => {:confirm => 'Are you certain you want to delete your progress on this card?'} %>
+</div>
+
 <div class="card-self">
-  <img src="<%= image_url('card.png') %>" class="card" />
+  <img src="<%= @introduction.thumbnail %>" class="card" />
   <div class="card-label card-label-left"><%= format_serial %></div>
 </div>
 
@@ -66,7 +70,7 @@
   <div class="form-container">
     <% if @recipient.errors.any? %>
       <div class="error-explanation error-explanation-confirm">
-        <h2><%= pluralize(@recipient.errors.count, "error") %> prohibited this  from being saved:</h2>
+        <h2><%= pluralize(@recipient.errors.count, "error") %> prohibited this from being saved:</h2>
         <ul>
         <% @recipient.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -109,7 +113,7 @@
     <% end %>
   </div>
 
-  <%= f.submit "Share the love" %>
+  <%= f.submit "Share the love", :class => "form-submit" %>
 <% end %>
 
 <%= render "footer" %>

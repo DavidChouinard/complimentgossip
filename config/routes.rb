@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'introductions#start'
 
   get '/:key' => 'introductions#start', :key => /.{1,#{KEY_LENGHT}}/
-  put '/:key' => 'introductions#start', :key => /.{1,#{KEY_LENGHT}}/
+  delete '/:key' => 'introductions#destroy', :key => /.{1,#{KEY_LENGHT}}/
 
   get '/card/:key' => 'introductions#show', :key => /.{1,#{KEY_LENGHT}}/
 
