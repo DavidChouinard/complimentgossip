@@ -1,41 +1,39 @@
 class IntroductionsController < ApplicationController
   def start
-    # TODO: this really should be seperated in two actions
-
-    if params.include? :key or session.include? :key
-
-      key = params[:key] || session[:key]
-      introduction  = Introduction.find_by_key(key)
-
-      @sender = introduction.to_node
-
-      session[:key] = params[:key]
-
-      if @sender.in_progress
-        @introduction = Introduction.find_by_key(@sender.in_progress)
-
-        @recipient = @introduction.to_node
-        render :confirm and return
-      else
-        @parent = introduction
-        @recipient = Person.new
-        @introduction = Introduction.new
-
-        #@parent = @sender.introduced_by.to_a[0]
-        #@grandparent = @parent.introduced_by.to_a[0]
-
-        @children = @sender.rels(dir: :outgoing)
-
-        render :new and return
-      end
-    else
+    if not params.include? :key and not session.include? :key
       render :file => "#{Rails.root}/public/notyet.html", :layout => false and return
+    end
+
+    key = params[:key] || session[:key]
+    introduction  = Introduction.find_by_key(key)
+
+    @sender = introduction.to_node
+
+    session[:key] = params[:key]
+
+    # TODO: this really should be seperated in two actions
+    if @sender.in_progress
+      @introduction = Introduction.find_by_key(@sender.in_progress)
+
+      @recipient = @introduction.to_node
+      render :confirm and return
+    else
+      @parent = introduction
+      @recipient = Person.new
+      @introduction = Introduction.new
+
+      #@parent = @sender.introduced_by.to_a[0]
+      #@grandparent = @parent.introduced_by.to_a[0]
+
+      @children = @sender.rels(dir: :outgoing)
+
+      render :new and return
     end
   end
 
   def show
     if params.include? :key
-      @sender = @introduction.from_node
+      @sender = @introduction.fr
       render :card, :layout => false
     end
   end
@@ -48,7 +46,7 @@ class IntroductionsController < ApplicationController
     @sender = Person.find(filtered_params[:sender][:uuid])
 
     # TODO: ensure logged in user only
-    if @sender.nil?
+    if @sender.nil? or @sender.get_referral_limit - @sender.rels(dir: :outgoing).count <= 0
       render :file => "#{Rails.root}/public/422.html", :status => :unprocessable_entity, :layout => false and return
     end
 

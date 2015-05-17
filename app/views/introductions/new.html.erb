@@ -72,16 +72,25 @@
 
   <div class="prompt">
 
-    <div class="bigcard">
-      <%= f.hidden_field :template %>
-      <%= f.label :content, 'Which friend inspires you? Whom do you want to be more like?', :class => "tip" %>
-      <%= f.text_area :content, :rows => 2, :autocomplete => false %>
+    <% if @sender.get_referral_limit - @children.count > 0 %>
+      <div class="bigcard">
+        <%= f.hidden_field :template %>
+        <%= f.label :content, 'Which friend inspires you? Whom do you want to be more like?', :class => "tip" %>
+        <%= f.text_area :content, :rows => 2, :autocomplete => false %>
 
-      <%= f.fields_for :sender, @sender do |c| %>
-        <%= c.hidden_field :uuid %>
-        <%= c.text_field :name, :autocomplete => false %>
-      <% end %>
-    </div>
+        <%= f.fields_for :sender, @sender do |c| %>
+          <%= c.hidden_field :uuid %>
+          <%= c.text_field :name, :autocomplete => false %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bigcard disabled">
+        <div class="bigcard-disabled-message">
+          <div>You’ve sent your 3 cards. <em>Thank you.</em></div>
+          <%= mail_to REFERRAL_REQUEST_EMAIL, "Request more", subject: REFERRAL_REQUEST_SUBJECT, body: REFERRAL_REQUEST_BODY, class: "button" %>
+        </div>
+      </div>
+    <% end %>
 
   </div>
 
@@ -93,14 +102,14 @@
     </div>-->
 
   <% if @children.count > 0 %>
-    <svg class="card-longline">
+    <svg class="card-longline <%= "disabled" if @sender.get_referral_limit - @children.count <= 0 %>">
       <path d="M200,0 L200,180" class="line"/>
     </svg>
   <% end %>
 
   <div class="prompt-buttons">
     <div class="progress">
-      <div class="progress-message">Ⅰ <em>of</em> Ⅲ</div>
+      <div class="progress-message">Your cards: <%= @sender.get_referral_limit - @children.count %> remaining</div>
       <div class="progress-cards">
         <div class="progress-active"></div>
         <div class="<%= "progress-active" if @children.count > 1 %>"></div>
@@ -108,14 +117,16 @@
       </div>
     </div>
 
-    <div class="template-picker">
-      <div class="disabled">◀</div>
-      <div>▶</div>
-    </div>
+    <% if @sender.get_referral_limit - @children.count > 0 %>
+      <div class="template-picker">
+        <div class="disabled">◀</div>
+        <div>▶</div>
+      </div>
 
-    <div class="prompt-submit">
-    <%= f.submit "Submit" %>
-    </div>
+      <div class="prompt-submit">
+      <%= f.submit "Submit" %>
+      </div>
+    <% end %>
   </div>
 
   <div class="clear"></div>

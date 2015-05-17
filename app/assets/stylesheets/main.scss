@@ -170,7 +170,7 @@ div {
  * Form
  */
 
-button, input[type="submit"] {
+button, input[type="submit"], .button {
   font: 14px/24px 'Playfair Display', Georgia, serif;
   text-align: center;
 
@@ -191,13 +191,17 @@ button, input[type="submit"] {
   cursor: pointer;
   display: block;
 }
-button:hover, input[type="submit"]:hover {
-  /*background-color: #D3D3D3;*/
-  /*color: black;*/
+
+button:hover, input[type="submit"]:hover, .button:hover {
   padding: 5px 11px 6px; /* one pixel less to compensate */
   border: 2px solid #D3D3D3;
 }
-button.loading, input[type="submit"].loading {
+
+a.button:hover {
+  text-decoration: none;
+}
+
+button.loading, input[type="submit"].loading, .button.loading {
   background-image: image-url('loading2.gif');
   background-size: auto 12px;
   background-position: 50% 12px;
@@ -436,6 +440,10 @@ button.loading, input[type="submit"].loading {
   float: left;
 }
 
+.card-longline.disabled {
+  height: 60px;
+}
+
 svg .line {
   stroke: #D3D3D3;
   stroke-width: 2;
@@ -521,6 +529,31 @@ label.tip {
   transform: rotate(135deg);
   pointer-events: none;
 }
+
+.bigcard.disabled {
+  background: repeating-linear-gradient(
+    45deg,
+    white,
+    white 20px,
+    #F4F4FF 20px,
+    #F4F4FF 40px
+  );
+
+  padding: 20px;
+}
+
+.bigcard-disabled-message {
+  background: white;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  padding-top: 100px;
+}
+
+.bigcard.disabled .button {
+  margin-top: 40px;
+}
+
 
 .prompt-submit {
   width: 180px;

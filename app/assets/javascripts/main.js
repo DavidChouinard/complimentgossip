@@ -4,8 +4,8 @@ $.fx.speeds._default = 200;
 
 $(document).ready(function() {
   var typed = $("#introduction_content").typed({
-    strings: ["David is…", "Heidi is…", "Alyssa is…", "Pierre is…", "Alex is…"],
-    //attr: "placeholder",
+    strings: ["David", "Olivia", "Nick", "Lei", "Chris",
+      "Alex", "Liz", "James", "Heidi", "Matt"].map(function(d) { return d + " is…"; }),
     cursorChar: "",
     backDelay: 2000,
     loop: true
@@ -18,7 +18,7 @@ $(document).ready(function() {
   $(".tip")
     .css({opacity: 0});
 
-  if ($(".prompt").length) {
+  if ($(".bigcard").length) {
     $(".prompt").height(4/6 * $(".prompt").width());
     fit($(".bigcard")[0], $(".prompt")[0]);
   }
@@ -28,12 +28,14 @@ $(document).ready(function() {
   }, function() {
     $(".tip").transition({opacity: 0});
   }).one("click", function() {
-    $("#introduction_content", this).select();
-    $("#introduction_content").data('typed').destroy();
+    if ($("#introduction_content").length) {
+      $("#introduction_content", this).select();
+      $("#introduction_content").data('typed').destroy();
 
-    $(this).click(function() {
-      $("#introduction_content", this).focus();
-    });
+      $(this).click(function() {
+        $("#introduction_content", this).focus();
+      });
+    }
   });
 
   $("#introduction_sender_name").on("click", function(e) {

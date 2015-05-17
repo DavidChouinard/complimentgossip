@@ -14,6 +14,8 @@ class Person
   property :postal_code, type: String
   property :country, type: String
 
+  property :referral_limit, type: Integer
+
   property :created_at
   property :updated_at
 
@@ -44,5 +46,9 @@ class Person
 
       self.state = self.state.upcase
     end
+  end
+
+  def get_referral_limit
+    return self.referral_limit || DEFAULT_REFERRAL_LIMIT
   end
 end

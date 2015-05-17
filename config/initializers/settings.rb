@@ -2,6 +2,13 @@ KEY_LENGHT = 6
 
 AUTHOR_UUID = "0b938d28-80d4-4d3a-980e-db280a019686"
 
+DEFAULT_REFERRAL_LIMIT = 3
+REFERRAL_REQUEST_EMAIL = CGI.escape "\"David Chouinard\"<david@davidchouinard.com>"
+REFERRAL_REQUEST_SUBJECT = "Compliment Gossip: request for more cards"
+REFERRAL_REQUEST_BODY = "David—
+
+I'd love to be able to send a few other cards on Compliment Gossip. Thanks!"
+
 TEST_API_KEY = "test_d7b407a97a9b0a53004fc28e88b46abdc36"
 LIVE_API_KEY = "live_824b49ca966125c15425f5ecd003fa5744a"
 
