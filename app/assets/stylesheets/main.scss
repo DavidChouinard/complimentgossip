@@ -472,19 +472,14 @@ svg .line {
   margin-right: 150px;
 }
 
-.bigcard {
-  border: 1px solid #D3D3D3;
-  width: 6in;
-  height: 4in;
-}
-
 .prompt-buttons {
   margin-top: 10px;
 }
 
 .bigcard {
-  font-size: 18px;
-  padding: 0.25in 0.5in 0;
+  border: 1px solid #D3D3D3;
+  width: 6in;
+  height: 4in;
 }
 
 label.tip {
@@ -525,34 +520,6 @@ label.tip {
   -webkit-transform: rotate(135deg);
   transform: rotate(135deg);
   pointer-events: none;
-}
-
-#introduction_content {
-  font-size: 26px;
-  line-height: 32px;
-  text-align: center;
-
-  margin-top: 30px;
-  width: 100%;
-  height: auto;
-
-  overflow: hidden;
-  outline: none;
-  border: none;
-  resize: none;
-}
-
-#introduction_sender_name {
-  font-family: 'Playfair Display SC', Georgia, serif;
-  font-size: 15px;
-  letter-spacing: 0.05em;
-  text-transform: lowercase;
-
-  display: block;
-  width: 100%;
-  margin-top: 1.25in;
-  text-align: center;
-  border: none;
 }
 
 .prompt-submit {

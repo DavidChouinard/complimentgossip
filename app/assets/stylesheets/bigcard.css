@@ -1,0 +1,35 @@
+.bigcard {
+  font-size: 18px;
+  padding: 0.25in 0.5in 0;
+}
+
+.tip {
+  height: 20px;
+}
+
+#introduction_content {
+  font-size: 26px;
+  line-height: 32px;
+  text-align: center;
+
+  margin-top: 30px;
+  width: 100%;
+
+  overflow: hidden;
+  outline: none;
+  border: none;
+  resize: none;
+}
+
+#introduction_sender_name {
+  font-family: 'Playfair Display SC', Georgia, serif;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+
+  display: block;
+  width: 100%;
+  margin-top: 1.25in;
+  text-align: center;
+  border: none;
+}
