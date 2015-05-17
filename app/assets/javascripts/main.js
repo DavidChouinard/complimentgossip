@@ -60,25 +60,25 @@ $(document).ready(function() {
       "is the most <mark>brilliantly creative</mark> person I've met."]
 
     var input = document.getElementById("introduction_content");
-    new Awesomplete(input, {
-      minChars: 0,
-      list: intros,
-      sort: function() {
-        return 0;  // keep original sort
-      },
-      filter: function (text, input) {
-        return (input.trim().split(" ").length - 1) <= 3
-      },
-      item: function(text, input){
-        var html = input.trim().split(" ")[0].capitalizeFirstCharacter() + " " + text
-          .replace(RegExp(input, "gi"), "$&")
-          .replace(/\{/, "");
+    //new Awesomplete(input, {
+      //minChars: 0,
+      //list: intros,
+      //sort: function() {
+        //return 0;  // keep original sort
+      //},
+      //filter: function (text, input) {
+        //return (input.trim().split(" ").length - 1) <= 3
+      //},
+      //item: function(text, input){
+        //var html = input.trim().split(" ")[0].capitalizeFirstCharacter() + " " + text
+          //.replace(RegExp(input, "gi"), "$&")
+          //.replace(/\{/, "");
 
-        return Awesomplete.$.create("li", {
-            innerHTML: html, "aria-selected": "false"
-        });
-      }
-    });
+        //return Awesomplete.$.create("li", {
+            //innerHTML: html, "aria-selected": "false"
+        //});
+      //}
+    //});
 
     var LINE_HEIGHT = 34;
     var PADDING = 4;

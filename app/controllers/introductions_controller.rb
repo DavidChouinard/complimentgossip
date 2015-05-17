@@ -33,7 +33,7 @@ class IntroductionsController < ApplicationController
 
   def show
     if params.include? :key
-      @sender = @introduction.fr
+      @sender = @introduction.from_node
       render :card, :layout => false
     end
   end

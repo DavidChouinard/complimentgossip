@@ -37,17 +37,31 @@ body {
   font-family: 'Playfair Display', Georgia, serif;
 }
 
-#introduction_content {
-  height: 64px;
-}
 
 .page {
   page-break-after: always;
-  margin: 0.125in;
-  padding: 0.25in;
-  height: 100%;
-  /*border: 1px solid #D3D3D3;*/
+}
+
+.page-content {
+  position: relative;
+  height: 4in;
+  width: 6in;
+  left: 0.125in;
+  top: 0.125in;
+
+  border: 1px solid #D3D3D3;
   text-align: center;
+}
+
+/* adjust for input padding */
+#introduction_content, #introduction_sender_name {
+  padding: 4px 0;
+}
+#introduction_content {
+  height: 72px;
+}
+#introduction_sender_name {
+  line-height: 30px;
 }
 
 .page-back-intro {
@@ -56,33 +70,42 @@ body {
   font-family: 'Playfair Display Italic', Georgia, serif;
   color: #4f4f4f;
   font-size: 12px;
-  margin: 0.25in 1in;
+  margin: 0 0.75in 0;
 }
 
 .page-back-link {
   font-size: 14px;
-  margin-top: 1in;
+  margin-top: 1.2in;
 }
 
+<%= Rails.application.assets.find_asset('bigcard').to_s.html_safe %>
+<%= Rails.application.assets.find_asset('templates').to_s.html_safe %>
 </style>
 
-<%= stylesheet_link_tag "bigcard" %>
-<%= stylesheet_link_tag "templates" %>
 </head>
 <body>
 
-  <div class="page bigcard" id="<%= @introduction.template ? "template-#{@introduction.template}" : "" %>">
-    <div class="tip"></div>
-    <div id="introduction_content">“<%= @introduction.content %>”</div>
-    <div id="introduction_sender_name"><%= @sender.name %></div>
+  <div class="page " id="<%= @introduction.template ? "template-#{@introduction.template}" : "" %>">
+    <div class="page-content">
+
+      <div class="bigcard">
+        <div class="tip"></div>
+        <div id="introduction_content">“<%= @introduction.content %>”</div>
+        <div id="introduction_sender_name"><%= @sender.name %></div>
+      </div>
+
+    </div>
   </div>
 
   <div class="page page-back" id="<%= @introduction.template ? "template-#{@introduction.template}" : "" %>">
+    <div class="page-content">
 
-    <div class="page-back-intro">Welcome to the halls of Compliment Gossip. Here, everyone recognizes each other for the greatness they bring to the world.</div>
+      <div class="bigcard">
+        <div class="page-back-intro">Welcome to the halls of Compliment Gossip. Here, everyone recognizes each other for the greatness they bring to the world.</div>
+        <div class="page-back-link">http://complimentgossip.com/<%= @introduction.key %></div>
+      </div>
 
-    <div class="page-back-link">http://complimentgossip.com/<%= @introduction.key %></div>
-
+    </div>
   </div>
 
 </div>

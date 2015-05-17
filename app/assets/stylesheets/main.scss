@@ -530,6 +530,10 @@ label.tip {
   pointer-events: none;
 }
 
+.bigcard > input, .bigcard > textarea {
+  display: block;
+}
+
 .bigcard.disabled {
   background: repeating-linear-gradient(
     45deg,
