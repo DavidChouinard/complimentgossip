@@ -1,0 +1,4 @@
+<div class="card-text" data-key="<%= card.key %>">
+  <div class="card-head"><%= card.content %></div>
+  <div class="card-subhead"> <%= format_serial(card.serial) %> • est. <%= format_date(card.expected_delivery) %> <% if recipient.email %>• <a href="mailto:<%=u '"#{recipient.name}"<#{recipient.email}>' %>"><%= recipient.email %></a><% end %></div>
+</div>

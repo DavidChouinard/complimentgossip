@@ -17,4 +17,5 @@
 //= require typed
 //= require awesomplete
 //= require jquery.hoverIntent
+//= require fit
 //= require_tree .

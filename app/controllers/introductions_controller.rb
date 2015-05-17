@@ -1,49 +1,41 @@
 class IntroductionsController < ApplicationController
   def start
-    # TODO: this really should be seperated in two
+    # TODO: this really should be seperated in two actions
 
     if params.include? :key or session.include? :key
 
       key = params[:key] || session[:key]
-      query = Person.all.introduced(:person, :intro).where('intro.key = {key}').params(key: key.downcase)
+      introduction  = Introduction.find_by_key(key)
 
-      introduction = query.pluck(:intro).to_a
+      @sender = introduction.to_node
 
-      if not introduction.empty?
-        @sender = query.pluck(:person).to_a[0]
+      session[:key] = params[:key]
 
-        session[:key] = params[:key]
-        session[:user_id] = @sender[:uuid]
+      if @sender.in_progress
+        @introduction = Introduction.find_by_key(@sender.in_progress)
 
-        if @sender.in_progress
-          query = Person.all.introduced(:person, :intro).where('intro.key = {key}').params(key: @sender.in_progress)
-
-          @introduction = query.pluck(:intro).to_a[0]  # TODO: handle empty
-          @recipient = query.pluck(:person).to_a[0]
-
-          render :confirm and return
-        else
-          @parent = introduction[0]
-          @recipient = Person.new
-          @introduction = Introduction.new
-
-          @children = @sender.rels(dir: :outgoing)
-
-          render :new and return
-        end
+        @recipient = @introduction.to_node
+        render :confirm and return
       else
-        render :file => "#{Rails.root}/public/404.html", :status => :not_found, :layout => false and return
+        @parent = introduction
+        @recipient = Person.new
+        @introduction = Introduction.new
+
+        #@parent = @sender.introduced_by.to_a[0]
+        #@grandparent = @parent.introduced_by.to_a[0]
+
+        @children = @sender.rels(dir: :outgoing)
+
+        render :new and return
       end
     else
       render :file => "#{Rails.root}/public/notyet.html", :layout => false and return
     end
-
-    #@parent = @sender.introduced_by.to_a[0]
-    #@grandparent = @parent.introduced_by.to_a[0]
   end
 
   def show
     if params.include? :key
+      @sender = @introduction.from_node
       render :card, :layout => false
     end
   end
@@ -51,12 +43,15 @@ class IntroductionsController < ApplicationController
   def create
     filtered_params = introduction_params
 
-    # TODO: handle UUID no recognized
-    # ensure login user only
-
     # TODO: should be a transaction
 
     @sender = Person.find(filtered_params[:sender][:uuid])
+
+    # TODO: ensure logged in user only
+    if @sender.nil?
+      render :file => "#{Rails.root}/public/422.html", :status => :unprocessable_entity, :layout => false and return
+    end
+
     @sender.update(filtered_params[:sender])
     @recipient = Person.create()
 
@@ -89,11 +84,13 @@ class IntroductionsController < ApplicationController
   def update
     filtered_params = introduction_params
 
-    puts @sender
-    puts @sender.name
+    @sender = @introduction.from_node
 
-    # TODO: check not exists  and in_progress exists
-    @recipient = Person.find(filtered_params[:recipient][:uuid])
+    if @sender.in_progress.blank?
+      render :file => "#{Rails.root}/public/422.html", :status => :unprocessable_entity, :layout => false and return
+    end
+
+    @recipient = @introduction.to_node
 
     in_progress = @sender.in_progress
     @sender.in_progress = nil
@@ -104,7 +101,15 @@ class IntroductionsController < ApplicationController
 
     job = LOB.jobs.create(
       description: "Card #{@introduction.key}",
-      from: "adr_6de93363a1bc1f9a",  # TODO
+      from: {
+        :name => @sender.name,
+        :address_line1 => @sender.street_line1,
+        :address_line2 => @sender.street_line2,
+        :city => @sender.city,
+        :state => @sender.state,
+        :country => @sender.country,
+        :zip => @sender.postal_code
+      },
       to: {
         :name => @recipient.name,
         :address_line1 => @recipient.street_line1,
@@ -130,9 +135,8 @@ class IntroductionsController < ApplicationController
   end
 
   def destroy
-    query = Person.all.introduced(:person, :intro).rel_where(key: params[:key])
-    @sender = query.pluck(:person).to_a[0]
-    @introduction = query.pluck(:intro).to_a[0]
+    @introduction = Introduction.find_by_key(params[:key])
+    @sender = @introduction.to_node
 
     if @sender.in_progress
       @sender.introduced(:person, :intro).rel_where(key: @sender.in_progress).delete_all(:intro)
@@ -155,29 +159,28 @@ class IntroductionsController < ApplicationController
   end
   helper_method :format_serial
 
-  private
-    before_action :set_introduction, only: [:show, :update]
-    def set_introduction
-      # TODO: validation
+  def format_date(date)
+    if date.blank?
+      return ""
+    end
 
-      query = Person.all.introduced_by(:person, :intro).rel_where(key: params[:key])
-      @sender = query.pluck(:person).to_a[0]
-      @introduction = query.pluck(:intro).to_a[0]
+    if date.year == Date.today.year
+      return date.strftime("%b %e")
+    else
+      return date.strftime("%b %e, %Y")
+    end
+  end
+  helper_method :format_date
+
+  private
+    before_action :set_introduction, only: [:show, :update, :destroy]
+    def set_introduction
+      @introduction = Introduction.find_by_key(params[:key])
     end
 
     def introduction_params
-      #TODO: require uuid
       params.require(:introduction).permit(:content, :template,
           :sender => [:uuid, :name, :email],
           :recipient => [:uuid, :name, :street_line1, :street_line2, :city, :state, :postal_code, :country])
     end
-
-    #def sender_params
-      #puts params
-      #params.require(:sender).permit(:uuid, :full_name, :contact)
-    #end
-
-    #def recipient_params
-      #params.require(:recipient).permit(:given_name)
-    #end
 end

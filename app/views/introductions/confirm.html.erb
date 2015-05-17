@@ -24,8 +24,6 @@
     <% end %>
 
     <%= f.fields_for :sender, @sender do |c| %>
-      <%= c.hidden_field :uuid %>
-
       <%= c.label :email, "Your email"%>
       <%= c.text_field :email, :autofocus => true, :placeholder => "#{@sender.name.downcase.delete(' ')}@example.com" %>
     <% end %>
@@ -33,23 +31,6 @@
 
   <div class="form-container form-inset">
     <div>
-    <!--<div class="form-inset-block">
-      <h3>Find address by name</h3>
-
-      <div class="form-group">
-        <div style="width:65%;">
-          <label>Name</label>
-          <input type="text" />
-        </div>
-
-        <div style="width:35%;">
-          <label>Location</label>
-          <input type="text" id="address-location" placeholder="city, state, …" />
-        </div>
-      </div>
-      </div>-->
-
-      <!--<div class="form-inset-block">-->
       <h3>Find a workplace address</h3>
 
       <label>Business name</label>
@@ -80,9 +61,8 @@
     <% end %>
 
     <%= f.fields_for :recipient, @recipient do |c| %>
-      <%= c.hidden_field :uuid %>
 
-      <%= c.label :name, "Recipient name" %>
+      <%= c.label :name, "Name" %>
       <%= c.text_field :name %>
 
       <%= c.label :street_line1, "Address" %>

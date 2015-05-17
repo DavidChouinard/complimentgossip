@@ -236,7 +236,6 @@ button.loading, input[type="submit"].loading {
 .card {
   width: 100px;
   height: auto;
-  padding: 6px;
   margin-right: 10px;
 
   border: 1px solid #D3D3D3;
@@ -245,6 +244,7 @@ button.loading, input[type="submit"].loading {
 .card > img {
   width: 100%;
   height: auto;
+  display: block;
 }
 
 .cards > .card {
@@ -291,12 +291,12 @@ button.loading, input[type="submit"].loading {
 .card-text {
   float: left;
   margin-left: 10px;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
 .card-head {
   font-size: 18px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .card-subhead {
@@ -362,7 +362,7 @@ button.loading, input[type="submit"].loading {
   background: rgba(255, 255, 255, 0.8);
   color: #2ecc71;
 
-  padding-top: 22px;
+  padding-top: 20px;
 
   font-size: 18px;
   text-align: center;
@@ -401,6 +401,10 @@ button.loading, input[type="submit"].loading {
 .card-stack > *:not(:first-child) {
   position: absolute;
   top: 0;
+}
+
+.card-stack > .card:hover {
+  border: 1px solid #B5B5B5;
 }
 
 .exit {
@@ -463,35 +467,29 @@ svg .line {
   height: 100%;
 }
 
-.prompt {
-  border: 1px solid #D3D3D3;
-}
-
 .prompt, .prompt-buttons, .error-explanation-new {
   margin-left: 150px;
   margin-right: 150px;
+}
+
+.bigcard {
+  border: 1px solid #D3D3D3;
+  width: 6in;
+  height: 4in;
 }
 
 .prompt-buttons {
   margin-top: 10px;
 }
 
-.prompt-sidebar {
-  width: 100px;
-  float: left;
-  overflow: auto;
-  max-height: 480px;
-}
-
-.prompt-inner {
+.bigcard {
   font-size: 18px;
-  margin: 40px 50px 0;
-  height: 440px;
+  padding: 0.25in 0.5in 0;
 }
 
 label.tip {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 14px;
+  font-size: 12px;
   font-style: italic;
   text-transform: none;
   text-align: center;
@@ -508,7 +506,7 @@ label.tip {
   position: absolute;
   top: 100%;
   left: calc(50% - 50px);
-  margin-top: 5px;
+  margin-top: 3px;
   height: 1px;
   width: 100px;
   border-bottom: 1px solid #D3D3D3;
@@ -519,7 +517,6 @@ label.tip {
   top: 100%;
   left: calc(50% - 4px);
   content: "";
-  margin-top: 2px;
   width: 8px;
   height: 8px;
   background: white;
@@ -531,8 +528,8 @@ label.tip {
 }
 
 #introduction_content {
-  font-size: 34px;
-  line-height: 42px;
+  font-size: 26px;
+  line-height: 32px;
   text-align: center;
 
   margin-top: 30px;
@@ -547,14 +544,14 @@ label.tip {
 
 #introduction_sender_name {
   font-family: 'Playfair Display SC', Georgia, serif;
+  font-size: 15px;
   letter-spacing: 0.05em;
   text-transform: lowercase;
 
   display: block;
   width: 100%;
-  margin-top: 145px;
+  margin-top: 1.25in;
   text-align: center;
-  font-size: 20px;
   border: none;
 }
 
@@ -565,16 +562,6 @@ label.tip {
 .prompt-submit > a {
   width: 100%;
 }
-
-/*.progress {*/
-  /*text-align: center;*/
-/*}*/
-
-/*.progress span {*/
-  /*color: #D3D3D3;*/
-  /*padding: 0 6px;*/
-  /*font-size: 20px;*/
-/*}*/
 
 
 

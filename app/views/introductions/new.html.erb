@@ -47,9 +47,6 @@
   <path d="M200,0 L200,30" class="line"/>
 </svg>
 
-<div class="prompt-sidebar">
-</div>
-
 <%= form_for @introduction do |f| %>
   <% if @introduction.errors.any? %>
     <div class="error-explanation error-explanation-new">
@@ -75,7 +72,7 @@
 
   <div class="prompt">
 
-    <div class="prompt-inner">
+    <div class="bigcard">
       <%= f.hidden_field :template %>
       <%= f.label :content, 'Which friend inspires you? Whom do you want to be more like?', :class => "tip" %>
       <%= f.text_area :content, :rows => 2, :autocomplete => false %>
@@ -84,10 +81,16 @@
         <%= c.hidden_field :uuid %>
         <%= c.text_field :name, :autocomplete => false %>
       <% end %>
-
     </div>
 
   </div>
+
+  <!--<div class="prompt">
+
+    <div class="prompt-inner">
+    </div>
+
+    </div>-->
 
   <% if @children.count > 0 %>
     <svg class="card-longline">
@@ -123,7 +126,7 @@
 
   <div class="card-alone <%= "card-stack" if @children.count > 1 %>">
     <% @sender.introduced.each_with_rel do |_, card| %>
-      <div class="card card-overlaid">
+      <div class="card <%= "card-overlaid" if flash[:updated_key] and flash[:updated_key] == card.key %>" data-key="<%= card.key %>">
         <img src="<%= card.thumbnail %>"/>
 
         <% if flash[:updated_key] and flash[:updated_key] == card.key %>
@@ -140,10 +143,10 @@
     <% end %>
   </div>
 
-  <div class="card-text">
-    <div class="card-head"><%= @sender.rels(dir: :outgoing).first.content %></div>
-    <div class="card-subhead"> <%= format_serial(@sender.rels(dir: :outgoing).first.serial) %> • est. may 1 • <a href="mailto:<%=u '"Alex Lynn"<alexlynn@gmail.com>' %>">alexlynn@gmail.com</a></div>
-  </div>
+  <% @sender.introduced.each_with_rel do |recipient, card| %>
+    <%= render :partial => 'card_text', :locals => {:recipient => recipient, :card => card} %>
+  <% end %>
+
 </div>
 <% end %>
 

@@ -34,11 +34,15 @@ class Person
 
   before_validation do
     # if the user enters a full state name, convert it to the abreviation automatically
-    STATES.each { |state|
-      if not self.state.blank? and self.state.downcase == state["name"].downcase
-        self.state = state["short_name"]
-        break
-      end
-    }
+    if not self.state.blank?
+      STATES.each { |state|
+        if self.state.downcase == state["name"].downcase
+          self.state = state["short_name"]
+          break
+        end
+      }
+
+      self.state = self.state.upcase
+    end
   end
 end
