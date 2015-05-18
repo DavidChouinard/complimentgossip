@@ -68,7 +68,7 @@ class IntroductionsController < ApplicationController
     @sender.update(filtered_params[:sender])
     @recipient = Person.create()
 
-    @introduction = Introduction.new(from_node: @sender, to_node: @recipient, content: filtered_params[:content])
+    @introduction = Introduction.new(from_node: @sender, to_node: @recipient, content: filtered_params[:content], template: filtered_params[:template])
 
     if @introduction.valid?
       @introduction.generate_key
