@@ -33,11 +33,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'neo4j', '~> 4.1.1'
 
-gem 'email_validator'
-
 gem 'lob'
-
 gem 'rollbar'
+
+gem 'email_validator'
 
 gem 'puma'
 
