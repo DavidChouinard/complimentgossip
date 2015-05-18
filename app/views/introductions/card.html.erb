@@ -93,7 +93,7 @@ body {
   <div class="page">
     <div class="page-content">
 
-      <div class="bigcard id="<%= "template-#{@introduction.template}" if @introduction.template %>"">
+      <div class="bigcard" id="<%= "template-#{@introduction.template}" if @introduction.template %>">
         <div class="tip"></div>
         <div id="introduction_content">“<%= @introduction.content.gsub(/\n/, '<br/>').squish.html_safe %>”</div>
         <div id="introduction_sender_name"><%= @sender.name %></div>
@@ -102,7 +102,7 @@ body {
     </div>
   </div>
 
-  <div class="page page-back" id="<%= @introduction.template ? "template-#{@introduction.template}" : "" %>">
+  <div class="page page-back">
     <div class="page-content">
 
       <div class="bigcard">
