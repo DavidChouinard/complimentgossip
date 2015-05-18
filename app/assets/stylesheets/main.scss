@@ -50,6 +50,15 @@ footer {
   width: 100%;
 }
 
+.clear {
+  clear: both;
+}
+
+
+/*
+ * General form styles
+ */
+
 input, select, textarea {
   font: 16px/30px 'Playfair Display', Georgia, serif;
   background: transparent;
@@ -74,7 +83,6 @@ input:focus, select:focus, textarea:focus {
   outline: 0;
 }
 
-
 label {
   font-family: 'Playfair Display SC', Georgia, serif;
   font-size: 12px;
@@ -86,8 +94,42 @@ label {
   padding: 2px 0 4px;
 }
 
-.clear {
-  clear: both;
+button, input[type="submit"], .button {
+  font: 14px/24px 'Playfair Display', Georgia, serif;
+  text-align: center;
+
+  border: 1px solid #D3D3D3;
+  border-radius: 5px;
+  background: none;
+
+  margin-left: auto;
+  margin-right: auto;
+  padding: 6px 12px 7px;
+  width: 180px;
+
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  text-decoration: none;
+
+  cursor: pointer;
+  display: block;
+}
+
+button:hover, input[type="submit"]:hover, .button:hover {
+  padding: 5px 11px 6px; /* one pixel less to compensate */
+  border: 2px solid #D3D3D3;
+}
+
+a.button:hover {
+  text-decoration: none;
+}
+
+button.loading, input[type="submit"].loading, .button.loading {
+  background-image: image-url('loading2.gif');
+  background-size: auto 12px;
+  background-position: 50% 12px;
+  background-repeat: no-repeat;
 }
 
 /*
@@ -133,79 +175,6 @@ div {
     font-size: 12px;
     list-style: square;
   }
-}
-
-
-/*
- *
- */
-
-.arrow {
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid #d3d3d3;
-  margin: 10px auto 0;
-}
-
-.calltoaction {
-  margin-top: 50px;
-}
-
-.subhead {
-  font-size: 14px;
-  font-style: italic;
-  /*color: rgb(82, 82, 82);*/
-  margin-bottom: 8px;
-}
-
-.seperator {
-  width: 50px;
-  margin-top: 14px;
-  border-bottom: 1px solid #D3D3D3;
-}
-
-/*
- * Form
- */
-
-button, input[type="submit"], .button {
-  font: 14px/24px 'Playfair Display', Georgia, serif;
-  text-align: center;
-
-  border: 1px solid #D3D3D3;
-  border-radius: 5px;
-  background: none;
-
-  margin-left: auto;
-  margin-right: auto;
-  padding: 6px 12px 7px;
-  width: 180px;
-
-  appearance: none;
-  -webkit-appearance: none;
-  outline: none;
-  text-decoration: none;
-
-  cursor: pointer;
-  display: block;
-}
-
-button:hover, input[type="submit"]:hover, .button:hover {
-  padding: 5px 11px 6px; /* one pixel less to compensate */
-  border: 2px solid #D3D3D3;
-}
-
-a.button:hover {
-  text-decoration: none;
-}
-
-button.loading, input[type="submit"].loading, .button.loading {
-  background-image: image-url('loading2.gif');
-  background-size: auto 12px;
-  background-position: 50% 12px;
-  background-repeat: no-repeat;
 }
 
 /*
@@ -572,9 +541,11 @@ label.tip {
 }
 
 
+/*
+ * Progress bar
+ */
 
 .progress {
-  /*margin-top: 4px;*/
   float: right;
   font-size: 11px;
 }
@@ -612,93 +583,9 @@ label.tip {
 }
 
 
-.form-container {
-  width: 400px;
-  margin: 0 auto;
-}
-
-.form-container input, .form-inset input, .form-container select, .form-inset select {
-  width: 100%;
-}
-
-.form-group > div {
-  float: left;
-}
-
-.form-group > div:not(:last-child) {
-  padding-right: 10px;
-}
-
-.form-inset {
-  /*width: 750px;*/
-  /*overflow: auto;*/
-  margin: 60px auto 30px;
-  padding: 0 25px;
-  border: 1px solid #D3D3D3;
-  border-radius: 5px;
-}
-
-.form-inset > div:first-child {
-  padding: 10px 0 8px;
-}
-.form-inset > div:first-child h3 {
-  margin: 15px 0;
-}
-
-.form-inset > div:last-child {
-  padding: 15px 0 20px;
-}
-.form-inset > div:last-child h3 {
-  margin: 0 0 4px;
-}
-
-.form-inset-content {
-  font-size: 14px;
-  font-style: italic;
-}
-
-.form-inset-block:first-child {
-  border-right: 1px solid #D3D3D3;
-}
-
-.form-inset-block {
-  float: left;
-  width: 50%;
-  padding: 10px 20px 15px;
-}
-
-.form-inset-block h3 {
-  margin: 4px 0 14px;
-}
-
-.form-inset-seperator {
-  position: relative;
-  text-align: center;
-}
-.form-inset-seperator:after {
-  content: "";
-  position: absolute;
-  top: 12px;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: #D3D3D3;
-  z-index: -1;
-}
-.form-inset-seperator-content {
-  font-size: 12px;
-  font-style: italic;
-  color: #B0B0B0;
-  background: white;
-  display: inline-block;
-  margin: 0 auto;
-  padding: 0 4px;
-}
-
-.form-submit {
-  margin-top: 40px;
-}
-
+/*
+ * Template picker arrows
+ */
 
 .template-picker {
   width: 100px;
@@ -732,6 +619,140 @@ label.tip {
   border-radius: 0 6px 6px 0;
 }
 
+
+/*
+ * Form confirmation page
+ */
+
+.form-container {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.form-container input, .form-inset input, .form-container select, .form-inset select {
+  width: 100%;
+}
+
+.form-group > div {
+  float: left;
+}
+
+.form-group > div:not(:last-child) {
+  padding-right: 10px;
+}
+
+.form-inset {
+  margin: 60px auto 30px;
+  padding: 0 25px;
+  border: 1px solid #D3D3D3;
+  border-radius: 5px;
+}
+
+.form-inset > div:first-child {
+  padding: 10px 0 8px;
+}
+.form-inset > div:first-child h3 {
+  margin: 15px 0;
+}
+
+.form-inset > div:last-child {
+  padding: 15px 0 20px;
+}
+.form-inset > div:last-child h3 {
+  margin: 0 0 4px;
+}
+
+.form-inset-content {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.form-inset-block:first-child {
+  border-right: 1px solid #D3D3D3;
+}
+
+.form-inset-seperator {
+  position: relative;
+  text-align: center;
+}
+.form-inset-seperator:after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #D3D3D3;
+  z-index: -1;
+}
+
+.form-inset-seperator-content {
+  font-size: 12px;
+  font-style: italic;
+  color: #B0B0B0;
+  background: white;
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0 4px;
+}
+
+.form-submit {
+  margin-top: 40px;
+}
+
+
+/*
+ * Loading spinner
+ */
+.spinner {
+  margin: 0 auto;
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 8px;
+  height: 8px;
+  background-color: white;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+  animation: bouncedelay 1.4s infinite ease-in-out;
+  /* Prevent first frame from flickering when animation starts */
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.30s;
+  animation-delay: -0.30s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.15s;
+  animation-delay: -0.15s;
+}
+
+@-webkit-keyframes bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0.0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes bouncedelay {
+  0%, 80%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 40% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+
+/*
+ * Author page
+ */
 
 .me {
   margin: 50px auto 0;
@@ -821,59 +842,4 @@ label.tip {
   /*font-weight: bold;*/
   padding-right: 3px;
   letter-spacing: 0.05em;
-}
-
-
-
-
-
-
-
-
-/*
- * Loading spinner
- */
-.spinner {
-  margin: 0 auto;
-  width: 70px;
-  text-align: center;
-}
-
-.spinner > div {
-  width: 8px;
-  height: 8px;
-  background-color: white;
-
-  border-radius: 100%;
-  display: inline-block;
-  -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
-  animation: bouncedelay 1.4s infinite ease-in-out;
-  /* Prevent first frame from flickering when animation starts */
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-
-.spinner .bounce1 {
-  -webkit-animation-delay: -0.30s;
-  animation-delay: -0.30s;
-}
-
-.spinner .bounce2 {
-  -webkit-animation-delay: -0.15s;
-  animation-delay: -0.15s;
-}
-
-@-webkit-keyframes bouncedelay {
-  0%, 80%, 100% { -webkit-transform: scale(0.0) }
-  40% { -webkit-transform: scale(1.0) }
-}
-
-@keyframes bouncedelay {
-  0%, 80%, 100% {
-    transform: scale(0.0);
-    -webkit-transform: scale(0.0);
-  } 40% {
-    transform: scale(1.0);
-    -webkit-transform: scale(1.0);
-  }
 }

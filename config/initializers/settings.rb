@@ -1,6 +1,6 @@
 KEY_LENGHT = 6
 
-AUTHOR_UUID = "0b938d28-80d4-4d3a-980e-db280a019686"
+AUTHOR_UUID = "6493fb03-786b-40fa-990d-9347efcc0df2"
 
 DEFAULT_REFERRAL_LIMIT = 3
 REFERRAL_REQUEST_EMAIL = CGI.escape "\"David Chouinard\"<david@davidchouinard.com>"
