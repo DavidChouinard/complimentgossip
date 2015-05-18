@@ -4,7 +4,7 @@
 alyssa = Person.create(name: 'Allysa Roberts', email: "alyssa@me.com")
 matt = Person.create(name: 'Matt Johnson', email: "matt@mattjohnson.com")
 alex = Person.create(name: 'Alex Todd', email: "alextodd@gmail.com")
-david = Person.create(name: 'David Chouinard', :street_line1 => "1 fake boob St.", :city => "Beverly Hills", :state => "CA", :postal_code => "90210", :country => "US")
+david = Person.create(name: 'David Chouinard', :street_line1 => "1 Test St.", :city => "Beverly Hills", :state => "CA", :postal_code => "90210", :country => "US")
 darrell = Person.create(name: 'Darrell Lewis')
 
 

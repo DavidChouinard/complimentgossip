@@ -49,8 +49,12 @@ body {
   left: 0.125in;
   top: 0.125in;
 
-  border: 1px solid #D3D3D3;
+  /*border: 1px solid #D3D3D3;*/
   text-align: center;
+}
+
+.bigcard {
+  height: 100%;
 }
 
 /* adjust for input padding */
@@ -62,6 +66,7 @@ body {
 }
 #introduction_sender_name {
   line-height: 30px;
+  letter-spacing: 0.1em !important;
 }
 
 .page-back-intro {
@@ -70,12 +75,12 @@ body {
   font-family: 'Playfair Display Italic', Georgia, serif;
   color: #4f4f4f;
   font-size: 12px;
-  margin: 0 0.75in 0;
+  margin: 0.1in 0.75in 0;
 }
 
 .page-back-link {
   font-size: 14px;
-  margin-top: 1.2in;
+  margin-top: 1.15in;
 }
 
 <%= Rails.application.assets.find_asset('bigcard').to_s.html_safe %>
@@ -90,7 +95,7 @@ body {
 
       <div class="bigcard">
         <div class="tip"></div>
-        <div id="introduction_content">“<%= @introduction.content %>”</div>
+        <div id="introduction_content">“<%= @introduction.content.gsub(/\n/, '<br/>').squish.html_safe %>”</div>
         <div id="introduction_sender_name"><%= @sender.name %></div>
       </div>
 

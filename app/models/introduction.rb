@@ -1,7 +1,7 @@
 class Introduction
   include Neo4j::ActiveRel
 
-  property :key, type: String
+  property :key, type: String, presence: true
   property :serial, type: Integer
   property :template, type: Integer
 
@@ -24,13 +24,19 @@ class Introduction
     format: { without: /…\z/, message: "is empty; enter an introduction" }
 
   before_create do
-    generate_key
+    if self.key.nil?
+      generate_key
+    end
 
     # This is ugly, but seemingly the only solution
     # Potential race condition (not a problem for this application)
     # and possible bad performance at scale (likely not a problem)
-    # Also, this will break of a relationship is ever deleted
+    # Also, this will break of relationships are deleted
     self.serial = Person.all.introduced.count + 1
+  end
+
+  before_save do
+    self.content.strip!
   end
 
   def generate_key

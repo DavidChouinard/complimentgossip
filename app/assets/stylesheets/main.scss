@@ -292,6 +292,10 @@ button.loading, input[type="submit"].loading, .button.loading {
   left: 8px;
 }
 
+.card-single {
+  margin-left: 40px;
+}
+
 .card-text {
   float: left;
   margin-left: 10px;
@@ -441,7 +445,7 @@ button.loading, input[type="submit"].loading, .button.loading {
 }
 
 .card-longline.disabled {
-  height: 60px;
+  height: 30px;
 }
 
 svg .line {
@@ -481,7 +485,7 @@ svg .line {
 }
 
 .prompt-buttons {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .bigcard {
@@ -551,11 +555,11 @@ label.tip {
   height: 100%;
   width: 100%;
   text-align: center;
-  padding-top: 100px;
+  padding-top: 110px;
 }
 
 .bigcard.disabled .button {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 
@@ -570,61 +574,36 @@ label.tip {
 
 
 .progress {
-  /*text-align: center;*/
-  /*margin-top: 30px;*/
+  /*margin-top: 4px;*/
   float: right;
   font-size: 11px;
-  line-height: 20px;
 }
 
 .progress-message {
   text-align: right;
   display: inline-block;
-  vertical-align: top;
-  padding-top: 2px;
   padding-right: 4px;
 }
 
-.progress-cards {
-  display: inline-block;
-}
-
-.progress-cards > div {
-  margin-left: 1px;
-  border: 1px solid #D3D3D3;
-  width: 36px;
-  height: 24px;
-  display: inline-block;
-}
-
-.progress-cards > div.progress-active {
-  background: repeating-linear-gradient(
-    45deg,
-    white,
-    white 4px,
-    #E7EAFF 4px,
-    #E7EAFF 8px
-  );
-}
-
-
 .progress-chicklet {
   display: inline-block;
-  width: 60px;
-  height: 6px;
-  background: #D3D3D3;
-  margin-right: 1px;
-}
-.progress-chicklet:first-child {
-  border-radius: 3px 0 0 3px;
-}
-.progress-chicklet:last-child {
-  border-radius: 0 3px 3px 0;
+  width: 20px;
+  height: 4px;
+  background: #E8E8E8;
+  vertical-align: middle;
+  margin-left: 1px;
 }
 .progress-chicklet.active {
-  background: #2c89c7;
+  background: #59AAE0;
 }
-.progress-chicklet.active {
+.progress-chicklet.inprogress {
+  background: repeating-linear-gradient(
+    45deg,
+    #E8E8E8,
+    #E8E8E8 2px,
+    #59AAE0 2px,
+    #59AAE0 4px
+  );
 }
 .progess-label {
   text-align: center;
@@ -730,8 +709,11 @@ label.tip {
 }
 .template-picker > div {
   padding: 6px 8px;
+  margin-top: 2px;
+
   border: 1px solid #D3D3D3;
   color: #4f4f4f;
+
   display: inline-block;
   cursor: pointer;
 }

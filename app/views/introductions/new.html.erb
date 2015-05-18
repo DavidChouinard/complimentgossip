@@ -3,40 +3,10 @@
 <div class="card-ellipsis card-ellipsis-top card-alone">…</div>
 
 <div class="top">
-  <div class="cards">
-    <img src="<%= image_url('card.png') %>" class="card card-alone" />
-    <div class="card-text">
-      <div class="card-head">Matt is a deeply genuine and thoughtful person.</div>
-      <div class="card-subhead">#153 • april 21 •  <a href="mailto:<%=u '"Matt Foo"<matt@mattfoo.com>' %>">matt@mattfoo.com</a></div>
-    </div>
-  </div>
 
-  <svg class="card-line">
-    <path d="M200,0 L200,30" class="line"/>
-  </svg>
-
-  <div class="cards">
-    <img src="<%= image_url('card.png') %>" class="card card-alone" />
-    <div class="card-text">
-      <div class="card-head">Alex is passionate and fearless: he inspires me to be ambitious.</div>
-      <div class="card-subhead"> #159 • may 1 • <a href="mailto:<%=u '"Alex Lynn"<alexlynn@gmail.com>' %>">alexlynn@gmail.com</a></div>
-    </div>
-  </div>
-
-  <svg class="card-line">
-    <path d="M200,0 C200,20 90,10 90,30" class="line line-dashed" />
-    <path d="M200,0 L200,30" class="line"/>
-  </svg>
-
-  <div class="cards">
-    <div class="card-ellipsis card-ellipsis-side">…</div>
-    <img src="<%= image_url('card.png') %>" class="card card-fadded" />
-    <img src="<%= image_url('card.png') %>" class="card" />
-    <div class="card-text">
-      <div class="card-head">David is one of the most brilliant and creative people I've met.</div>
-      <div class="card-subhead">#171 • may 8</div>
-    </div>
-  </div>
+  <% @chain.each_with_index do |introduction, index| %>
+    <%= render :partial => 'card_row', :locals => {:introduction => introduction, :index => index} %>
+  <% end %>
 
   <div class="card-preview">
     <img src="<%= image_url('card.png') %>" />
@@ -86,20 +56,13 @@
     <% else %>
       <div class="bigcard disabled">
         <div class="bigcard-disabled-message">
-          <div>You’ve sent your 3 cards. <em>Thank you.</em></div>
+          <div>You’ve sent your <%= @sender.get_referral_limit %> cards. <em>Thank you.</em></div>
           <%= mail_to REFERRAL_REQUEST_EMAIL, "Request more", subject: REFERRAL_REQUEST_SUBJECT, body: REFERRAL_REQUEST_BODY, class: "button" %>
         </div>
       </div>
     <% end %>
 
   </div>
-
-  <!--<div class="prompt">
-
-    <div class="prompt-inner">
-    </div>
-
-    </div>-->
 
   <% if @children.count > 0 %>
     <svg class="card-longline <%= "disabled" if @sender.get_referral_limit - @children.count <= 0 %>">
@@ -108,16 +71,16 @@
   <% end %>
 
   <div class="prompt-buttons">
-    <div class="progress">
-      <div class="progress-message">Your cards: <%= @sender.get_referral_limit - @children.count %> remaining</div>
-      <div class="progress-cards">
-        <div class="progress-active"></div>
-        <div class="<%= "progress-active" if @children.count > 1 %>"></div>
-        <div class="<%= "progress-active" if @children.count > 2 %>"></div>
-      </div>
-    </div>
-
     <% if @sender.get_referral_limit - @children.count > 0 %>
+
+      <div class="progress">
+        <div class="progress-message">Your cards: <%= @sender.get_referral_limit - @children.count %> remaining</div>
+
+        <% if @sender.get_referral_limit == DEFAULT_REFERRAL_LIMIT %>
+          <span class="progress-chicklet active"></span><span class="progress-chicklet <%= "active" if @children.count >= 1 %>"></span><span class="progress-chicklet <%= "active" if @children.count >= 2 %>"></span>
+        <% end %>
+      </div>
+
       <div class="template-picker">
         <div class="disabled">◀</div>
         <div>▶</div>
@@ -155,10 +118,11 @@
   </div>
 
   <% @sender.introduced.each_with_rel do |recipient, card| %>
-    <%= render :partial => 'card_text', :locals => {:recipient => recipient, :card => card} %>
+    <%= render :partial => 'card_text', :locals => {:recipient => recipient, :introduction => card} %>
   <% end %>
 
 </div>
+<div class="card-ellipsis card-ellipsis-top card-alone">…</div>
 <% end %>
 
 <!--<div class="progress">-->

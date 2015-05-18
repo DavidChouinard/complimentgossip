@@ -22,9 +22,24 @@ class IntroductionsController < ApplicationController
       @recipient = Person.new
       @introduction = Introduction.new
 
-      #@parent = @sender.introduced_by.to_a[0]
-      #@grandparent = @parent.introduced_by.to_a[0]
+      @chain = []
 
+      3.times do |i|
+        if i == 0
+          @chain[i] = introduction
+        else
+          if @chain[i - 1].nil?
+            break
+          else
+            parents = @chain[i - 1].from_node.rels(dir: :incoming)
+            if not parents.empty?
+              @chain[i] = parents[0]
+            end
+          end
+        end
+      end
+
+      @chain.reverse!
       @children = @sender.rels(dir: :outgoing)
 
       render :new and return
@@ -56,6 +71,7 @@ class IntroductionsController < ApplicationController
     @introduction = Introduction.new(from_node: @sender, to_node: @recipient, content: filtered_params[:content])
 
     if @introduction.valid?
+      @introduction.generate_key
       html = render_to_string :card, :layout => false
 
       object =  LOB.objects.create(

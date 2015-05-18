@@ -1,0 +1,31 @@
+<%
+if index == 0
+  children_count = 1
+else
+  children_count = introduction.from_node.rels(dir: :outgoing).count
+end
+%>
+
+<% if index != 0 %>
+<svg class="card-line">
+  <% if children_count > 1 %>
+    <path d="M200,0 C200,20 90,10 90,30" class="line line-dashed" />
+  <% end %>
+
+  <path d="M200,0 L200,30" class="line"/>
+</svg>
+<% end %>
+
+<div class="cards">
+  <% if children_count > 2 %>
+    <div class="card-ellipsis card-ellipsis-side">…</div>
+  <% end %>
+
+  <% if children_count > 1 %>
+    <img src="<%= image_url('card.png') %>" class="card card-fadded <%= "card-single" if children_count == 2 %>" />
+  <% end %>
+
+  <img src="<%= image_url('card.png') %>" class="card <%= "card-alone" if children_count == 1 %>" />
+
+  <%= render :partial => 'card_text', :locals => {:recipient => introduction.from_node, :introduction => introduction} %>
+</div>
