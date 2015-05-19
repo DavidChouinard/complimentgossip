@@ -25,7 +25,7 @@ end
     <img src="<%= image_url('card.png') %>" class="card card-fadded <%= "card-single" if children_count == 2 %>" />
   <% end %>
 
-  <img src="<%= introduction.thumbnail %>" class="card <%= "card-alone" if children_count == 1 %>" />
+  <img src="<%= introduction.image %>" class="card <%= "card-alone" if children_count == 1 %>" />
 
   <%= render :partial => 'card_text', :locals => {:recipient => introduction.to_node, :introduction => introduction} %>
 </div>
