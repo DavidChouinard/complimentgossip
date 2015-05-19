@@ -99,7 +99,7 @@
 <div class="cards cards-children">
 
   <div class="card-alone <%= "card-stack" if @children.count > 1 %>">
-    <% @sender.introduced.each_with_rel do |_, card| %>
+    <% @children.each do |card| %>
       <div class="card <%= "card-overlaid" if flash[:updated_key] and flash[:updated_key] == card.key %>" data-key="<%= card.key %>">
         <img src="<%= card.thumbnail %>"/>
 

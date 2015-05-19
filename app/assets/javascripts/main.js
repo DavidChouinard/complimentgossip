@@ -122,6 +122,12 @@ $(document).ready(function() {
   }
 
   if ($(".card-overlay").length) {
+
+    // bring into view
+    var card_top = $(".cards-children").offset().top;
+    var window_height = $(window).height();
+    $(window).scrollTop(card_top - window_height + 125);
+
     setTimeout(function() {
       $(".card-overlaid").css({"border-color": "#2ecc71"});
 

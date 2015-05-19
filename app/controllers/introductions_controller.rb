@@ -16,6 +16,7 @@ class IntroductionsController < ApplicationController
       @introduction = Introduction.find_by_key(@sender.in_progress)
 
       @recipient = @introduction.to_node
+
       render :confirm and return
     else
       @parent = introduction
@@ -40,7 +41,19 @@ class IntroductionsController < ApplicationController
       end
 
       @chain.reverse!
-      @children = @sender.rels(dir: :outgoing)
+
+      #@children = @sender.rels(dir: :outgoing)
+      @children = @sender.rels(dir: :outgoing).sort { |a,b|
+        if flash[:updated_key]
+          if flash[:updated_key] == a.key
+            next -1
+          elsif flash[:updated_key] == b.key
+            next 1
+          end
+        end
+
+        b.created_at <=> a.created_at
+      }
 
       render :new and return
     end
