@@ -40,7 +40,7 @@ class Introduction
   end
 
   def generate_key
-    key = rand(36**KEY_LENGHT).to_s(36)
+    key = KEY_ALLOWED_CHARACTERS.shuffle[0,KEY_LENGHT].join
     if Person.all.introduced_by(:person, :intro).rel_where(key: key).pluck(:intro).count == 0
       self.key = key
     else

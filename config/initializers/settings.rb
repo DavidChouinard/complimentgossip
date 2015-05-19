@@ -1,4 +1,5 @@
 KEY_LENGHT = 6
+KEY_ALLOWED_CHARACTERS = [('0'..'9'), ('a'..'z')].map { |i| i.to_a }.flatten - ['o', '0', 'l', '1']
 
 AUTHOR_UUID = "6493fb03-786b-40fa-990d-9347efcc0df2"
 
