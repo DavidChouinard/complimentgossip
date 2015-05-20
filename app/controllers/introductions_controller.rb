@@ -7,6 +7,10 @@ class IntroductionsController < ApplicationController
     key = params[:key] || session[:key]
     introduction  = Introduction.find_by_key(key)
 
+    if introduction.nil?
+      render :file => "#{Rails.root}/public/404.html", :status => :not_found, :layout => false and return
+    end
+
     @sender = introduction.to_node
 
     session[:key] = params[:key]
@@ -162,7 +166,6 @@ class IntroductionsController < ApplicationController
   end
 
   def destroy
-    @introduction = Introduction.find_by_key(params[:key])
     @sender = @introduction.to_node
 
     if @sender.in_progress
@@ -203,6 +206,11 @@ class IntroductionsController < ApplicationController
     before_action :set_introduction, only: [:show, :update, :destroy]
     def set_introduction
       @introduction = Introduction.find_by_key(params[:key])
+
+      # TODO: handle this and report exception
+      #if @introduction.nil?
+        #render :file => "#{Rails.root}/public/404.html", :status => :not_found, :layout => false and return
+      #end
     end
 
     def introduction_params

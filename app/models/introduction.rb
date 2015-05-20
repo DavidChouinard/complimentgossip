@@ -1,3 +1,5 @@
+include Neo4j
+
 class Introduction
   include Neo4j::ActiveRel
 
@@ -52,7 +54,7 @@ class Introduction
     introductions = Person.all.introduced(:person, :intro).rel_where(key: key.downcase).pluck(:intro).to_a
 
     if introductions.empty?
-      raise ActiveRecord::RecordNotFound
+      return nil
     else
       return introductions[0]
     end
