@@ -223,6 +223,14 @@ $(document).ready(function() {
       }
     });
   }
+
+  if ($(".only-sf").length) {
+    $.get("http://ipinfo.io", function(response) {
+      if(response.region === "California") {
+        $(".only-sf").show();
+      };
+    }, "jsonp");
+  }
 });
 
 

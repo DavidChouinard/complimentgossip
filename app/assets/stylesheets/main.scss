@@ -569,18 +569,32 @@ label.tip {
   background: #59AAE0;
 }
 .progress-chicklet.inprogress {
-  background: repeating-linear-gradient(
-    45deg,
-    #E8E8E8,
-    #E8E8E8 2px,
-    #59AAE0 2px,
-    #59AAE0 4px
-  );
+  -webkit-animation: bluepulse 3s infinite ease-in-out;
+  animation: bluepulse 3s infinite ease-in-out;
 }
-.progess-label {
-  text-align: center;
-  font-size: 10px;
-  color: #4f4f4f;
+
+@-webkit-keyframes bluepulse {
+    from {
+        background-color: #E8E8E8;
+    }
+    50% {
+        background-color: #59AAE0;
+    }
+    to {
+        background-color: #E8E8E8;
+    }
+}
+
+@keyframes bluepulse {
+    from {
+        background-color: #E8E8E8;
+    }
+    50% {
+        background-color: #59AAE0;
+    }
+    to {
+        background-color: #E8E8E8;
+    }
 }
 
 

@@ -77,7 +77,7 @@
         <div class="progress-message">Your cards: <%= @sender.get_referral_limit - @children.count %> remaining</div>
 
         <% if @sender.get_referral_limit == DEFAULT_REFERRAL_LIMIT %>
-          <span class="progress-chicklet active"></span><span class="progress-chicklet <%= "active" if @children.count >= 1 %>"></span><span class="progress-chicklet <%= "active" if @children.count >= 2 %>"></span>
+          <% DEFAULT_REFERRAL_LIMIT.times do |i| %><span class="progress-chicklet <%= if @children.count == i then "inprogress" elsif @children.count > i then "active" end %>""></span><% end %>
         <% end %>
       </div>
 
