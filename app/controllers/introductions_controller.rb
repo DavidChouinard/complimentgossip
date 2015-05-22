@@ -78,7 +78,7 @@ class IntroductionsController < ApplicationController
     @sender = Person.find(filtered_params[:sender][:uuid])
 
     # TODO: ensure logged in user only
-    if @sender.nil? or @sender.get_referral_limit - @sender.rels(dir: :outgoing).count <= 0
+    if @sender.nil? or @sender.in_progress or @sender.get_referral_limit - @sender.rels(dir: :outgoing).count <= 0
       render :file => "#{Rails.root}/public/422.html", :status => :unprocessable_entity, :layout => false and return
     end
 

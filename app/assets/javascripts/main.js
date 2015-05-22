@@ -12,7 +12,11 @@ $(document).ready(function() {
   });
 
   $('button, input[type="submit"]').on("click", function(e) {
-    $(this).addClass("loading").val("");
+    var $button = $(this);
+
+    $button.addClass("loading").val("");
+
+    setTimeout(function() { $button.attr("disabled", true); }, 10);
   });
 
   $(".tip")
@@ -224,6 +228,11 @@ $(document).ready(function() {
     });
   }
 
+  if ($(".card-self").length) {
+    // when Lob returns an image URL, it sometimes isn't actually available yet and needs to be reloaded
+    $(".card-self > img").on("error", reload_img);
+  }
+
   if ($(".only-sf").length) {
     $.get("http://ipinfo.io", function(response) {
       if(response.region === "California") {
@@ -272,6 +281,23 @@ function show_card_stack_key($parent, key) {
       $(this).hide();
     }
   });
+}
+
+function reload_img() {
+  var $img = $(this)
+
+  if ($img.data("reload-count") === undefined) {
+      $img.data("reload-count", 0)
+  }
+
+  if ($(this).data("reload-count") < 4) {
+    setTimeout(function() {
+      // this can cause some flickering
+      $img
+        .attr("src", $img.attr("src"))
+        .data("reload-count", $img.data("reload-count") + 1)
+    }, 200);
+  }
 }
 
 String.prototype.capitalizeFirstCharacter = function() {

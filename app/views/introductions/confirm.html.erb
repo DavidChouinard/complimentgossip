@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <div class="form-container">
-  <%= link_to "×", "/#{params[:key]}", :method => :delete, :class => "exit", :data => {:confirm => 'Are you certain you want to delete your progress on this card?'} %>
-</div>
 
-<div class="card-self">
-  <img src="<%= @introduction.thumbnail %>" class="card" />
-  <div class="card-label card-label-left"><%= format_serial %></div>
+  <div class="card-self">
+    <div class="card-label card-label-left"><%= format_serial %></div>
+  <%= link_to "×", "/#{params[:key]}", :method => :delete, :class => "exit", :data => {:confirm => 'Are you certain you want to delete your progress on this card?'} %>
+    <img src="<%= @introduction.image %>" class="card" />
+  </div>
 </div>
 
 <%= form_for @introduction, :url => url_for(:controller => 'introductions', :action => 'update', :key => @introduction.key), method: :put do |f| %>
@@ -31,7 +31,7 @@
 
   <div class="form-container form-inset">
     <div>
-      <h3>Find a workplace address</h3>
+      <h3>Send to a workplace address</h3>
 
       <label>Business name</label>
       <input type="text" placeholder="" id="google-autocomplete" autocomplete="off"/>
@@ -41,7 +41,7 @@
       <span class="form-inset-seperator-content">Or</span>
     </div>
     <div>
-      <h3>Use a personal address</h3>
+      <h3>Send to a personal address</h3>
 
       <div class="form-inset-content">Progress saved — you can come back later</div>
       <!--</div>-->

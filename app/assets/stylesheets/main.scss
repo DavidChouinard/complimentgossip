@@ -116,9 +116,8 @@ button, input[type="submit"], .button {
   display: block;
 }
 
-button:hover, input[type="submit"]:hover, .button:hover {
-  padding: 5px 11px 6px; /* one pixel less to compensate */
-  border: 2px solid #D3D3D3;
+button:hover:enabled, input[type="submit"]:hover:enabled, .button:hover {
+  border: 1px solid #B5B5B5;
 }
 
 a.button:hover {
@@ -302,12 +301,12 @@ div {
 
 .card-label {
   font-family: 'Playfair Display SC', Georgia, serif;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.05em;
   text-transform: lowercase;
   color: #4f4f4f;
 
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .card-label-left {
@@ -321,9 +320,14 @@ div {
 }
 
 .card-self {
-  width: 100px;
-  margin: -20px auto 30px;
+  margin: 30px auto 20px;
   text-align: center;
+}
+
+.card-self > img {
+  width: 100%;
+  height: 273px;
+  margin: 0;
 }
 
 .card-overlaid {
@@ -386,13 +390,14 @@ div {
 }
 
 .exit {
-  font-size: 40px;
+  font-size: 26px;
   font-weight: bold;
   text-align: right;
   color: #D3D3D3;
 
-  display: block;
-  margin-top: 30px;
+  /*display: block;*/
+  float: right;
+  line-height: 10px;
 }
 .exit:hover {
   text-decoration: none;
@@ -624,8 +629,7 @@ label.tip {
   cursor: no-drop;
 }
 .template-picker > div:not(.disabled):hover {
-  padding: 5px 7px;
-  border: 2px solid #D3D3D3;
+  border: 1px solid #B5B5B5;
 }
 .template-picker > div:first-child {
   border-radius: 6px 0 0 6px;
