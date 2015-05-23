@@ -3,9 +3,9 @@
 
 
 <div class="me-intro">
-  <span class="leader">hi, i’m david</span> I build <em>thoughtful</em>, <em>ambitious</em> things with incredible people.
+  <span class="leader">hi, i’m david</span> I build thoughtful, ambitious things with people that inspire me.
 
-  <a href="#" class="button">reach out</a>
+  <%= mail_to REFERRAL_REQUEST_EMAIL, "reach out", body: "Hey David—\n\n...", class: "button" %>
   <span class="button-companion"><span class="only-sf">Catch me in SF:<br>June 18 – June 29</span></span>
 </div>
 <!--early
@@ -35,16 +35,9 @@ attentive
 
 intuitions
 
+-->
 
-David is
-
-
-
-Reach out.
-
-Next time in SF:-->
-
-<div class="me-cards">
+<!--<div class="me-cards">
   <div>
     <img src="<%= image_url('card.png') %>" class="card" /><div class="card-label card-label-left">#005</div>
   </div>
@@ -63,37 +56,28 @@ Next time in SF:-->
     <img src="<%= image_url('card.png') %>" class="card" />
     <div class="card-label card-label-left">#191</div>
   </div>
-</div>
+  </div>-->
 
 <div class="me-project">
   <p>
-  <em>Who are your most interesting friends?</em> In 2014, I started asking the people around me. I wanted to follow the trail a few levels deeper.
+  <em>Who are your most interesting friends?</em> In 2014, I started asking the people around me.
   </p>
 
   <p>
-  I considered a physical token that would be passed along. The military tradition of <a href="http://en.wikipedia.org/wiki/Challenge_coin">challenge coins</a> was particularly interesting.
+  I wanted to follow the trail a few levels deeper: I considered a physical token that would be passed along. The military tradition of <a href="http://en.wikipedia.org/wiki/Challenge_coin">challenge coins</a> was particularly interesting.
   </p>
 
   <p>
-  In parallel, I was fascinated by chain letters and loved witnessing introductions.
+  I also love the experience of witnessing being introduced to somebody else. In parallel, I was fascinated by chain letters.
   </p>
 
   <p>
-  Inspired by that—
+  Inspired by those things—
   </p>
 
   <p style="margin-top: 20px;">
-  This is Compliment Gossip. Built atop the Neo4j graph database, set in Playfair Display and fulfilled by Lob.
+  This is Compliment Gossip. Built atop the <a href="http://neo4j.com/">Neo4j</a> graph database, fulfilled by <a href="https://lob.com/">Lob</a> and set in Playfair Display.
   </p>
-
-  <!--<p>
-  This is an experiment and you’re part of it.
-  </p>-->
-
-  <!--<p>
- You and I are connected.
-  Compliment Gossip will eventually be open to trees where I am not the root node. But until then, stand by — we're not quite ready to be <a href="http://www.producthunt.com/">hunted</a>.
-  </p>-->
 </div>
 
 </div>

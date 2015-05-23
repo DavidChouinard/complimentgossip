@@ -5,7 +5,7 @@ AUTHOR_UUID = "6493fb03-786b-40fa-990d-9347efcc0df2"
 
 DEFAULT_REFERRAL_LIMIT = 3
 REFERRAL_REQUEST_EMAIL = URI.escape "\"David Chouinard\"<david@davidchouinard.com>"
-REFERRAL_REQUEST_SUBJECT = "Compliment Gossip: request for more cards"
+REFERRAL_REQUEST_SUBJECT = "Compliment Gossip: requesting more cards"
 REFERRAL_REQUEST_BODY = "David—
 
 I'd love to be able to send a few other cards on Compliment Gossip. Thanks!"
