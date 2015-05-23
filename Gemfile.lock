@@ -88,6 +88,10 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    mailgun_rails (0.7.0)
+      actionmailer (>= 3.2.13)
+      json (>= 1.7.7)
+      rest-client (>= 1.6.7)
     mime-types (2.5)
     mini_portile (0.6.2)
     minitest (5.6.1)
@@ -211,6 +215,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   lob
+  mailgun_rails
   neo4j (~> 4.1.1)
   puma
   rails (= 4.2.1)

@@ -527,10 +527,6 @@ body.outlook p {
       margin-left: 1px;
     }
 
-    .progress-chicklet.active {
-      background: #59AAE0;
-    }
-
     a {
       text-decoration: none;
       color: #4f4f4f;
@@ -583,8 +579,8 @@ body.outlook p {
                       <table class="twelve columns" style="border-spacing: 0;border-collapse: collapse;padding: 0;vertical-align: top;text-align: left;margin: 0 auto;width: 580px;">
                         <tr style="padding: 0;vertical-align: top;text-align: left;">
                           <td style="word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;padding: 0px 0px 10px;vertical-align: top;text-align: left;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;border-collapse: collapse !important;">
-                            <span class="preheader" style="display: none !important;">&quot;David’s attentiveness and fever in pursuing his intuitions inspire me&quot;</span>
-                            <a href="#" style="text-decoration: none;color: #4f4f4f;"><img src="http://assets.lob.com/obj_7239f76fc4c944a2_thumb_large_1.png" alt="&quot;David’s attentiveness and fever in pursuing his intuitions inspire me&quot;" class="card" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;width: 100%;max-width: 578px;float: left;clear: both;display: block;border: 1px solid #D3D3D3;height: auto;min-height: 200px;text-align: center;font-size: 22px;line-height: 30px;background-color: #FFFFFF;"></a>
+                            <span class="preheader" style="display: none !important;">&quot;<%= @introduction.content %>&quot;</span>
+                            <a href="#" style="text-decoration: none;color: #4f4f4f;"><img src="<%= @introduction.image %>" alt="&quot;<%= @introduction.content %>&quot;" class="card" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;width: 100%;max-width: 578px;float: left;clear: both;display: block;border: 1px solid #D3D3D3;height: auto;min-height: 200px;text-align: center;font-size: 22px;line-height: 30px;background-color: #FFFFFF;"></a>
                           </td>
                           <td class="expander" style="word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;padding: 0 !important;vertical-align: top;text-align: left;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;visibility: hidden;width: 0px;border-collapse: collapse !important;"></td>
                         </tr>
@@ -601,11 +597,15 @@ body.outlook p {
                       <table class="eight columns" style="border-spacing: 0;border-collapse: collapse;padding: 0;vertical-align: top;text-align: left;margin: 0 auto;width: 380px;">
                         <tr style="padding: 0;vertical-align: top;text-align: left;">
                           <td class="status" style="word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;padding: 0px 0px 10px;vertical-align: top;text-align: left;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;padding-top: 1px;border-collapse: collapse !important;">
-                            <div>Your cards: 2 remaining</div>
-                            <div class="progress" style="line-height: 14px;">
-                              <span class="progress-chicklet active" style="display: inline-block;width: 40px;height: 6px;background: #59AAE0;vertical-align: middle;margin-left: 1px;"></span><span class="progress-chicklet" style="display: inline-block;width: 40px;height: 6px;background: #E8E8E8;vertical-align: middle;margin-left: 1px;"></span><span class="progress-chicklet" style="display: inline-block;width: 40px;height: 6px;background: #E8E8E8;vertical-align: middle;margin-left: 1px;"></span>
-                            </div>
+                            <% if @person.get_referral_limit - @children.count > 0 %>
+                              <div>Your cards: <%= @person.get_referral_limit - @children.count %> remaining</div>
 
+                              <% if @person.get_referral_limit == DEFAULT_REFERRAL_LIMIT %>
+                                <div class="progress" style="line-height: 14px;">
+                                  <% DEFAULT_REFERRAL_LIMIT.times do |i| %><span class="progress-chicklet" style="display: inline-block;width: 40px;height: 6px;vertical-align: middle;margin-left: 1px;background: <%= if @children.count > i then "#59AAE0" else "#E8E8E8" end %>;"></span><% end %>
+                                </div>
+                              <% end %>
+                            <% end %>
                           </td>
                           <td class="expander" style="word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;padding: 0 !important;vertical-align: top;text-align: left;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;visibility: hidden;width: 0px;border-collapse: collapse !important;"></td>
                         </tr>
@@ -617,7 +617,11 @@ body.outlook p {
                       <table class="four columns" style="border-spacing: 0;border-collapse: collapse;padding: 0;vertical-align: top;text-align: left;margin: 0 auto;width: 180px;">
                         <tr style="padding: 0;vertical-align: top;text-align: left;">
                           <td class="last" style="word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;padding: 0px 0px 10px;vertical-align: top;text-align: left;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;padding-right: 0px;border-collapse: collapse !important;">
-                            <a href="#" class="button" style="text-decoration: none;color: #4f4f4f;font: 14px/24px 'Playfair Display', Georgia, serif;text-align: center;border: 1px solid #D3D3D3;border-radius: 5px;background: none;padding: 6px 0 7px;outline: none;display: block;width: 100%;margin-left: auto;margin-right: auto;">Send a card</a>
+                            <% if @person.get_referral_limit - @children.count > 0 %>
+                              <a href="#" class="button" style="text-decoration: none;color: #4f4f4f;font: 14px/24px 'Playfair Display', Georgia, serif;text-align: center;border: 1px solid #D3D3D3;border-radius: 5px;background: none;padding: 6px 0 7px;outline: none;display: block;width: 100%;margin-left: auto;margin-right: auto;">Send a card</a>
+                            <% else %>
+                              <a href="#" class="button" style="text-decoration: none;color: #4f4f4f;font: 14px/24px 'Playfair Display', Georgia, serif;text-align: center;border: 1px solid #D3D3D3;border-radius: 5px;background: none;padding: 6px 0 7px;outline: none;display: block;width: 100%;margin-left: auto;margin-right: auto;">Request most cards</a>
+                            <% end %>
                           </td>
                           <td class="expander" style="word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;padding: 0 !important;vertical-align: top;text-align: left;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;visibility: hidden;width: 0px;border-collapse: collapse !important;"></td>
                         </tr>

@@ -1,18 +1,20 @@
 class UserMailer < ApplicationMailer
-  # TODO: name
-  # David Chouinard (Compliment Gossip)
-  default from: 'david@davidchouinard.com'
+  default from: "\"David Chouinard (Compliment Gossip)\" <david@davidchouinard.com>"
 
+  EMOJIS = ['🎉', '😇', '🙇', '😸', '🌝', '🎁', '✨', '📬']
 
-  def new_card(recipient, introduction)
+  def new_card(recipient, introduction, type: :parent)
     @introduction = introduction
-    @recipient = recipient
-    mail(to: recipient.email, subject: 'Welcome to My Awesome Site')
-    # David should be receiving your card today
-    #
-    # David passed along a card
-    #
-    # random emoji
+    @person = recipient
+    @children = @person.rels(dir: :outgoing)
+
+    if (type == :parent)
+      subject = "#{@introduction.from_node.first_name} passed along a card #{EMOJIS.sample}"
+    else
+      subject = "#{@introduction.to_node.first_name} should be receiving your card today #{EMOJIS.sample}"
+    end
+
+    mail(to: @person.email, subject: subject)
   end
 
 end

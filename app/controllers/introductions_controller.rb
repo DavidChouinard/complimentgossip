@@ -46,7 +46,6 @@ class IntroductionsController < ApplicationController
 
       @chain.reverse!
 
-      #@children = @sender.rels(dir: :outgoing)
       @children = @sender.rels(dir: :outgoing).sort { |a,b|
         if flash[:updated_key]
           if flash[:updated_key] == a.key
@@ -124,11 +123,12 @@ class IntroductionsController < ApplicationController
     @recipient = @introduction.to_node
 
     in_progress = @sender.in_progress
-    @sender.in_progress = nil
 
     if not (@sender.update(filtered_params[:sender]) and @recipient.update(filtered_params[:recipient]))
       render :confirm and return
     end
+
+    #UserMailer.new_card(@sender.introduced_by[0], @introduction, :type => :parent).deliver_now
 
     job = LOB.jobs.create(
       description: "Card #{@introduction.key}",
@@ -156,8 +156,10 @@ class IntroductionsController < ApplicationController
     @introduction.job_id = job["id"]
     @introduction.expected_delivery = Date.parse(job["expected_delivery_date"])
 
+    @sender.in_progress = nil
+
     respond_to do |format|
-      if @introduction.save
+      if @introduction.save and @sender.save
         format.html { redirect_to "/#{session.fetch("key", "")}", :flash => { :updated_key => in_progress } }
       else
         format.html { render :confirm }

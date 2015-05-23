@@ -51,4 +51,8 @@ class Person
   def get_referral_limit
     return self.referral_limit || DEFAULT_REFERRAL_LIMIT
   end
+
+  def first_name
+    self.name.blank? ? "" : self.name.split(" ")[0].titlecase
+  end
 end

@@ -5,8 +5,8 @@ Person.all.delete_all
 
 alyssa = Person.create(name: 'Allysa Roberts', email: "alyssa@me.com")
 matt = Person.create(name: 'Matt Johnson', email: "matt@mattjohnson.com")
-alex = Person.create(name: 'Alex Todd', email: "alextodd@gmail.com")
-david = Person.create(name: 'David Chouinard', :street_line1 => "1 Test St.", :city => "Beverly Hills", :state => "CA", :postal_code => "90210", :country => "US")
+alex = Person.create(name: 'Alex Todd', email: "david@davidchouinard.com")
+david = Person.create(name: 'David Chouinard', email: "david@gmail.com", :street_line1 => "1 Test St.", :city => "Beverly Hills", :state => "CA", :postal_code => "90210", :country => "US", :referral_limit => 100)
 darrell = Person.create(name: 'Darrell Lewis')
 darrell2 = Person.create(name: 'Darrell Jones')
 
