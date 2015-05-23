@@ -15,6 +15,8 @@ class Introduction
   property :job_id, type: String
   property :expected_delivery, type: Date
 
+  property :delivery_notice_sent, type: DateTime
+
   property :created_at
   property :updated_at
 
@@ -33,7 +35,7 @@ class Introduction
     # This is ugly, but seemingly the only solution
     # Potential race condition (not a problem for this application)
     # and possible bad performance at scale (likely not a problem)
-    # Also, this will break of relationships are deleted
+    # Also, this will break if relationships are deleted
     self.serial = Person.all.introduced.count + 1
   end
 

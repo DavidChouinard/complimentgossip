@@ -152,8 +152,7 @@ class IntroductionsController < ApplicationController
     @introduction.expected_delivery = Date.parse(job["expected_delivery_date"])
 
     respond_to do |format|
-      if @introduction.save
-        @sender.update(in_progress: nil)
+      if @introduction.save and @sender.update(in_progress: nil)
 
         #UserMailer.new_card(@sender.introduced_by[0], @introduction, :type => :parent).deliver_now
 
@@ -170,8 +169,7 @@ class IntroductionsController < ApplicationController
     if @sender.in_progress
       @sender.introduced(:person, :intro).rel_where(key: @sender.in_progress).delete_all(:intro)
 
-      @sender.in_progress = nil
-      @sender.save
+      @sender.update(in_progress: nil)
 
       redirect_to "/#{session.fetch("key", "")}"
     else
