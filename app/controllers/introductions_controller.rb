@@ -1,11 +1,6 @@
 class IntroductionsController < ApplicationController
   def start
-    if not params.include? :key and not session.include? :key
-      render :file => "#{Rails.root}/public/notyet.html", :layout => false and return
-    end
-
-    key = params[:key] || session[:key]
-    introduction  = Introduction.find_by_key(key)
+    introduction  = Introduction.find_by_key(params[:key])
 
     if introduction.nil?
       render :file => "#{Rails.root}/public/404.html", :status => :not_found, :layout => false and return
@@ -58,15 +53,17 @@ class IntroductionsController < ApplicationController
         b.created_at <=> a.created_at
       }
 
-      render :new and return
+      render :new
     end
   end
 
   def show
-    if params.include? :key
-      @sender = @introduction.from_node
-      render :card, :layout => false
+    if introduction.nil?
+      render :file => "#{Rails.root}/public/404.html", :status => :not_found, :layout => false and return
     end
+
+    @sender = @introduction.from_node
+    render :card, :layout => false
   end
 
   def create
@@ -128,8 +125,6 @@ class IntroductionsController < ApplicationController
       render :confirm and return
     end
 
-    #UserMailer.new_card(@sender.introduced_by[0], @introduction, :type => :parent).deliver_now
-
     job = LOB.jobs.create(
       description: "Card #{@introduction.key}",
       from: {
@@ -156,10 +151,12 @@ class IntroductionsController < ApplicationController
     @introduction.job_id = job["id"]
     @introduction.expected_delivery = Date.parse(job["expected_delivery_date"])
 
-    @sender.in_progress = nil
-
     respond_to do |format|
-      if @introduction.save and @sender.save
+      if @introduction.save
+        @sender.update(in_progress: nil)
+
+        #UserMailer.new_card(@sender.introduced_by[0], @introduction, :type => :parent).deliver_now
+
         format.html { redirect_to "/#{session.fetch("key", "")}", :flash => { :updated_key => in_progress } }
       else
         format.html { render :confirm }
@@ -213,6 +210,17 @@ class IntroductionsController < ApplicationController
       #if @introduction.nil?
         #render :file => "#{Rails.root}/public/404.html", :status => :not_found, :layout => false and return
       #end
+    end
+
+    before_action :redirect_to_key, only: [:start]
+    def redirect_to_key
+      if not params.include? :key
+        if session.include? :key
+          redirect_to "/#{session[:key]}"
+        else
+          render :file => "#{Rails.root}/public/notyet.html", :layout => false and return
+        end
+      end
     end
 
     def introduction_params
