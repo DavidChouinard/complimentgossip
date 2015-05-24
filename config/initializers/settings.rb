@@ -10,6 +10,8 @@ REFERRAL_REQUEST_BODY = "David—
 
 I'd love to be able to send a few other cards on Compliment Gossip. Thanks!"
 
+BusinessTime::Config.work_week = [:mon, :tue, :wed, :thu, :fri, :sat]
+
 TEST_API_KEY = "test_d7b407a97a9b0a53004fc28e88b46abdc36"
 LIVE_API_KEY = "live_824b49ca966125c15425f5ecd003fa5744a"
 

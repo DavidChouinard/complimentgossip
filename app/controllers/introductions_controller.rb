@@ -58,7 +58,7 @@ class IntroductionsController < ApplicationController
   end
 
   def show
-    if introduction.nil?
+    if @introduction.nil?
       render :file => "#{Rails.root}/public/404.html", :status => :not_found, :layout => false and return
     end
 

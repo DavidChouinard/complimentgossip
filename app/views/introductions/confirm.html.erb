@@ -14,7 +14,7 @@
   <div class="form-container">
     <% if @sender.errors.any? %>
       <div class="error-explanation error-explanation-confirm">
-        <h2><%= pluralize(@sender.errors.count, "error") %> prohibited this  from being saved:</h2>
+        <h2><%= pluralize(@sender.errors.count, "error") %> prohibited this from being saved:</h2>
         <ul>
         <% @sender.errors.full_messages.each do |message| %>
           <li><%= message %></li>

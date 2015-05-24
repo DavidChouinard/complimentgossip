@@ -12,6 +12,7 @@ class UserMailer < ApplicationMailer
       subject = "#{@introduction.from_node.first_name} passed along a card #{EMOJIS.sample}"
     else
       subject = "#{@introduction.to_node.first_name} should be receiving your card today #{EMOJIS.sample}"
+      # about now
     end
 
     mail(to: @person.email, subject: subject)
