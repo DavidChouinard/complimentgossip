@@ -4,12 +4,12 @@
 
   <div class="card-self">
     <div class="card-label card-label-left"><%= format_serial %></div>
-  <%= link_to "×", "/#{params[:key]}", :method => :delete, :class => "exit", :data => {:confirm => 'Are you certain you want to delete your progress on this card?'} %>
-    <img src="<%= @introduction.image %>" class="card" />
+  <%= link_to "×", "/#{@introduction.key}", :method => :delete, :class => "exit", :data => {:confirm => 'Are you certain you want to delete your progress on this card?'} %>
+    <img src="<%= @current_intro.image %>" class="card" />
   </div>
 </div>
 
-<%= form_for @introduction, :url => url_for(:controller => 'introductions', :action => 'update', :key => @introduction.key), method: :put do |f| %>
+<%= form_for @current_intro, :url => url_for(:controller => 'introductions', :action => 'update', :key => @current_intro.key), method: :put do |f| %>
 
   <div class="form-container">
     <% if @sender.errors.any? %>

@@ -1,32 +1,28 @@
 class IntroductionsController < ApplicationController
   def start
-    introduction  = Introduction.find_by_key(params[:key])
-
-    if introduction.nil?
+    if @introduction.nil?
       render :file => "#{Rails.root}/public/404.html", :status => :not_found, :layout => false and return
     end
 
-    @sender = introduction.to_node
+    @sender = @introduction.to_node
 
     session[:key] = params[:key]
 
     # TODO: this really should be seperated in two actions
     if @sender.in_progress
-      @introduction = Introduction.find_by_key(@sender.in_progress)
-
-      @recipient = @introduction.to_node
+      @current_intro = Introduction.find_by_key(@sender.in_progress)
+      @recipient = @current_intro.to_node
 
       render :confirm and return
     else
-      @parent = introduction
       @recipient = Person.new
-      @introduction = Introduction.new
+      @current_intro = Introduction.new
 
       @chain = []
 
       3.times do |i|
         if i == 0
-          @chain[i] = introduction
+          @chain[i] = @introduction
         else
           if @chain[i - 1].nil?
             break
@@ -111,13 +107,15 @@ class IntroductionsController < ApplicationController
   def update
     filtered_params = introduction_params
 
-    @sender = @introduction.from_node
+    @current_intro = @introduction
+    @sender = @current_intro.from_node
 
     if @sender.in_progress.blank?
       render :file => "#{Rails.root}/public/422.html", :status => :unprocessable_entity, :layout => false and return
     end
 
-    @recipient = @introduction.to_node
+    @introduction = Introduction.find_by_key(session[:key])
+    @recipient = @current_intro.to_node
 
     in_progress = @sender.in_progress
 
@@ -126,7 +124,7 @@ class IntroductionsController < ApplicationController
     end
 
     job = LOB.jobs.create(
-      description: "Card #{@introduction.key}",
+      description: "Card #{@current_intro.key}",
       from: {
         :name => @sender.name,
         :address_line1 => @sender.street_line1,
@@ -145,14 +143,14 @@ class IntroductionsController < ApplicationController
         :country => @recipient.country,
         :zip => @recipient.postal_code
       },
-      objects: [@introduction.obj_id]
+      objects: [@current_intro.obj_id]
     )
 
-    @introduction.job_id = job["id"]
-    @introduction.expected_delivery = Date.parse(job["expected_delivery_date"])
+    @current_intro.job_id = job["id"]
+    @current_intro.expected_delivery = Date.parse(job["expected_delivery_date"])
 
     respond_to do |format|
-      if @introduction.save and @sender.update(in_progress: nil)
+      if @current_intro.save and @sender.update(in_progress: nil)
 
         #UserMailer.new_card(@sender.introduced_by[0], @introduction, :type => :parent).deliver_now
 
@@ -200,25 +198,28 @@ class IntroductionsController < ApplicationController
   helper_method :format_date
 
   private
-    before_action :set_introduction, only: [:show, :update, :destroy]
-    def set_introduction
+    before_action :redirect_to_key, only: [:start]
+    def redirect_to_key
+      puts "TESTTTTTT"
+      if not params[:key]
+        if session[:key]
+          redirect_to "/#{session[:key]}" and return
+        else
+          render :file => "#{Rails.root}/public/notyet.html", :layout => false and return
+        end
+      end
+
+      find_introduction
+    end
+
+    before_action :find_introduction, only: [:show, :update, :destroy]
+    def find_introduction
       @introduction = Introduction.find_by_key(params[:key])
 
       # TODO: handle this and report exception
       #if @introduction.nil?
         #render :file => "#{Rails.root}/public/404.html", :status => :not_found, :layout => false and return
       #end
-    end
-
-    before_action :redirect_to_key, only: [:start]
-    def redirect_to_key
-      if not params.include? :key
-        if session.include? :key
-          redirect_to "/#{session[:key]}"
-        else
-          render :file => "#{Rails.root}/public/notyet.html", :layout => false and return
-        end
-      end
     end
 
     def introduction_params

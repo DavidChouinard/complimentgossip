@@ -17,12 +17,12 @@
   <path d="M200,0 L200,30" class="line"/>
 </svg>
 
-<%= form_for @introduction do |f| %>
-  <% if @introduction.errors.any? %>
+<%= form_for @current_intro do |f| %>
+  <% if @current_intro.errors.any? %>
     <div class="error-explanation error-explanation-new">
-      <h2><%= pluralize(@introduction.errors.count, "error") %> prohibited this from being saved:</h2>
+      <h2><%= pluralize(@current_intro.errors.count, "error") %> prohibited this from being saved:</h2>
       <ul>
-      <% @introduction.errors.full_messages.each do |message| %>
+      <% @current_intro.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
