@@ -96,7 +96,7 @@
   <%= f.submit "Share the love", :class => "form-submit" %>
 <% end %>
 
-<% if defined? MIXPANEL %>
+<% if defined? MIXPANEL and @sender.uuid != AUTHOR_UUID %>
   <script>
     mixpanel.identify("<%= @sender.uuid %>");
 

@@ -125,7 +125,7 @@
 <div class="card-ellipsis card-ellipsis-top card-alone">…</div>
 <% end %>
 
-<% if defined? MIXPANEL %>
+<% if defined? MIXPANEL and @sender.uuid != AUTHOR_UUID %>
   <script>
     mixpanel.identify("<%= @sender.uuid %>");
 
