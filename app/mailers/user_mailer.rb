@@ -22,12 +22,12 @@ class UserMailer < ApplicationMailer
       subject = "#{@introduction.to_node.first_name} should be "
 
       if hedge_on_estimate
-        subject += "about to receive your card "
+        subject += "about to receive your card"
       else
-        subject += "receiving your card today "
+        subject += "receiving your card today"
       end
 
-      subject += EMOJIS.sample + " "   # trailing space required to deal with an emoji bug in Apple mail
+      subject += EMOJIS.sample
     end
 
     mail(to: @person.email, subject: subject)
