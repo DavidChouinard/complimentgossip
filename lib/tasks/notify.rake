@@ -53,4 +53,27 @@ namespace :notify do
     UserMailer.new_card(introduction.from_node, introduction, :type => :delivery, :hedge_on_estimate => hedge).deliver_now
     #intro.update(delivery_notice_sent: DateTime.now)
   end
+
+  task :populate_mixpanel => :environment do
+    mixpanel = Mixpanel::Tracker.new("bfd59c67d03d9d1763a9301bf838de31")
+
+    Person.all.each do |person|
+      if person.name
+        mixpanel.people.set(person.uuid, {
+          '$name' => person.name,
+          'Address' => "#{person.city}, " + if person.country == "US" then person.state else person.country end,
+          '$created' => person.created_at,
+          '$city' => person.city,
+          '$region' => person.state,
+          '$country' => person.country
+        })
+
+        if person.email
+          mixpanel.people.set(person.uuid, {
+            '$email' => person.email
+          })
+        end
+      end
+    end
+  end
 end

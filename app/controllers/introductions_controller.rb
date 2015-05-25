@@ -154,7 +154,10 @@ class IntroductionsController < ApplicationController
         MIXPANEL.people.set(@recipient.uuid, {
           '$name' => @recipient.name,
           'Address' => "#{@sender.city}, " + if @sender.country == "US" then @sender.state else @sender.country end,
-          '$created' => @recipient.created_at
+          '$created' => @recipient.created_at,
+          '$city' => person.city,
+          '$region' => person.state,
+          '$country' => person.country
         }) if MIXPANEL
 
         #UserMailer.new_card(@sender.introduced_by[0], @introduction, :type => :parent).deliver_now
