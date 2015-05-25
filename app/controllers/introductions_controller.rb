@@ -129,19 +129,19 @@ class IntroductionsController < ApplicationController
         :name => @sender.name,
         :address_line1 => @sender.street_line1,
         :address_line2 => @sender.street_line2,
-        :city => @sender.city,
-        :state => @sender.state,
-        :country => @sender.country,
-        :zip => @sender.postal_code
+        :address_city => @sender.city,
+        :address_state => @sender.state,
+        :address_country => @sender.country,
+        :address_zip => @sender.postal_code
       },
       to: {
         :name => @recipient.name,
         :address_line1 => @recipient.street_line1,
         :address_line2 => @recipient.street_line2,
-        :city => @recipient.city,
-        :state => @recipient.state,
-        :country => @recipient.country,
-        :zip => @recipient.postal_code
+        :address_city => @recipient.city,
+        :address_state => @recipient.state,
+        :address_country => @recipient.country,
+        :address_zip => @recipient.postal_code
       },
       objects: [@current_intro.obj_id]
     )
@@ -158,7 +158,7 @@ class IntroductionsController < ApplicationController
           '$city' => @recipient.city,
           '$region' => @recipient.state,
           '$country' => @recipient.country
-        }) if MIXPANEL
+        }) if defined? MIXPANEL
 
         #UserMailer.new_card(@sender.introduced_by[0], @introduction, :type => :parent).deliver_later
 
@@ -174,7 +174,7 @@ class IntroductionsController < ApplicationController
 
     MIXPANEL.track(@sender.uuid, 'Card cancelled', {
       "card": @introduction.key
-    }) if MIXPANEL
+    }) if defined? MIXPANEL
 
     if @sender.in_progress
       @sender.introduced(:person, :intro).rel_where(key: @sender.in_progress).delete_all(:intro)
@@ -238,4 +238,5 @@ class IntroductionsController < ApplicationController
           :sender => [:uuid, :name, :email],
           :recipient => [:uuid, :name, :street_line1, :street_line2, :city, :state, :postal_code, :country])
     end
+
 end
