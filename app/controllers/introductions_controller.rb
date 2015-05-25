@@ -155,9 +155,9 @@ class IntroductionsController < ApplicationController
           '$name' => @recipient.name,
           'Address' => "#{@sender.city}, " + if @sender.country == "US" then @sender.state else @sender.country end,
           '$created' => @recipient.created_at,
-          '$city' => person.city,
-          '$region' => person.state,
-          '$country' => person.country
+          '$city' => @recipient.city,
+          '$region' => @recipient.state,
+          '$country' => @recipient.country
         }) if MIXPANEL
 
         #UserMailer.new_card(@sender.introduced_by[0], @introduction, :type => :parent).deliver_now
