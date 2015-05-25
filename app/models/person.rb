@@ -1,5 +1,6 @@
 class Person
   include Neo4j::ActiveNode
+  include GlobalID::Identification
 
   property :name, type: String
 

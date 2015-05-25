@@ -74,10 +74,16 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  # Mailgun seemed better than Mandrill, but it seemed to botch emoji subject lines
+  #config.action_mailer.delivery_method = :mailgun
 
-  config.action_mailer.delivery_method = :mailgun
-  config.action_mailer.mailgun_settings = {
-    api_key: 'key-7903fc53b9724f1f03f7c8a5a2877799',
-    domain: 'davidchouinard.com'
+  config.action_mailer.smtp_settings = {
+    :address   => "smtp.mandrillapp.com",
+    :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
+    :enable_starttls_auto => true, # detects and uses STARTTLS
+    :user_name => "chouichoui@me.com",
+    :password  => "nn2nYg-wVONJo6VfXeCF1w", # SMTP password is any valid API key
+    :authentication => 'login', # Mandrill supports 'plain' or 'login'
+    :domain => 'davidchouinard.com', # your domain to identify your server when connecting
   }
 end

@@ -35,11 +35,4 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
-
-  config.action_mailer.delivery_method = :mailgun
-  config.action_mailer.mailgun_settings = {
-    api_key: 'key-7903fc53b9724f1f03f7c8a5a2877799',
-    domain: 'davidchouinard.com'
-  }
 end

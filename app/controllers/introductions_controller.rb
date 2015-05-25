@@ -160,7 +160,7 @@ class IntroductionsController < ApplicationController
           '$country' => @recipient.country
         }) if MIXPANEL
 
-        #UserMailer.new_card(@sender.introduced_by[0], @introduction, :type => :parent).deliver_now
+        #UserMailer.new_card(@sender.introduced_by[0], @introduction, :type => :parent).deliver_later
 
         format.html { redirect_to "/#{session.fetch("key", "")}", :flash => { :updated_key => in_progress } }
       else

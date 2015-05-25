@@ -17,7 +17,7 @@ class UserMailer < ApplicationMailer
     @key = incoming[0].key
 
     if (type == :parent)
-      subject = "#{@introduction.from_node.first_name} passed along a card #{EMOJIS.sample}"
+      subject = "#{@introduction.from_node.first_name} passed along a card #{EMOJIS.sample} "
     else
       subject = "#{@introduction.to_node.first_name} should be "
 
@@ -27,7 +27,7 @@ class UserMailer < ApplicationMailer
         subject += "receiving your card today "
       end
 
-      subject += EMOJIS.sample
+      subject += EMOJIS.sample + " "   # trailing space required to deal with an emoji bug in Apple mail
     end
 
     mail(to: @person.email, subject: subject)

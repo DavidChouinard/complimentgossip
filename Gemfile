@@ -34,14 +34,15 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'neo4j', '~> 4.1.1'
 
 gem 'lob'
-gem 'rollbar'
+gem "airbrake"
 
+#gem 'mailgun_rails'
+gem 'sucker_punch'
 gem 'business_time'
 gem 'email_validator'
 
 gem 'puma'
 
-gem 'mailgun_rails'
 gem 'mixpanel-ruby'
 
 group :development, :test do
