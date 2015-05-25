@@ -1,0 +1,11 @@
+“<%= @introduction.content %>”
+
+  – <%= @introduction.from_node.name %>
+
+======
+
+<% if @person.get_referral_limit - @children.count > 0 %>
+Your cards: <%= @person.get_referral_limit - @children.count %> remaining
+<% end %>
+
+<% if @person.get_referral_limit - @children.count > 0 %>Send a card<% else %>Request most cards<% end %>: http://complimentgossip.com/<%= @key %>

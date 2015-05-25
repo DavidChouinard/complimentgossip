@@ -233,6 +233,12 @@ $(document).ready(function() {
     $(".card-self > img").on("error", reload_img);
   }
 
+  if ($(".me-button").length && typeof mixpanel !== 'undefined') {
+    $(".me-button").on("click", function() {
+      mixpanel.track("Reached out on about page");
+    });
+  }
+
   if ($(".only-sf").length) {
     $.get("http://ipinfo.io", function(response) {
       if(response.region === "California") {

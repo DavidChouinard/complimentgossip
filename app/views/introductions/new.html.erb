@@ -125,4 +125,26 @@
 <div class="card-ellipsis card-ellipsis-top card-alone">…</div>
 <% end %>
 
+<% if defined? MIXPANEL %>
+  <script>
+    mixpanel.identify("@sender.uuid");
+
+    mixpanel.people.set({
+      "$name": "<%= @sender.name %>",
+      <% if @sender.email %>"$email": "<%= @sender.email %>",<% end %>
+      "Address": "<%= @sender.city + ", " + if @sender.country == "US" then @sender.state else @sender.country end %>",
+      "Parents": <%= @chain.count %>
+    });
+
+    <% if flash[:updated_key] %>
+      mixpanel.track("Submitted card", {
+        "Card": "<%= flash[:updated_key] %>"
+      });
+      mixpanel.people.increment("Cards sent");
+    <% end %>
+
+    mixpanel.track("Viewed card");
+  </script>
+<% end %>
+
 <%= render "footer" %>

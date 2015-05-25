@@ -5,7 +5,7 @@
 <div class="me-intro">
   <span class="leader">hi, i’m david</span> I build thoughtful, ambitious things with people that inspire me.
 
-  <%= mail_to REFERRAL_REQUEST_EMAIL, "reach out", body: "Hey David—\n\n...", class: "button" %>
+  <%= mail_to REFERRAL_REQUEST_EMAIL, "reach out", body: "Hey David—\n\nLet's catch up sometime.", class: "button me-button" %>
   <span class="button-companion"><span class="only-sf">Catch me in SF:<br>June 18 – June 29</span></span>
 </div>
 <!--early
@@ -81,3 +81,9 @@ intuitions
 </div>
 
 </div>
+
+<% if defined? MIXPANEL %>
+  <script>
+    mixpanel.track("Viewed about page");
+  </script>
+<% end %>

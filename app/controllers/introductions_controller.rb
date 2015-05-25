@@ -151,6 +151,11 @@ class IntroductionsController < ApplicationController
 
     respond_to do |format|
       if @current_intro.save and @sender.update(in_progress: nil)
+        MIXPANEL.people.set(@recipient.uuid, {
+          '$name' => @recipient.name,
+          'Address' => "#{@sender.city}, " + if @sender.country == "US" then @sender.state else @sender.country end,
+          '$created' => @recipient.created_at
+        }) if MIXPANEL
 
         #UserMailer.new_card(@sender.introduced_by[0], @introduction, :type => :parent).deliver_now
 
@@ -163,6 +168,10 @@ class IntroductionsController < ApplicationController
 
   def destroy
     @sender = @introduction.to_node
+
+    MIXPANEL.track(@sender.uuid, 'Card cancelled', {
+      "card": @introduction.key
+    }) if MIXPANEL
 
     if @sender.in_progress
       @sender.introduced(:person, :intro).rel_where(key: @sender.in_progress).delete_all(:intro)
@@ -200,7 +209,6 @@ class IntroductionsController < ApplicationController
   private
     before_action :redirect_to_key, only: [:start]
     def redirect_to_key
-      puts "TESTTTTTT"
       if not params[:key]
         if session[:key]
           redirect_to "/#{session[:key]}" and return

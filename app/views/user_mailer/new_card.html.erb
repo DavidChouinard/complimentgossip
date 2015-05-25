@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width">
-	<style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<style type="text/css">
 
 /* Client-specific Styles and Reset */
 
@@ -273,7 +273,7 @@ table.column .text-pad-right {
   width:52px;
 }
 
-/* Alignment & Visibility Classes */
+/* Alignment and Visibility Classes */
 
 table.center, td.center {
   text-align: center;
@@ -482,7 +482,7 @@ body.outlook p {
 }
 
   </style>
-  <style>
+  <style type="text/css">
 
     td.main {
       padding: 30px 0 10px;
@@ -565,6 +565,7 @@ body.outlook p {
 <body style="min-width: 100%;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;margin: 0;padding: 0;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;text-align: left;line-height: 19px;font-size: 14px;width: 100% !important;">
   <table class="body" style="border-spacing: 0;border-collapse: collapse;padding: 0;vertical-align: top;text-align: left;height: 100%;width: 100%;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;">
     <tr style="padding: 0;vertical-align: top;text-align: left;">
+      <td style="word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;padding: 0;vertical-align: top;text-align: left;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;border-collapse: collapse !important;" valign="top">
         <center style="width: 100%;min-width: 580px;">
 
           <table class="container" style="border-spacing: 0;border-collapse: collapse;padding: 0;vertical-align: top;text-align: inherit;width: 580px;margin: 0 auto;">
@@ -579,7 +580,7 @@ body.outlook p {
                         <tr style="padding: 0;vertical-align: top;text-align: left;">
                           <td style="word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;padding: 0px 0px 10px;vertical-align: top;text-align: left;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;border-collapse: collapse !important;">
                             <span class="preheader" style="display: none !important;">&quot;<%= @introduction.content %>&quot;</span>
-                            <a href="#" style="text-decoration: none;color: #4f4f4f;"><img src="<%= @introduction.image %>" alt="&quot;<%= @introduction.content %>&quot;" class="card" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;width: 100%;max-width: 578px;float: left;clear: both;display: block;border: 1px solid #D3D3D3;height: auto;min-height: 200px;text-align: center;font-size: 22px;line-height: 30px;background-color: #FFFFFF;"></a>
+                            <a href="#" style="text-decoration: none;color: #4f4f4f;"><img src="<%= @introduction.image %>" alt="&quot;<%= @introduction.content %>&quot;" class="card" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;width: 100%;max-width: 578px;float: left;clear: both;display: block;border: 1px solid #D3D3D3;height: auto;min-height: 200px;text-align: center;font-size: 22px;line-height: 30px;background-color: #FFFFFF;" /></a>
                           </td>
                           <td class="expander" style="word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;padding: 0 !important;vertical-align: top;text-align: left;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;visibility: hidden;width: 0px;border-collapse: collapse !important;"></td>
                         </tr>
@@ -616,11 +617,7 @@ body.outlook p {
                       <table class="four columns" style="border-spacing: 0;border-collapse: collapse;padding: 0;vertical-align: top;text-align: left;margin: 0 auto;width: 180px;">
                         <tr style="padding: 0;vertical-align: top;text-align: left;">
                           <td class="last" style="word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;padding: 0px 0px 10px;vertical-align: top;text-align: left;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;padding-right: 0px;border-collapse: collapse !important;">
-                            <% if @person.get_referral_limit - @children.count > 0 %>
-                              <a href="#" class="button" style="text-decoration: none;color: #4f4f4f;font: 14px/24px 'Playfair Display', Georgia, serif;text-align: center;border: 1px solid #D3D3D3;border-radius: 5px;background: none;padding: 6px 0 7px;outline: none;display: block;width: 100%;margin-left: auto;margin-right: auto;">Send a card</a>
-                            <% else %>
-                              <a href="#" class="button" style="text-decoration: none;color: #4f4f4f;font: 14px/24px 'Playfair Display', Georgia, serif;text-align: center;border: 1px solid #D3D3D3;border-radius: 5px;background: none;padding: 6px 0 7px;outline: none;display: block;width: 100%;margin-left: auto;margin-right: auto;">Request most cards</a>
-                            <% end %>
+                            <a href="http://complimentgossip.com/<%= @key %>" class="button" style="text-decoration: none;color: #4f4f4f;font: 14px/24px 'Playfair Display', Georgia, serif;text-align: center;border: 1px solid #D3D3D3;border-radius: 5px;background: none;padding: 6px 0 7px;outline: none;display: block;width: 100%;margin-left: auto;margin-right: auto;"><% if @person.get_referral_limit - @children.count > 0 %>Send a card<% else %>Request most cards<% end %></a>
                           </td>
                           <td class="expander" style="word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;padding: 0 !important;vertical-align: top;text-align: left;color: #222222;font-family: 'Playfair Display', Georgia, serif;font-weight: normal;margin: 0;line-height: 19px;font-size: 14px;visibility: hidden;width: 0px;border-collapse: collapse !important;"></td>
                         </tr>
