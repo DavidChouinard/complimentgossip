@@ -98,7 +98,7 @@
 
 <% if defined? MIXPANEL %>
   <script>
-    mixpanel.identify("@sender.uuid");
+    mixpanel.identify("<%= @sender.uuid %>");
 
     mixpanel.track("Confirming card", {
       <% if @sender.errors.count + @recipient.errors.count > 0 %>

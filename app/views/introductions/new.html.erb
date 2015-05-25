@@ -127,7 +127,7 @@
 
 <% if defined? MIXPANEL %>
   <script>
-    mixpanel.identify("@sender.uuid");
+    mixpanel.identify("<%= @sender.uuid %>");
 
     mixpanel.people.set({
       "$name": "<%= @sender.name %>",
