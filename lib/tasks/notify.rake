@@ -20,7 +20,6 @@ namespace :notify do
       # no tracking data for non-US, just send on original estimated delivery date
       if job["to"]["address_country"] != "United States"
         if expected_delivery_date <= Time.zone.today
-          puts "foreign"
           send_delivery_email intro, hedge: true
         end
         next
@@ -37,13 +36,11 @@ namespace :notify do
           e["location"][0,1] == job["to"]["address_zip"][0,1] &&
           DateTime.parse(e["time"]) <= 1.business_days.before(Time.zone.today).to_datetime.change({ hour: TIME_CUTOFF, offset: "-0600"})
         }.length >= 2 and expected_delivery_date >= 2.business_days.before(Date.today)
-          puts "scan"
           send_delivery_email intro
           next
       end
 
       if expected_delivery_date <= 1.business_day.before(Time.zone.today)
-        puts "expected"
         send_delivery_email intro
       end
 
