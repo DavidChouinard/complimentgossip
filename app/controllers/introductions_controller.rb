@@ -177,7 +177,7 @@ class IntroductionsController < ApplicationController
     }) if defined? MIXPANEL
 
     if @sender.in_progress
-      @sender.introduced(:person, :intro).rel_where(key: @sender.in_progress).delete_all(:intro)
+      @sender.introduced(:person, :intro).rel_where(key: @sender.in_progress).delete_all(:person)
 
       @sender.update(in_progress: nil)
 

@@ -22,10 +22,10 @@ module Complimentgossip
     config.neo4j.session_type = :server_db
 
     if Rails.env.production?
-      config.neo4j.session_options = { basic_auth: { username: 'complimentgossip', password: 'GPxq6L04RrU8FToLnPAc'} }
-      config.neo4j.session_path = 'http://complimentgossip.sb05.stations.graphenedb.com:24789/db/data/'
+      config.neo4j.session_options = { basic_auth: { username: 'complimentgossipprod', password: 'CqaWzeRddDyRkxM6bJTi'} }
+      config.neo4j.session_path = 'http://complimentgossipprod.sb05.stations.graphenedb.com:24789/db/data/'
     else
-      config.neo4j.session_options = { basic_auth: { username: 'complimentgossip_dev', password: 'uLlmffNyaZ6R2TVofDz8'} }
+      config.neo4j.session_options = { basic_auth: { username: 'complimentgossipdev', password: 'QR7o98cnI6Ss8fNGRJqX'} }
       config.neo4j.session_path = 'http://complimentgossipdev.sb05.stations.graphenedb.com:24789/db/data/'
     end
 
