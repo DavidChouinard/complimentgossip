@@ -7,6 +7,10 @@
   <%= link_to "×", "/#{@introduction.key}", :method => :delete, :class => "exit", :data => {:confirm => 'Are you certain you want to delete your progress on this card?'} %>
     <img src="<%= @current_intro.image %>" class="card" />
   </div>
+
+  <div class="form-saved">
+    Card saved
+  </div>
 </div>
 
 <%= form_for @current_intro, :url => url_for(:controller => 'introductions', :action => 'update', :key => @current_intro.key), method: :put do |f| %>
@@ -30,22 +34,10 @@
   </div>
 
   <div class="form-container form-inset">
-    <div>
-      <h3>Send to a workplace address</h3>
+    <h3>Search by workplace address</h3>
 
-      <label>Business name</label>
-      <input type="text" placeholder="" id="google-autocomplete" autocomplete="off"/>
-    </div>
-
-    <div class="form-inset-seperator">
-      <span class="form-inset-seperator-content">Or</span>
-    </div>
-    <div>
-      <h3>Send to a personal address</h3>
-
-      <div class="form-inset-content">Progress saved — you can come back later</div>
-      <!--</div>-->
-    </div>
+    <label>Business name</label>
+    <input type="text" placeholder="" id="google-autocomplete" autocomplete="off"/>
   </div>
 
   <div class="form-container">

@@ -320,7 +320,7 @@ div {
 }
 
 .card-self {
-  margin: 30px auto 20px;
+  margin: 30px auto 0;
   text-align: center;
 }
 
@@ -660,59 +660,19 @@ label.tip {
   padding-right: 10px;
 }
 
-.form-inset {
-  margin: 60px auto 30px;
-  padding: 0 25px;
-  border: 1px solid #D3D3D3;
-  border-radius: 5px;
-}
-
-.form-inset > div:first-child {
-  padding: 10px 0 8px;
-}
-.form-inset > div:first-child h3 {
-  margin: 15px 0;
-}
-
-.form-inset > div:last-child {
-  padding: 15px 0 20px;
-}
-.form-inset > div:last-child h3 {
-  margin: 0 0 4px;
-}
-
-.form-inset-content {
-  font-size: 14px;
-  font-style: italic;
-}
-
-.form-inset-block:first-child {
-  border-right: 1px solid #D3D3D3;
-}
-
-.form-inset-seperator {
-  position: relative;
-  text-align: center;
-}
-.form-inset-seperator:after {
-  content: "";
-  position: absolute;
-  top: 12px;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: #D3D3D3;
-  z-index: -1;
-}
-
-.form-inset-seperator-content {
+.form-saved {
   font-size: 12px;
   font-style: italic;
-  color: #B0B0B0;
-  background: white;
-  display: inline-block;
-  margin: 0 auto;
-  padding: 0 4px;
+  text-align: center;
+
+  margin: 5px auto 25px;
+}
+
+.form-inset {
+  margin: 60px auto 30px;
+  padding: 5px 25px 20px;
+  border: 1px solid #D3D3D3;
+  border-radius: 5px;
 }
 
 .form-submit {
