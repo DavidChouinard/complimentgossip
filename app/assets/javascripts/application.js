@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.transit
+//= require jquery.caret
 //= require typed
 //= require awesomplete
 //= require jquery.hoverIntent

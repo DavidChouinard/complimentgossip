@@ -87,17 +87,30 @@ $(document).ready(function() {
     var LINE_HEIGHT = 34;
     var PADDING = 4;
 
+    // one-level undo
+    var introduction_content_last_value = "";
+    var introduction_content_caret = 0;
+
     $('#introduction_content').on('input propertychange', function(e) {
       if (($(this)[0].scrollHeight + 2 * PADDING) / LINE_HEIGHT >= 3) {
 
-        // delete last entered char
-        $(input).val(function(index,value) {
-          return value.substr(0,value.length-1);
-        })
+        if ($(this).val().length - 1 > introduction_content_last_value.length) {
+          // handle copy paste differently: delete characters from the end until it fits
 
-        // Handle copy paste case recursively
-        $(this).trigger("input");
+          while (($(this)[0].scrollHeight + 2 * PADDING) / LINE_HEIGHT >= 3) {
+            $(this).val(function(index,value) {
+              return value.substr(0,value.length-1);
+            })
+          }
+        } else {
+          // prevent last change
+          $(this).val(introduction_content_last_value);
+          $(this).caret(introduction_content_caret);
+        }
       }
+
+      introduction_content_last_value = $(this).val();
+      introduction_content_caret = $(this).caret();
     });
   }
 
