@@ -41,7 +41,7 @@ gem 'sucker_punch'
 gem 'business_time'
 gem 'email_validator'
 
-gem 'puma'
+gem 'puma', '~>2.16.0'
 
 gem 'mixpanel-ruby'
 
